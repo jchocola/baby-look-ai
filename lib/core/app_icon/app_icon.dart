@@ -25,4 +25,5 @@ class AppIcon {
 
   static const shareIcon = LucideIcons.share;
   static const fullScreenIcon = LucideIcons.fullscreen;
+  
 }

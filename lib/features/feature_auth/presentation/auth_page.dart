@@ -1,0 +1,191 @@
+import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_theme/app_color.dart';
+import 'package:baby_look/features/feature_auth/widget/ad_widget.dart';
+import 'package:baby_look/features/feature_auth/widget/animated_greetings_widget.dart';
+import 'package:baby_look/features/feature_auth/widget/login_via_other_methods.dart';
+import 'package:baby_look/features/feature_auth/widget/login_widget.dart';
+import 'package:baby_look/features/feature_auth/widget/register_widget.dart';
+import 'package:baby_look/shared/custom_circle_avatar.dart';
+import 'package:baby_look/shared/custom_textfield.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
+
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _topExpanded = true;
+
+  int _slidingIndex = 0;
+
+  void changeSlidingIndex(int? value) {
+    setState(() {
+      _slidingIndex = value!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    // Начинаем с активного верха
+    _controller.value = 1.0;
+  }
+
+  void _toggleAnimation(bool toTop) {
+    if (toTop) {
+      _controller.forward();
+      _topExpanded = true;
+    } else {
+      _controller.reverse();
+      _topExpanded = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            // Интерполируем значения между 3 и 7
+            final topFlex = (3 + (_controller.value * 4)).toInt();
+            final bottomFlex = (7 - (_controller.value * 4)).toInt();
+
+            // Интерполируем прозрачность между 0.6 и 1
+            final topOpacity = 0.6 + (_controller.value * 0.4);
+            final bottomOpacity = 1.0 - (_controller.value * 0.4);
+
+            return Column(
+              children: [
+                /// TOP PART
+                Expanded(
+                  flex: topFlex,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (!_topExpanded) {
+                        _toggleAnimation(true);
+                      }
+                    },
+                    child: Container(
+                      color: AppColor.whitColor,
+                      child: Opacity(
+                        opacity: topOpacity,
+                        child: Padding(
+                          padding: EdgeInsets.all(AppConstant.appPadding),
+                          child: Column(
+                            spacing: AppConstant.appPadding,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'BabyLook AI',
+                                style: theme.textTheme.headlineLarge,
+                              ),
+                              AnimatedGreetingsWidget(),
+                              Visibility(
+                                visible: _topExpanded,
+                                child: AdWidget(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                /// BOTTOM PART
+                Expanded(
+                  flex: bottomFlex,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      if (_topExpanded) {
+                        _toggleAnimation(false);
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadiusGeometry.only(
+                        topLeft: Radius.circular(AppConstant.borderRadius * 4),
+                        topRight: Radius.circular(AppConstant.borderRadius * 4),
+                      ),
+                      child: Container(
+                        color: AppColor.pinkColor,
+                        child: Opacity(
+                          opacity: bottomOpacity,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(AppConstant.appPadding),
+                              child: Column(
+                                children: [
+                                  Visibility(
+                                    visible: _topExpanded,
+                                    child: Text(
+                                      'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
+                                      style: theme.textTheme.titleMedium,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+
+                                  Visibility(
+                                    visible: !_topExpanded,
+                                    child: Column(
+                                      children: [
+                                        CupertinoSlidingSegmentedControl(
+                                          groupValue: _slidingIndex,
+                                          children: {
+                                            0: Text('Login'),
+                                            1: Text('Register'),
+                                          },
+                                          onValueChanged: changeSlidingIndex,
+                                        ),
+                                        SizedBox.fromSize(
+                                          size: Size.fromHeight(size.height * 0.35),
+                                          child: _slidingIndex == 0
+                                              ? LoginWidget()
+                                              : RegisterWidget(),
+                                        ),
+                                        LoginViaOtherMethods(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
