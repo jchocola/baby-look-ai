@@ -16,7 +16,7 @@ class GeneratePage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Step 1: Upload Ultrasound'),
+      appBar: CustomAppBar(title: 'Step 1: Upload Ultrasound (Optional)'),
       body: _buildBody(context),
     );
   }

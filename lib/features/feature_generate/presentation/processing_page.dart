@@ -1,4 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/features/feature_generate/widget/fun_facts_widget.dart';
+import 'package:baby_look/features/feature_generate/widget/lottie_animation_widget.dart';
 import 'package:baby_look/shared/big_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +15,18 @@ class ProcessingPage extends StatelessWidget {
         spacing: AppConstant.appPadding,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Transform.scale(scale: 4, child: CircularProgressIndicator(strokeWidth: AppConstant.appPadding/5,)),
+          Stack(
+            children: [
+              LottieAnimationWidget(),
+             // Transform.scale(scale: 4, child: CircularProgressIndicator(strokeWidth: AppConstant.appPadding/5,)),
+            ],
+          ),
 
           SizedBox.fromSize(size: Size.fromHeight(AppConstant.preferredSizeHeight),),
       
-          LinearProgressIndicator(value: 0.3,minHeight: AppConstant.appPadding,borderRadius: BorderRadius.circular(AppConstant.borderRadius),),
+          LinearProgressIndicator(minHeight: AppConstant.appPadding,borderRadius: BorderRadius.circular(AppConstant.borderRadius),),
 
-          Text('Progress Text'),
+         FunFactsWidget(),
           
            SizedBox.fromSize(size: Size.fromHeight(AppConstant.preferredSizeHeight),),
           BigButton(title: 'Cancel',)

@@ -16,7 +16,7 @@ class GeneratePage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Step2: Baby Information'),
+      appBar: CustomAppBar(title: 'Step2: Baby Information (Optional)'),
       body: _buildBody(context),
     );
   }
