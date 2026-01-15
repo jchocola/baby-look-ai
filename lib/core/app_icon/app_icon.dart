@@ -31,6 +31,7 @@ class AppIcon {
   static const boyIcon = LucideIcons.mars;
   static const girlIcon = LucideIcons.venus;
   static const dontKnowIcon = LucideIcons.circleQuestionMark;
+  static const ideaIcon = LucideIcons.lightbulb;
 
   ///
   /// SETTINGS

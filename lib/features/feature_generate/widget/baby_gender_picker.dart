@@ -25,13 +25,14 @@ class BabyGenderPicker extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppConstant.appPadding,
+      //spacing: AppConstant.appPadding,
       children: [
         Text('Baby Gender', style: theme.textTheme.titleMedium),
         Text(
           "Choose the baby's gender or select if you don't know yet",
           style: theme.textTheme.bodySmall,
         ),
+        SizedBox(height: AppConstant.appPadding,),
 
         GridView.builder(
           shrinkWrap: true,
@@ -55,7 +56,7 @@ class BabyGenderPicker extends StatelessWidget {
           },
         ),
 
-        Text('Selected: Dont know'),
+       // Text('Selected: Dont know'),
       ],
     );
   }

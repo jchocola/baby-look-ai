@@ -18,15 +18,10 @@ class GestationWeek extends StatelessWidget {
           'Select the current week of pregnancy',
           style: theme.textTheme.bodySmall,
         ),
+       
 
         _weekPicker(),
-        Row(
-          spacing: AppConstant.appPadding,
-          children: [
-            Text('Selected:', style: theme.textTheme.bodySmall),
-            BlocBuilder<PrepareDataBloc,PrepareDataBlocState>(builder:(context,state)=> Text('Week ${state is PrepareDataBlocState_loaded ? state.gestationWeek : 0}', style: theme.textTheme.titleSmall)),
-          ],
-        ),
+       
       ],
     );
   }
@@ -43,21 +38,51 @@ class _weekPicker extends StatelessWidget {
       content: SizedBox.fromSize(
         size: Size.fromHeight(size.height * 0.4),
         child: SingleChildScrollView(
-          child: BlocBuilder<PrepareDataBloc,PrepareDataBlocState>(
-            builder: (context,state)=> Column(
+          child: BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
+            builder: (context, state) => Column(
               children: List.generate(40, (index) {
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppConstant.appPadding),
-                    color:  state is PrepareDataBlocState_loaded && state.gestationWeek == index+1 ? theme.colorScheme.primary : Colors.transparent
+                    color:
+                        state is PrepareDataBlocState_loaded &&
+                            state.gestationWeek == index + 1
+                        ? theme.colorScheme.onPrimary
+                        : Colors.transparent,
                   ),
-                  child: ListTile(title: Text("Week ${index + 1}" ), onTap: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_setGestationWeek(value: index+1)),));
+                  child: ListTile(
+                    title: Text("Week ${index + 1}" ,style: theme.textTheme.bodyMedium!.copyWith(
+                      fontWeight:  state is PrepareDataBlocState_loaded &&
+                            state.gestationWeek == index + 1
+                        ? FontWeight.bold
+                        :FontWeight.normal
+                    ),),
+                    onTap: () => context.read<PrepareDataBloc>().add(
+                      PrepareDataBlocEvent_setGestationWeek(value: index + 1),
+                    ),
+                  ),
+                );
               }),
             ),
           ),
         ),
       ),
-      child: BlocBuilder<PrepareDataBloc,PrepareDataBlocState>(builder:(context,state)=> ListTile(title: Text('Week ${state is PrepareDataBlocState_loaded ? state.gestationWeek : 0}'))),
+      child: BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
+        builder: (context, state) => ListTile(
+          title: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppConstant.borderRadius),
+              border: Border.all(color: theme.colorScheme.secondary)
+            ),
+            child: ListTile(
+              title: Text(
+                 state is PrepareDataBlocState_loaded && state.gestationWeek!=null ?  'Week ${ state.gestationWeek}' : 'Please pick gestation week',
+                 style: theme.textTheme.titleMedium,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

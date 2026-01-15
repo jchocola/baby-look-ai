@@ -21,7 +21,11 @@ final ThemeData appTheme = ThemeData(
 
     tertiary: AppColor.blueColor,
     onTertiary: AppColor.blueColor2,
-    tertiaryFixed: AppColor.blueColor3
+    tertiaryFixed: AppColor.blueColor3,
+
+    error: AppColor.yellowColor,
+    onError: AppColor.yellowColor2,
+    errorContainer: AppColor.yellowColor3,
 
   ),
 
