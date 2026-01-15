@@ -7,23 +7,38 @@ class StatisticWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _statistic = [
+      {"title": "Predictions", "color": AppColor.pinkColor},
+      {"title": "Favorites", "color": AppColor.blueColor},
+      {"title": "Days Active", "color": AppColor.yellowColor},
+    ];
+    final theme = Theme.of(context);
     return GridView.builder(
-    
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        childAspectRatio: 2/1,
-        crossAxisSpacing: AppConstant.appPadding
+        childAspectRatio: 2 / 1,
+        crossAxisSpacing: AppConstant.appPadding,
       ),
-      itemCount: 3,
+      itemCount: _statistic.length,
       itemBuilder: (context, index) {
+        final statistic = _statistic[index];
         return Container(
-          color: AppColor.grayColor,
+          //color: AppColor.grayColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
-            children: [Text('14'), Text('Prediction')],
+            children: [
+              Text(
+                '14',
+                style: theme.textTheme.headlineLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: statistic["color"] as Color,
+                ),
+              ),
+              Text(statistic["title"] as String),
+            ],
           ),
         );
       },

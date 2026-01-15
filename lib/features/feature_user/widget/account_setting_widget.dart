@@ -1,3 +1,4 @@
+import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class AccountSettingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Account'),
-        CustomListile(title: 'Edit Profile',),
-        CustomListile(title: 'Subscription',),
-        CustomListile(title: 'Prediction History',),
+        CustomListile(title: 'Edit Profile',icon: AppIcon.editProfileIcon,),
+        CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon,),
+        CustomListile(title: 'Prediction History',icon: AppIcon.predictionHistoryIcon,),
 
       ],
     );

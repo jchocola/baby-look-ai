@@ -31,4 +31,18 @@ class AppIcon {
   static const boyIcon = LucideIcons.mars;
   static const girlIcon = LucideIcons.venus;
   static const dontKnowIcon = LucideIcons.circleQuestionMark;
+
+  ///
+  /// SETTINGS
+  ///
+  static const editProfileIcon = LucideIcons.user;
+  static const subscriptionIcon = LucideIcons.chessKing;
+  static const predictionHistoryIcon = LucideIcons.history;
+
+  static const languageIcon = LucideIcons.languages;
+  static const helpIcon = LucideIcons.circleQuestionMark;
+  static const feedbackIcon = LucideIcons.send;
+  static const termServiceIcon = LucideIcons.file;
+  static const pravicyPolicyIcon = LucideIcons.shield;
+  static const infoIcon = LucideIcons.info;
 }

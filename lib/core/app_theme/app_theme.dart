@@ -6,6 +6,8 @@ final ThemeData appTheme = ThemeData(
   useMaterial3: true,
   scaffoldBackgroundColor: AppColor.whitColor,  // BACKGROUND
 
+  indicatorColor: AppColor.blueColor3,
+
   ///
   /// COLOR SCHEME
   ///
@@ -13,6 +15,9 @@ final ThemeData appTheme = ThemeData(
     primary: AppColor.pinkColor,
 
     secondary: AppColor.grayColor,
+
+    tertiary: AppColor.blueColor,
+
   ),
 
   ///
@@ -32,5 +37,10 @@ final ThemeData appTheme = ThemeData(
    ///   
    appBarTheme: AppBarTheme(
     actionsPadding: EdgeInsets.only(right: AppConstant.appPadding),
+   ),
+
+
+   dividerTheme: DividerThemeData(
+    color: AppColor.grayColor.withOpacity(0.3)
    )
 );

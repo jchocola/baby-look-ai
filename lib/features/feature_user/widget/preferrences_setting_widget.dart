@@ -1,4 +1,6 @@
+import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/shared/custom_listile.dart';
+import 'package:baby_look/shared/custom_switch.dart';
 import 'package:flutter/material.dart';
 
 class PreferrencesSettingWidget extends StatelessWidget {
@@ -10,11 +12,11 @@ class PreferrencesSettingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Preferences'),
-        CustomListile(title: 'Notifications',),
-        CustomListile(title: 'Language',),
-        CustomListile(title: 'Help and FAQ',),
-        CustomListile(title: 'Send Feedback',),
-         CustomListile(title: 'Invite Friends',),
+        CustomListile(title: 'Notifications', icon: AppIcon.notificationIcon, tralingWidget: CustomSwitch(),),
+        CustomListile(title: 'Language', icon: AppIcon.languageIcon,),
+        CustomListile(title: 'Help and FAQ', icon: AppIcon.helpIcon,),
+        CustomListile(title: 'Send Feedback', icon: AppIcon.feedbackIcon,) ,
+        // CustomListile(title: 'Invite Friends',),
 
       ],
     );
