@@ -5,25 +5,28 @@ import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewPredictionWidget extends StatelessWidget {
-  const CreateNewPredictionWidget({super.key});
-
+  const CreateNewPredictionWidget({super.key,  this.onTap});
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context);
-    return Container(
-      color: AppColor.pinkColor,
-      child: Row(
-        spacing: AppConstant.appPadding,
-        children: [
-          CustomRoundedIcon(),
-          Column(
-            children: [
-              Text('Create New Prediction'),
-              Text('Upload ultrasound and parent photos')
-            ],
-          ),
-          Icon(AppIcon.arrowForwardIcon)
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: AppColor.pinkColor,
+        child: Row(
+          spacing: AppConstant.appPadding,
+          children: [
+            CustomRoundedIcon(),
+            Column(
+              children: [
+                Text('Create New Prediction'),
+                Text('Upload ultrasound and parent photos')
+              ],
+            ),
+            Icon(AppIcon.arrowForwardIcon)
+          ],
+        ),
       ),
     );
   }

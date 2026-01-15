@@ -1,10 +1,19 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
+import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/web.dart';
 
-void main() {
+final logger = Logger();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // DI
+  await DI();
+
   runApp(const MyApp());
 }
 
@@ -13,10 +22,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      
       theme: appTheme,
       debugShowCheckedModeBanner: false,
-      routerConfig: appRouter, title: 'AI BabyLook');
+      routerConfig: appRouter,
+      title: 'AI BabyLook',
+    );
   }
 }
 
@@ -29,7 +39,7 @@ class MainPage extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
-        onTap: (value){
+        onTap: (value) {
           navigationShell.goBranch(value);
         },
         items: [

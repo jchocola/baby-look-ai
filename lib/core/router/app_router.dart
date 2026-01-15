@@ -2,8 +2,6 @@ import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_dashboard/presentation/home_page/home_page.dart';
 import 'package:baby_look/features/feature_gallery/presentation/gallery_page.dart';
 import 'package:baby_look/features/feature_generate/presentation/generate_page.dart';
-import 'package:baby_look/features/feature_generate/presentation/generate_page1.dart';
-import 'package:baby_look/features/feature_generate/presentation/generate_page2.dart';
 import 'package:baby_look/features/feature_user/presentation/user_page.dart';
 import 'package:baby_look/main.dart';
 import 'package:go_router/go_router.dart';
