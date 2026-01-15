@@ -27,4 +27,8 @@ class AppIcon {
   static const fullScreenIcon = LucideIcons.fullscreen;
 
   static const cancelIcon = Icons.cancel_outlined;
+
+  static const boyIcon = LucideIcons.mars;
+  static const girlIcon = LucideIcons.venus;
+  static const dontKnowIcon = LucideIcons.circleQuestionMark;
 }

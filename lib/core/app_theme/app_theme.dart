@@ -10,7 +10,9 @@ final ThemeData appTheme = ThemeData(
   /// COLOR SCHEME
   ///
   colorScheme: ColorScheme.light(
-    
+    primary: AppColor.pinkColor,
+
+    secondary: AppColor.grayColor,
   ),
 
   ///

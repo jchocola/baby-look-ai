@@ -1,31 +1,57 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_enum/baby_gender.dart';
+import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/shared/gender_card_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BabyGenderPicker extends StatelessWidget {
   const BabyGenderPicker({super.key});
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context);
+    final theme = Theme.of(context);
+
+    final _genderOption = [
+      {"title": "Boy", "gender": BABY_GENDER.BOY, "icon": AppIcon.boyIcon},
+      {"title": "Girl", "gender": BABY_GENDER.GIRL, "icon": AppIcon.girlIcon},
+      {
+        "title": "Don't know",
+        "gender": BABY_GENDER.DONT_KNOW,
+        "icon": AppIcon.dontKnowIcon,
+      },
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppConstant.appPadding,
       children: [
-        Text('Baby Gender' , style: theme.textTheme.titleMedium,),
-        Text("Choose the baby's gender or select if you don't know yet",style: theme.textTheme.bodySmall,),
+        Text('Baby Gender', style: theme.textTheme.titleMedium),
+        Text(
+          "Choose the baby's gender or select if you don't know yet",
+          style: theme.textTheme.bodySmall,
+        ),
 
         GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             childAspectRatio: 1,
-            crossAxisSpacing: AppConstant.appPadding
+            crossAxisSpacing: AppConstant.appPadding,
           ),
-          itemCount: 3,
-          
+          itemCount: _genderOption.length,
+
           itemBuilder: (context, index) {
-            return GenderCardPicker();
+            final option = _genderOption[index];
+            return BlocBuilder<PrepareDataBloc,PrepareDataBlocState>(
+              builder:(context,state)=> GenderCardPicker(
+                onTap: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_setGender(value:option["gender"] as BABY_GENDER )),
+                title: option["title"] as String,
+                icon: option["icon"] as IconData,
+                isSelected: state is PrepareDataBlocState_loaded && state.babyGender == option["gender"],
+              ),
+            );
           },
         ),
 
