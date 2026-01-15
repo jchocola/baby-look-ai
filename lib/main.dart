@@ -2,10 +2,13 @@ import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
+import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
+import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/web.dart';
 
@@ -13,6 +16,9 @@ final logger = Logger();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // .env
+  await dotenv.load(fileName: ".env");
 
   // DI
   await DI();
@@ -27,6 +33,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>())),
+         BlocProvider(create: (context)=> GeneratingBloc(bananaProService: getIt<BananaProService>())),
       ],
       child: MaterialApp.router(
         theme: appTheme,

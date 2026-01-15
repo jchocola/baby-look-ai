@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/widget/baby_gender_picker.dart';
 import 'package:baby_look/features/feature_generate/widget/gestation_week.dart';
@@ -127,8 +128,30 @@ class GeneratePage3 extends StatelessWidget {
             ///
             /// BUTTONS
             ///
-            BigButton(title: 'Generate Prediction'),
-            BigButton(title: 'Cancel' , onTap: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_cancelAll()),),
+            BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
+              builder: (context, state) => BigButton(
+                title: 'Generate Prediction',
+                onTap: () {
+                  if (state is PrepareDataBlocState_loaded) {
+                    context.read<GeneratingBloc>().add(
+                      GeneratingBlocEvent_generatePrediction(
+                        ultrasoundImage: File(state.ultrasoundImage!.path),
+                        gestationWeek: state.gestationWeek ?? 1,
+                        motherImage: File(state.motherImage!.path),
+                        fatherImage: File(state.fatherImage!.path),
+                        gender: state.babyGender.name
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+            BigButton(
+              title: 'Cancel',
+              onTap: () => context.read<PrepareDataBloc>().add(
+                PrepareDataBlocEvent_cancelAll(),
+              ),
+            ),
 
             Text(
               "Both parent photos are required to generate an accurate prediction",
