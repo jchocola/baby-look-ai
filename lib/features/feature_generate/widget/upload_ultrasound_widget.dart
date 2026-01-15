@@ -30,6 +30,7 @@ class UploadUltrasoundWidget extends StatelessWidget {
               );
             } else {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 spacing: AppConstant.appPadding,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

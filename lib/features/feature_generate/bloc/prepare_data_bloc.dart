@@ -38,6 +38,24 @@ class PrepareDataBlocEvent_setGender extends PrepareDataBlocEvent {
   List<Object?> get props => [value];
 }
 
+class PrepareDataBlocEvent_pickMotherImageFromGallery
+    extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_pickMotherImageFromCamera
+    extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_cancelMotherImage extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_pickFatherImageFromGallery
+    extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_pickFatherImageFromCamera
+    extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_cancelFatherImage extends PrepareDataBlocEvent {}
+
+class PrepareDataBlocEvent_cancelAll extends PrepareDataBlocEvent {}
+
 ///
 /// STATE
 ///
@@ -45,6 +63,8 @@ abstract class PrepareDataBlocState extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+class PrepareDataBlocState_initial extends PrepareDataBlocState {}
 
 class PrepareDataBlocState_loaded extends PrepareDataBlocState {
   final XFile? ultrasoundImage;
@@ -57,7 +77,7 @@ class PrepareDataBlocState_loaded extends PrepareDataBlocState {
     this.motherImage,
     this.fatherImage,
     this.gestationWeek,
-    required this.babyGender,
+     this.babyGender = BABY_GENDER.DONT_KNOW,
   });
 
   @override
@@ -77,9 +97,9 @@ class PrepareDataBlocState_loaded extends PrepareDataBlocState {
     BABY_GENDER? babyGender,
   }) {
     return PrepareDataBlocState_loaded(
-      ultrasoundImage: ultrasoundImage,
-      motherImage: motherImage,
-      fatherImage: fatherImage,
+      ultrasoundImage: ultrasoundImage ?? this.ultrasoundImage,
+      motherImage: motherImage ?? this.motherImage,
+      fatherImage: fatherImage ?? this.fatherImage,
       gestationWeek: gestationWeek ?? this.gestationWeek,
       babyGender: babyGender ?? this.babyGender,
     );
@@ -144,8 +164,7 @@ class PrepareDataBloc extends Bloc<PrepareDataBlocEvent, PrepareDataBlocState> {
       }
     });
 
-
-        ///
+    ///
     /// PrepareDataBlocEvent_setGender
     ///
     on<PrepareDataBlocEvent_setGender>((event, emit) async {
@@ -153,6 +172,91 @@ class PrepareDataBloc extends Bloc<PrepareDataBlocEvent, PrepareDataBlocState> {
       if (currentState is PrepareDataBlocState_loaded) {
         emit(currentState.copyWith(babyGender: event.value));
         logger.i('Current Gender: ${event.value}');
+      }
+    });
+
+    ///
+    ///  PrepareDataBlocEvent_pickMotherImageFromGallery
+    ///
+    on<PrepareDataBlocEvent_pickMotherImageFromGallery>((event, emit) async {
+      final currentState = state;
+
+      if (currentState is PrepareDataBlocState_loaded) {
+        final image = await pickerRepository.pickImageFromGallery();
+        if (image != null) {
+          emit(currentState.copyWith(motherImage: image));
+        }
+      }
+    });
+
+    ///
+    /// PrepareDataBlocEvent_pickMotherImageFromCamera
+    ///
+    on<PrepareDataBlocEvent_pickMotherImageFromCamera>((event, emit) async {
+      final currentState = state;
+      if (currentState is PrepareDataBlocState_loaded) {
+        final image = await pickerRepository.pickImageFromCamera();
+        if (image != null) {
+          emit(currentState.copyWith(motherImage: image));
+        }
+      }
+    });
+
+    ///
+    /// PrepareDataBlocEvent_cancelMotherImage
+    ///
+    on<PrepareDataBlocEvent_cancelMotherImage>((event, emit) async {
+      final currentState = state;
+      if (currentState is PrepareDataBlocState_loaded) {
+        emit(currentState.copyWith(motherImage: null));
+      }
+    });
+
+    ///
+    ///  PrepareDataBlocEvent_pickFatherImageFromGallery
+    ///
+    on<PrepareDataBlocEvent_pickFatherImageFromGallery>((event, emit) async {
+      final currentState = state;
+
+      if (currentState is PrepareDataBlocState_loaded) {
+        final image = await pickerRepository.pickImageFromGallery();
+        if (image != null) {
+          emit(currentState.copyWith(fatherImage: image));
+        }
+      }
+    });
+
+    ///
+    /// PrepareDataBlocEvent_pickFatherImageFromCamera
+    ///
+    on<PrepareDataBlocEvent_pickFatherImageFromCamera>((event, emit) async {
+      final currentState = state;
+      if (currentState is PrepareDataBlocState_loaded) {
+        final image = await pickerRepository.pickImageFromCamera();
+        if (image != null) {
+          emit(currentState.copyWith(fatherImage: image));
+        }
+      }
+    });
+
+    ///
+    /// PrepareDataBlocEvent_cancelFatherImage
+    ///
+    on<PrepareDataBlocEvent_cancelFatherImage>((event, emit) async {
+      final currentState = state;
+      if (currentState is PrepareDataBlocState_loaded) {
+        emit(currentState.copyWith(fatherImage: null));
+      }
+    });
+
+    ///
+    /// PrepareDataBlocEvent_cancelAll
+    ///
+    on<PrepareDataBlocEvent_cancelAll>((event, emit) async {
+      final currentState = state;
+      if (currentState is PrepareDataBlocState_loaded) {
+        emit(PrepareDataBlocState_initial());
+        emit(PrepareDataBlocState_loaded());
       }
     });
   }
