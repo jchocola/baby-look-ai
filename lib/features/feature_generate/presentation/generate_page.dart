@@ -35,14 +35,14 @@ class _GeneratePageState extends State<GeneratePage> {
           ),
         ),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [CustomButtonWithIcon(
-            title: 'Back',
-          ), CustomButtonWithIcon(
-            title: 'Next',
-          )],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //   children: [CustomButtonWithIcon(
+        //     title: 'Back',
+        //   ), CustomButtonWithIcon(
+        //     title: 'Next',
+        //   )],
+        // ),
 
         SmoothPageIndicator(controller: pageController, count: 4, effect: JumpingDotEffect(
           dotHeight: AppConstant.appPadding,

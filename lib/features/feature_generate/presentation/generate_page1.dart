@@ -16,40 +16,53 @@ class GeneratePage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Step 1: Upload Ultrasound (Optional)'),
+      appBar: CustomAppBar(title: 'Step 1: Upload Ultrasound'),
       body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(AppConstant.appPadding),
-      child: Column(
-        spacing: AppConstant.appPadding,
-        children: [
-          UploadUltrasoundWidget(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CustomButtonWithIcon(
-                icon: AppIcon.imageIcon,
-                title: 'Gallery',
-                onTap: () {
-                  context.read<PrepareDataBloc>().add(
-                    PrepareDataBlocEvent_pickUltrasoundImageFromGallery(),
-                  );
-                },
-              ),
-              CustomButtonWithIcon(icon: AppIcon.cameratIcon, title: 'Camera', onTap: () {
-                 context.read<PrepareDataBloc>().add(
-                    PrepareDataBlocEvent_pickUltrasoundImageFromCamera(),
-                  );
-              },),
-            ],
-          ),
-          TipsForBestResult(),
-          NoteWidget(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+        
+          spacing: AppConstant.appPadding,
+          children: [
+            UploadUltrasoundWidget(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomButtonWithIcon(
+                  icon: AppIcon.imageIcon,
+                  title: 'Gallery',
+                  onTap: () {
+                    context.read<PrepareDataBloc>().add(
+                      PrepareDataBlocEvent_pickUltrasoundImageFromGallery(),
+                    );
+                  },
+                ),
+                CustomButtonWithIcon(
+                  icon: AppIcon.cameratIcon,
+                  title: 'Camera',
+                  onTap: () {
+                    context.read<PrepareDataBloc>().add(
+                      PrepareDataBlocEvent_pickUltrasoundImageFromCamera(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            TipsForBestResult(),
+            NoteWidget(
+              icon: AppIcon.infoIcon,
+              note:
+                  "Your ultrasound image is processed securely and never stored after prediction generation.",
+              color: theme.colorScheme.tertiary,
+            ),
+          ],
+        ),
       ),
     );
   }

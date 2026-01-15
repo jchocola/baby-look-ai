@@ -8,27 +8,38 @@ class TipsCard extends StatelessWidget {
     this.icon = Icons.add,
     this.subtitle = 'Subtile',
     this.title = 'Title',
+    this.iconColor = Colors.black54,
+    this.iconBgColor = Colors.transparent,
+    this.cardColor = Colors.white
   });
   final String title;
   final String subtitle;
   final IconData icon;
+  final Color iconColor;
+  final Color iconBgColor;
+  final Color cardColor;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Card(
+      color: cardColor,
       child: Padding(
         padding: EdgeInsets.all(AppConstant.appPadding),
         child: Row(
           spacing: AppConstant.appPadding,
           children: [
-            CustomRoundedIcon(icon: icon),
+            CustomRoundedIcon(
+              icon: icon,
+              iconColor: iconColor,
+              color: iconBgColor,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(title, style: theme.textTheme.titleMedium, maxLines: 1,),
-                  Text(subtitle, style: theme.textTheme.bodySmall, maxLines: 2,),
+                  Text(title, style: theme.textTheme.titleMedium, maxLines: 1),
+                  Text(subtitle, style: theme.textTheme.bodySmall, maxLines: 2),
                 ],
               ),
             ),

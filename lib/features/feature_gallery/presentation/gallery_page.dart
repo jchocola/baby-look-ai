@@ -27,7 +27,7 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController( );
+    pageController = PageController();
   }
 
   @override
@@ -39,14 +39,16 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 
   Widget buildBody(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal:  AppConstant.appPadding),
+      padding: EdgeInsets.symmetric(horizontal: AppConstant.appPadding),
       child: Column(
         spacing: AppConstant.appPadding,
         children: [
           CupertinoSlidingSegmentedControl(
+           // backgroundColor: theme.colorScheme.secondary,
             groupValue: currentValue,
-            children: {0: Text("All"), 1: Text('Favourites')},
+            children: {0: Text("All (12)"), 1: Text('Favourites (4)')},
             onValueChanged: _changePage,
           ),
 

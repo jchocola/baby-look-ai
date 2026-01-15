@@ -8,15 +8,20 @@ final ThemeData appTheme = ThemeData(
 
   indicatorColor: AppColor.blueColor3,
 
+  
+
   ///
   /// COLOR SCHEME
   ///
   colorScheme: ColorScheme.light(
     primary: AppColor.pinkColor,
+    onPrimary: AppColor.pinkColor2,
 
     secondary: AppColor.grayColor,
 
     tertiary: AppColor.blueColor,
+    onTertiary: AppColor.blueColor2,
+    tertiaryFixed: AppColor.blueColor3
 
   ),
 

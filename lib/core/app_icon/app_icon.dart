@@ -45,4 +45,10 @@ class AppIcon {
   static const termServiceIcon = LucideIcons.file;
   static const pravicyPolicyIcon = LucideIcons.shield;
   static const infoIcon = LucideIcons.info;
+
+  ///
+  ///
+  ///
+  static const favouriteRoundedIcon = LucideIcons.heart;
+  static const verticalMoreIcon = Icons.more_vert_outlined;
 }

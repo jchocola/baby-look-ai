@@ -4,7 +4,9 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
+import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:baby_look/shared/picked_image_card.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,19 +16,33 @@ class UploadUltrasoundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(AppConstant.borderRadius),
-      child: Container(
-        height: size.width * 0.6,
-        width: size.width * 0.6,
-        color: AppColor.blueColor3,
+    final theme = Theme.of(context);
+    return DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        color: theme.colorScheme.secondary.withOpacity(0.5),
+        strokeWidth: 3,
+        padding: EdgeInsets.all(AppConstant.appPadding/2),
+        dashPattern: [
+          5,10,
+        ],
+        radius: Radius.circular(AppConstant.borderRadius * 1.3)
+      ),
+      child: SizedBox(
+        height: size.width * 0.7,
+        width: size.width * 0.7,
+        //color: AppColor.blueColor3,
         child: BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
           builder: (context, state) {
             if (state is PrepareDataBlocState_loaded &&
                 state.ultrasoundImage != null) {
-              return PickedImageCard(
-                file: File(state.ultrasoundImage!.path),
-                onCancelPressed: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_cancelUtrasoundImage()),
+              return ClipRRect(
+                borderRadius: BorderRadiusGeometry.circular(AppConstant.borderRadius),
+                child: PickedImageCard(
+                  file: File(state.ultrasoundImage!.path),
+                  onCancelPressed: () => context.read<PrepareDataBloc>().add(
+                    PrepareDataBlocEvent_cancelUtrasoundImage(),
+                  ),
+                ),
               );
             } else {
               return Column(
@@ -34,9 +50,9 @@ class UploadUltrasoundWidget extends StatelessWidget {
                 spacing: AppConstant.appPadding,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(AppIcon.imageIcon),
-                  Text('Upload Ultrasound Scan'),
-                  Text('Select your clearest ultrasound image'),
+                  CustomRoundedIcon(icon: AppIcon.imageIcon,color: theme.colorScheme.onPrimary, iconColor: theme.colorScheme.primary,),
+                  Text('Upload Ultrasound Scan', style: theme.textTheme.titleMedium,),
+                  Text('Select your clearest ultrasound image', style: theme.textTheme.bodySmall),
                 ],
               );
             }
