@@ -64,7 +64,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
     ///
     on<GeneratingBlocEvent_generatePrediction>((event, emit) async {
       try {
-        final response = await bananaProService.generateBabyPrediction(
+        final response = await bananaProService.generateAndSavePrediction(
           ultrasoundImage: event.ultrasoundImage,
           fatherImage: event.fatherImage,
           motherImage: event.motherImage,
