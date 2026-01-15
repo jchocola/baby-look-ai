@@ -25,5 +25,6 @@ class AppIcon {
 
   static const shareIcon = LucideIcons.share;
   static const fullScreenIcon = LucideIcons.fullscreen;
-  
+
+  static const cancelIcon = Icons.cancel_outlined;
 }

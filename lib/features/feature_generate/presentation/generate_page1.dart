@@ -1,11 +1,13 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/widget/tips_for_best_result.dart';
 import 'package:baby_look/features/feature_generate/widget/upload_ultrasound_widget.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/custom_button_with_icon.dart';
 import 'package:baby_look/shared/note_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class GeneratePage1 extends StatelessWidget {
@@ -29,8 +31,20 @@ class GeneratePage1 extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              CustomButtonWithIcon(icon: AppIcon.imageIcon, title: 'Gallery'),
-              CustomButtonWithIcon(icon: AppIcon.cameratIcon, title: 'Camera'),
+              CustomButtonWithIcon(
+                icon: AppIcon.imageIcon,
+                title: 'Gallery',
+                onTap: () {
+                  context.read<PrepareDataBloc>().add(
+                    PrepareDataBlocEvent_pickUltrasoundImageFromGallery(),
+                  );
+                },
+              ),
+              CustomButtonWithIcon(icon: AppIcon.cameratIcon, title: 'Camera', onTap: () {
+                 context.read<PrepareDataBloc>().add(
+                    PrepareDataBlocEvent_pickUltrasoundImageFromCamera(),
+                  );
+              },),
             ],
           ),
           TipsForBestResult(),

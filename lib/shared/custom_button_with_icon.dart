@@ -6,18 +6,23 @@ class CustomButtonWithIcon extends StatelessWidget {
     super.key,
     this.icon = Icons.add,
     this.title = "Default",
+    this.onTap,
   });
 
   final String title;
   final IconData icon;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: AppConstant.appPadding,
-      children: [
-        Icon(icon),
-        Text(title),
-      ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        spacing: AppConstant.appPadding,
+        children: [
+          Icon(icon),
+          Text(title),
+        ],
+      ),
     );
   }
 }
