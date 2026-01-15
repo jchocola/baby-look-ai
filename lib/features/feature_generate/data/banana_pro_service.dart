@@ -398,9 +398,9 @@ class BananaProService {
     String fileName = 'baby_prediction',
   }) async {
     try {
-      final directory = await getApplicationDocumentsDirectory();
+      final directory = await getDownloadsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
-      final file = File('${directory.path}/$fileName$timestamp.png');
+      final file = File('${directory?.path}/$fileName$timestamp.png');
 
       await file.writeAsBytes(imageBytes);
 
