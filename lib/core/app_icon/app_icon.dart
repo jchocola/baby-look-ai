@@ -33,6 +33,10 @@ class AppIcon {
   static const dontKnowIcon = LucideIcons.circleQuestionMark;
   static const ideaIcon = LucideIcons.lightbulb;
 
+  static const clearFaceIcon = LucideIcons.focus;
+  static const faceFillIcon = LucideIcons.scanFace;
+  static const naturalIcon = LucideIcons.leaf;
+
   ///
   /// SETTINGS
   ///

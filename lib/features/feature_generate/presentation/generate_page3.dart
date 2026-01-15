@@ -30,6 +30,7 @@ class GeneratePage3 extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(AppConstant.appPadding),
       child: SingleChildScrollView(
@@ -37,15 +38,20 @@ class GeneratePage3 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppConstant.appPadding,
           children: [
-            Text('Upload Parent Photos'),
+            Text('Upload Parent Photos', style: theme.textTheme.titleMedium),
             Text(
               "Clear photos of both parents help our AI generate a more accurate baby prediction",
+              style: theme.textTheme.bodySmall,
             ),
 
             Row(
               children: [
                 Expanded(
                   child: TipsCard(
+                    iconBgColor: theme.colorScheme.onPrimary,
+                    iconColor: theme.colorScheme.primary,
+                    cardColor: theme.colorScheme.tertiaryFixed,
+                    icon: AppIcon.ideaIcon,
                     title: "Good Lighting",
                     subtitle:
                         "Use natural light or well-lit indoor environment",
@@ -53,6 +59,10 @@ class GeneratePage3 extends StatelessWidget {
                 ),
                 Expanded(
                   child: TipsCard(
+                    iconBgColor: theme.colorScheme.onPrimary,
+                    iconColor: theme.colorScheme.primary,
+                    cardColor: theme.colorScheme.tertiaryFixed,
+                    icon: AppIcon.clearFaceIcon,
                     title: "Clear Face",
                     subtitle: "Ensure face is clearly visible and in focus",
                   ),
@@ -64,12 +74,20 @@ class GeneratePage3 extends StatelessWidget {
               children: [
                 Expanded(
                   child: TipsCard(
+                    iconBgColor: theme.colorScheme.onPrimary,
+                    iconColor: theme.colorScheme.primary,
+                    cardColor: theme.colorScheme.tertiaryFixed,
+                    icon: AppIcon.faceFillIcon,
                     title: "Face Fills Frame",
                     subtitle: "Position face to fill most of the frame",
                   ),
                 ),
                 Expanded(
                   child: TipsCard(
+                    iconBgColor: theme.colorScheme.onPrimary,
+                    iconColor: theme.colorScheme.primary,
+                    cardColor: theme.colorScheme.tertiaryFixed,
+                    icon: AppIcon.naturalIcon,
                     title: "Natural Expression",
                     subtitle: "Neutral or natural expression works best",
                   ),
@@ -78,8 +96,10 @@ class GeneratePage3 extends StatelessWidget {
             ),
 
             NoteWidget(
+              color: theme.colorScheme.error,
+              icon: AppIcon.infoIcon,
               note:
-                  "Tip.Frontal photos with neutral backgrounds work best for accurate predictions",
+                  "Tip ! Frontal photos with neutral backgrounds work best for accurate predictions",
             ),
 
             ///
@@ -139,7 +159,7 @@ class GeneratePage3 extends StatelessWidget {
                         gestationWeek: state.gestationWeek ?? 1,
                         motherImage: File(state.motherImage!.path),
                         fatherImage: File(state.fatherImage!.path),
-                        gender: state.babyGender.name
+                        gender: state.babyGender.name,
                       ),
                     );
                   }
