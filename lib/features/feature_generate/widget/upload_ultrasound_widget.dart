@@ -45,15 +45,22 @@ class UploadUltrasoundWidget extends StatelessWidget {
                 ),
               );
             } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: AppConstant.appPadding,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomRoundedIcon(icon: AppIcon.imageIcon,color: theme.colorScheme.onPrimary, iconColor: theme.colorScheme.primary,),
-                  Text('Upload Ultrasound Scan', style: theme.textTheme.titleMedium,),
-                  Text('Select your clearest ultrasound image', style: theme.textTheme.bodySmall),
-                ],
+              return Container(
+                
+                 decoration: BoxDecoration(
+                   color: theme.colorScheme.tertiaryFixed,
+                  borderRadius: BorderRadius.circular(AppConstant.borderRadius)
+                 ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: AppConstant.appPadding,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomRoundedIcon(icon: AppIcon.imageIcon,color: theme.colorScheme.onPrimary, iconColor: theme.colorScheme.primary,),
+                    Text('Upload Ultrasound Scan', style: theme.textTheme.titleMedium,),
+                    Text('Select your clearest ultrasound image', style: theme.textTheme.bodySmall),
+                  ],
+                ),
               );
             }
           },

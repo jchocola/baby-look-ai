@@ -9,8 +9,9 @@ class ProcessingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
-      padding:   EdgeInsets.symmetric(horizontal:  AppConstant.appPadding),
+      padding: EdgeInsets.symmetric(horizontal: AppConstant.appPadding),
       child: Column(
         spacing: AppConstant.appPadding,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -18,19 +19,26 @@ class ProcessingPage extends StatelessWidget {
           Stack(
             children: [
               LottieAnimationWidget(),
-             // Transform.scale(scale: 4, child: CircularProgressIndicator(strokeWidth: AppConstant.appPadding/5,)),
+              // Transform.scale(scale: 4, child: CircularProgressIndicator(strokeWidth: AppConstant.appPadding/5,)),
             ],
           ),
 
-          SizedBox.fromSize(size: Size.fromHeight(AppConstant.preferredSizeHeight),),
-      
-          LinearProgressIndicator(minHeight: AppConstant.appPadding,borderRadius: BorderRadius.circular(AppConstant.borderRadius),),
+          SizedBox.fromSize(
+            size: Size.fromHeight(AppConstant.preferredSizeHeight),
+          ),
 
-         FunFactsWidget(),
-          
-           SizedBox.fromSize(size: Size.fromHeight(AppConstant.preferredSizeHeight),),
-          BigButton(title: 'Cancel',)
-      
+          LinearProgressIndicator(
+            backgroundColor: theme.colorScheme.onPrimary,
+            minHeight: AppConstant.appPadding,
+            borderRadius: BorderRadius.circular(AppConstant.borderRadius),
+          ),
+
+          FunFactsWidget(),
+
+          SizedBox.fromSize(
+            size: Size.fromHeight(AppConstant.preferredSizeHeight),
+          ),
+          BigButton(title: 'Cancel', borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,),
         ],
       ),
     );

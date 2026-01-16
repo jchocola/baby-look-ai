@@ -150,6 +150,8 @@ class GeneratePage3 extends StatelessWidget {
             ///
             BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
               builder: (context, state) => BigButton(
+                buttonColor: theme.colorScheme.onPrimary,
+                borderColor:theme.colorScheme.primary,
                 title: 'Generate Prediction',
                 onTap: () {
                   if (state is PrepareDataBlocState_loaded) {
@@ -167,6 +169,8 @@ class GeneratePage3 extends StatelessWidget {
               ),
             ),
             BigButton(
+              borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,
+             
               title: 'Cancel',
               onTap: () => context.read<PrepareDataBloc>().add(
                 PrepareDataBlocEvent_cancelAll(),
@@ -175,6 +179,8 @@ class GeneratePage3 extends StatelessWidget {
 
             Text(
               "Both parent photos are required to generate an accurate prediction",
+              style: theme.textTheme.bodySmall,
+              textAlign: TextAlign.center,
             ),
           ],
         ),
