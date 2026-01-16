@@ -1,3 +1,5 @@
+import 'package:baby_look/core/data/vibration_repository_impl.dart';
+import 'package:baby_look/core/domain/vibrattion_repository.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/data/image_picker_repo_impl.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
@@ -13,6 +15,8 @@ Future<void> DI() async {
   getIt.registerSingleton<BananaProService>(
     BananaProService(apiKey: dotenv.env['GEMINI_API_KEY'] ?? ''),
   );
+
+  getIt.registerSingleton<VibrattionRepository>(VibrationRepositoryImpl());
 
   logger.i('DI initialized!');
 }

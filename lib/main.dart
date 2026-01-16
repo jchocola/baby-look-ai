@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/web.dart';
+import 'package:toastification/toastification.dart';
 
 final logger = Logger();
 
@@ -35,11 +36,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=> PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>())),
          BlocProvider(create: (context)=> GeneratingBloc(bananaProService: getIt<BananaProService>())),
       ],
-      child: MaterialApp.router(
-        theme: appTheme,
-        debugShowCheckedModeBanner: false,
-        routerConfig: appRouter,
-        title: 'AI BabyLook',
+      child: ToastificationWrapper(
+        
+        child: MaterialApp.router(
+          theme: appTheme,
+          debugShowCheckedModeBanner: false,
+          routerConfig: appRouter,
+          title: 'AI BabyLook',
+        ),
       ),
     );
   }

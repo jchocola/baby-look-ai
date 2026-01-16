@@ -1,8 +1,10 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
@@ -63,17 +65,24 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
     /// GeneratingBlocEvent_generatePrediction
     ///
     on<GeneratingBlocEvent_generatePrediction>((event, emit) async {
+      final Completer completer = Completer();
       try {
-        final response = await bananaProService.generateBabyPrediction(
-          ultrasoundImage: event.ultrasoundImage,
-          fatherImage: event.fatherImage,
-          motherImage: event.motherImage,
-          gestationWeek: event.gestationWeek,
-          gender: event.gender,
-          additionalNotes: event.additionalNotes,
-        );
+        emit(GeneratingBlocState_generating());
 
-        logger.f(response);
+        await Future.delayed(Duration(seconds: 5));
+
+        // final response = await bananaProService.generateBabyPrediction(
+        //   ultrasoundImage: event.ultrasoundImage,
+        //   fatherImage: event.fatherImage,
+        //   motherImage: event.motherImage,
+        //   gestationWeek: event.gestationWeek,
+        //   gender: event.gender,
+        //   additionalNotes: event.additionalNotes,
+        // );
+
+        // logger.f(response);
+
+        emit(GeneratingBlocState_generated());
       } catch (e) {
         logger.e(e);
       }
