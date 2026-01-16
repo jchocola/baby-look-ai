@@ -52,6 +52,7 @@ dependencies:
   lottie: ^3.3.2
   dotted_border: ^3.1.0
   flutter_animate: ^4.5.2
+  gif_view: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,8 @@ flutter:
   assets:
     - .env
     - assets/generating.json
+    - assets/logo.png
+    - assets/video.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

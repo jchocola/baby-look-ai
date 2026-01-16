@@ -16,6 +16,7 @@ import 'package:baby_look/shared/note_widget.dart';
 import 'package:baby_look/shared/picked_image_card.dart';
 import 'package:baby_look/shared/tips_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GeneratePage3 extends StatelessWidget {
@@ -166,7 +167,7 @@ class GeneratePage3 extends StatelessWidget {
                     );
                   }
                 },
-              ),
+              ).animate(onPlay: (controller) => controller.repeat(),).shimmer(duration: 2000.ms, delay: 1800.ms,color: theme.colorScheme.onPrimary).then(delay: 400.ms),
             ),
             BigButton(
               borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,

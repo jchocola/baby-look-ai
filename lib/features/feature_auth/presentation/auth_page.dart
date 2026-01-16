@@ -1,14 +1,16 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
-import 'package:baby_look/features/feature_auth/widget/ad_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/animated_greetings_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/login_via_other_methods.dart';
 import 'package:baby_look/features/feature_auth/widget/login_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/register_widget.dart';
+import 'package:baby_look/features/feature_auth/widget/video_gif.dart';
+import 'package:baby_look/shared/app_logo.dart';
 import 'package:baby_look/shared/custom_circle_avatar.dart';
 import 'package:baby_look/shared/custom_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -107,7 +109,7 @@ class _AuthPageState extends State<AuthPage>
                               AnimatedGreetingsWidget(),
                               Visibility(
                                 visible: _topExpanded,
-                                child: AdWidget(),
+                                child:VideoGif(),
                               ),
                             ],
                           ),
@@ -133,22 +135,28 @@ class _AuthPageState extends State<AuthPage>
                         topRight: Radius.circular(AppConstant.borderRadius * 4),
                       ),
                       child: Container(
-                        color: AppColor.pinkColor,
+                        color: theme.colorScheme.onTertiary,
                         child: Opacity(
                           opacity: bottomOpacity,
                           child: Center(
                             child: Padding(
                               padding: EdgeInsets.all(AppConstant.appPadding),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                spacing: AppConstant.appPadding,
                                 children: [
                                   Visibility(
                                     visible: _topExpanded,
                                     child: Text(
                                       'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
-                                      style: theme.textTheme.titleMedium,
+                                      style: theme.textTheme.titleLarge,
                                       textAlign: TextAlign.center,
-                                    ),
+                                    ).animate(onPlay: (controller) => controller.repeat(reverse: true),).shimmer(color: theme.colorScheme.onPrimary, duration: 1500.ms , delay: 500.ms).scaleXY(end: 1.1),
                                   ),
+
+                                  Visibility(
+                                    visible: !_topExpanded,
+                                    child: AppLogo()),
 
                                   Visibility(
                                     visible: !_topExpanded,
