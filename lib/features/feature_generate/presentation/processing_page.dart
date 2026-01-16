@@ -35,10 +35,10 @@ class ProcessingPage extends StatelessWidget {
 
           FunFactsWidget(),
 
-          SizedBox.fromSize(
-            size: Size.fromHeight(AppConstant.preferredSizeHeight),
-          ),
-          BigButton(title: 'Cancel', borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,),
+          // SizedBox.fromSize(
+          //   size: Size.fromHeight(AppConstant.preferredSizeHeight),
+          // ),
+         // BigButton(title: 'Cancel', borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,),
         ],
       ),
     );

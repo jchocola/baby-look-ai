@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RecentPredictionsWidget extends StatelessWidget {
   const RecentPredictionsWidget({super.key});
@@ -17,7 +18,7 @@ class RecentPredictionsWidget extends StatelessWidget {
             Text('Recent Predictions', style: theme.textTheme.titleMedium),
             TextButton(
               onPressed: () {
-                
+                context.go('/gallery');
               },
               child: Text(
                 'View All',
