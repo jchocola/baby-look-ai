@@ -9,5 +9,11 @@ abstract class AuthRepository {
   Future<void> authViaGoogle();
   Future<UserCredential> authViaFacebook();
 
+  Future<User?> getCurrentUser();
+
   Future<void> authViaGithub();
+
+  Future<void> logOut();
+
+  Stream<User?> userStream();
 }

@@ -41,7 +41,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> AuthBloc(authRepository: getIt<AuthRepository>())),
+        BlocProvider(
+          create: (context) =>
+              AuthBloc(authRepository: getIt<AuthRepository>())
+                ..add(AuthBlocEvent_authCheck()),
+        ),
         BlocProvider(
           create: (context) =>
               PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>()),
