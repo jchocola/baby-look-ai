@@ -7,8 +7,6 @@ import 'package:baby_look/features/feature_auth/widget/login_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/register_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/video_gif.dart';
 import 'package:baby_look/shared/app_logo.dart';
-import 'package:baby_look/shared/custom_circle_avatar.dart';
-import 'package:baby_look/shared/custom_textfield.dart';
 import 'package:baby_look/shared/note_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

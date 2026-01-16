@@ -3,6 +3,7 @@ import 'package:baby_look/shared/custom_listile.dart';
 import 'package:baby_look/shared/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wiredash/wiredash.dart';
 
 class PreferrencesSettingWidget extends StatelessWidget {
   const PreferrencesSettingWidget({super.key});
@@ -27,7 +28,9 @@ class PreferrencesSettingWidget extends StatelessWidget {
             context.push('/user/faq');
           },
         ),
-        CustomListile(title: 'Send Feedback', icon: AppIcon.feedbackIcon),
+        CustomListile(title: 'Send Feedback', icon: AppIcon.feedbackIcon, onTap: () async{
+           Wiredash.of(context).show(inheritMaterialTheme: true);
+        },),
 
         // CustomListile(title: 'Invite Friends',),
       ],

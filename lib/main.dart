@@ -12,6 +12,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/web.dart';
 import 'package:toastification/toastification.dart';
+import 'package:wiredash/wiredash.dart';
 
 final logger = Logger();
 
@@ -36,13 +37,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=> PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>())),
          BlocProvider(create: (context)=> GeneratingBloc(bananaProService: getIt<BananaProService>())),
       ],
-      child: ToastificationWrapper(
-        
-        child: MaterialApp.router(
-          theme: appTheme,
-          debugShowCheckedModeBanner: false,
-          routerConfig: appRouter,
-          title: 'AI BabyLook',
+      child: Wiredash(
+        projectId: dotenv.get("WIREDASH_PROJECT_ID"),
+        secret: dotenv.get("WIREDASH_SECRET_KEY"),
+        child: ToastificationWrapper(
+          child: MaterialApp.router(
+            theme: appTheme,
+            debugShowCheckedModeBanner: false,
+            routerConfig: appRouter,
+            title: 'AI BabyLook',
+          ),
         ),
       ),
     );
