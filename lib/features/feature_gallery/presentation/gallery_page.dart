@@ -4,6 +4,7 @@ import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
@@ -46,7 +47,7 @@ class _GalleryPageState extends State<GalleryPage> {
         spacing: AppConstant.appPadding,
         children: [
           CupertinoSlidingSegmentedControl(
-           // backgroundColor: theme.colorScheme.secondary,
+            // backgroundColor: theme.colorScheme.secondary,
             groupValue: currentValue,
             children: {0: Text("All (12)"), 1: Text('Favourites (4)')},
             onValueChanged: _changePage,
@@ -79,7 +80,14 @@ class _GalleryAll extends StatelessWidget {
       ),
       itemCount: 13,
       itemBuilder: (context, index) {
-        return GeneratedCardWidget();
+        return Hero(
+          tag: AppConstant.heroTag,
+          child: GeneratedCardWidget(
+            onCardTap: () {
+              context.push('/gallery/prediction_detail');
+            },
+          ),
+        );
       },
     );
   }
@@ -99,7 +107,11 @@ class _GalleryFavourites extends StatelessWidget {
       ),
       itemCount: 3,
       itemBuilder: (context, index) {
-        return GeneratedCardWidget();
+        return Hero(
+           tag: AppConstant.heroTag,
+          child: GeneratedCardWidget(
+            onCardTap: () =>  context.push('/gallery/prediction_detail'),
+          ));
       },
     );
   }

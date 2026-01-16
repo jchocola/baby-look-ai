@@ -56,4 +56,10 @@ class AppIcon {
   ///
   static const favouriteRoundedIcon = LucideIcons.heart;
   static const verticalMoreIcon = Icons.more_vert_outlined;
+
+  static const calendarIcon = LucideIcons.calendar;
+  static const genderIcon = LucideIcons.baby;
+  static const dateIcon = LucideIcons.timer;
+
+  static const fullImageIcon = LucideIcons.fullscreen;
 }

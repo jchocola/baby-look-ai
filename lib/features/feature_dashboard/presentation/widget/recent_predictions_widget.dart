@@ -7,12 +7,27 @@ class RecentPredictionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text('Recent Predictions'), Text('View All')],
+          children: [
+            Text('Recent Predictions', style: theme.textTheme.titleMedium),
+            TextButton(
+              onPressed: () {
+                
+              },
+              child: Text(
+                'View All',
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
 
         _buildGenerated(context),
@@ -22,7 +37,6 @@ class RecentPredictionsWidget extends StatelessWidget {
 
   Widget _buildGenerated(BuildContext context) {
     return GridView.builder(
-    
       itemCount: 4,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
