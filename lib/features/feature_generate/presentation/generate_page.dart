@@ -41,7 +41,13 @@ class _GeneratePageState extends State<GeneratePage> {
               if (state is GeneratingBlocState_generated) {
                 showSuccessCustomToastification(title: 'Imaged Generated');
                 getIt<VibrattionRepository>().vibrate();
-                context.go('/gallery/prediction_detail');
+
+                context.go('/gallery/image_viewer_after_generating', extra: state.generatedImage);
+
+              }
+              if (state is GeneratingBlocState_error) {
+                showSuccessCustomToastification(title: 'Failed'); 
+
               }
             },
 

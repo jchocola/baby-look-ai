@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:baby_look/main.dart';
 import 'package:dio/dio.dart';
+
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
@@ -42,7 +43,7 @@ class BananaProService {
 
   /// Simple public interface for UI
   /// Generates baby prediction and returns file path
-  Future<Map<String, dynamic>> generateBabyPrediction({
+  Future<Uint8List?> generateBabyPrediction({
     required File ultrasoundImage,
     File? fatherImage,
     File? motherImage,
@@ -62,31 +63,28 @@ class BananaProService {
       );
 
       if (!result['success'] || result['image_bytes'] == null) {
-        return {'success': false, 'error': 'No image generated'};
+        return null;
       }
 
       final Uint8List imageBytes = result['image_bytes'] as Uint8List;
 
       // 2. Validate the generated image
-      await _validateImage(imageBytes);
+      final isValid = await _validateImage(imageBytes);
+
+      if (isValid) {
+        return imageBytes;
+      } else {
+        return null;
+      }
 
       // 3. Optimize image size (optional)
-      final optimizedBytes = await _optimizeImage(imageBytes);
+      // final optimizedBytes = await _optimizeImage(imageBytes);
 
       // 4. Save to file system
-      final savedFile = await _saveGeneratedImage(optimizedBytes);
-
-      return {
-        'success': true,
-        'image_bytes': optimizedBytes,
-        'image_file': savedFile,
-        'text': result['text'],
-        'image_path': savedFile?.path,
-        'image_size': optimizedBytes.length,
-      };
+      // final savedFile = await _saveGeneratedImage(optimizedBytes);
     } catch (e) {
       logger.e('Error in generateBabyPrediction: $e');
-      return {'success': false, 'error': e.toString()};
+      return null;
     }
   }
 
@@ -348,7 +346,7 @@ class BananaProService {
   }
 
   /// Validate that bytes represent a valid image
-  Future<void> _validateImage(Uint8List imageBytes) async {
+  Future<bool> _validateImage(Uint8List imageBytes) async {
     try {
       final image = img.decodeImage(imageBytes);
 
@@ -356,11 +354,14 @@ class BananaProService {
         logger.d('✅ Image is valid!');
         logger.d('  Dimensions: ${image.width}x${image.height}');
         logger.d('  Format: PNG (assumed)');
+        return true;
       } else {
         logger.e('❌ Failed to decode image');
+        return false;
       }
     } catch (e) {
       logger.e('Error validating image: $e');
+      return false;
     }
   }
 

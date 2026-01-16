@@ -62,4 +62,8 @@ class AppIcon {
   static const dateIcon = LucideIcons.timer;
 
   static const fullImageIcon = LucideIcons.fullscreen;
+
+  static const saveIcon = LucideIcons.download;
+  static const retryIcon = LucideIcons.repeat;
+
 }
