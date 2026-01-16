@@ -9,11 +9,12 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       spacing: AppConstant.appPadding,
       children: [
-        CustomTextfield(),
-        CustomTextfield(),
+        CustomTextfield(labelText: 'Enter Email', focusBorderColor: theme.colorScheme.tertiary, cursorColor: theme.colorScheme.tertiary,),
+        CustomTextfield(labelText: 'Password', isObscure: true, focusBorderColor: theme.colorScheme.tertiary, cursorColor: theme.colorScheme.tertiary, ),
 
         Align(
           alignment: AlignmentGeometry.centerRight,
@@ -21,6 +22,8 @@ class LoginWidget extends StatelessWidget {
         ),
 
         BigButton(
+          borderColor: theme.colorScheme.tertiary,
+          buttonColor: theme.colorScheme.tertiary.withOpacity(0.3),
           title: 'Log In',
           onTap: () {
             context.go('/home');

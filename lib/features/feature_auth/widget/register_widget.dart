@@ -8,16 +8,20 @@ class RegisterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       spacing: AppConstant.appPadding,
       children: [
-        CustomTextfield(),
-        CustomTextfield(),
-        CustomTextfield(),
+        CustomTextfield(labelText: 'Enter Email',),
+        CustomTextfield(labelText: 'Password',isObscure: true,),
+        CustomTextfield(labelText: 'Confirm Password',isObscure: true,),
 
         
 
-        BigButton(title: 'Register'),
+        BigButton(
+           borderColor: theme.colorScheme.primary,
+          buttonColor: theme.colorScheme.primary.withOpacity(0.3),
+          title: 'Register'),
       ],
     );
   }

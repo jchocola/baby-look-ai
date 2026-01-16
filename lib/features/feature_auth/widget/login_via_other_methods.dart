@@ -1,3 +1,4 @@
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -7,23 +8,43 @@ class LoginViaOtherMethods extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: AppConstant.appPadding,
       children: [
         Row(
           spacing: AppConstant.appPadding,
           children: [
             Flexible(child: Divider()),
             Text('Sign up with'),
-             Flexible(child: Divider()),
+            Flexible(child: Divider()),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TextButton(onPressed: () {}, child: Text('Google')),
-            TextButton(onPressed: () {}, child: Text('Facebook')),
-            TextButton(onPressed: () {}, child: Text('Anonymous')),
-            ],
+            GoogleAuthButton(
+              onPressed: () {},
+              style: AuthButtonStyle(
+                buttonType: AuthButtonType.icon,
+                iconType: AuthIconType.secondary,
+              ),
+            ),
+            FacebookAuthButton(
+              onPressed: () {},
+              style: AuthButtonStyle(
+                buttonType: AuthButtonType.icon,
+                iconType: AuthIconType.secondary,
+              ),
+            ),
+            GithubAuthButton(
+               onPressed: () {},
+              style: AuthButtonStyle(
+                buttonType: AuthButtonType.icon,
+                iconType: AuthIconType.secondary,
+              ),
+            )
+          ],
         ),
+        //  TextButton(onPressed: () {}, child: Text('Guest')),
       ],
     );
   }

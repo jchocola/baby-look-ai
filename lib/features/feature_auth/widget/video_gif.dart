@@ -7,12 +7,13 @@ class VideoGif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width * 0.7;
     return ClipRRect(
       borderRadius: BorderRadiusGeometry.circular(AppConstant.borderRadius),
       child: GifView.asset(
         'assets/video.gif',
-        height: 200,
-        width: 200,
+        height: size,
+        width: size,
         frameRate: 10,
       ),
     );

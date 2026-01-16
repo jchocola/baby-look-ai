@@ -53,6 +53,7 @@ dependencies:
   dotted_border: ^3.1.0
   flutter_animate: ^4.5.2
   gif_view: ^1.0.3
+  auth_buttons: ^3.0.3
 
 dev_dependencies:
   flutter_test:

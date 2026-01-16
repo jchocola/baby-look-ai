@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/features/feature_auth/widget/animated_greetings_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/login_via_other_methods.dart';
@@ -8,6 +9,7 @@ import 'package:baby_look/features/feature_auth/widget/video_gif.dart';
 import 'package:baby_look/shared/app_logo.dart';
 import 'package:baby_look/shared/custom_circle_avatar.dart';
 import 'package:baby_look/shared/custom_textfield.dart';
+import 'package:baby_look/shared/note_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -68,7 +70,7 @@ class _AuthPageState extends State<AuthPage>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+       // resizeToAvoidBottomInset: false,
         body: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
@@ -97,21 +99,25 @@ class _AuthPageState extends State<AuthPage>
                         opacity: topOpacity,
                         child: Padding(
                           padding: EdgeInsets.all(AppConstant.appPadding),
-                          child: Column(
-                            spacing: AppConstant.appPadding,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'BabyLook AI',
-                                style: theme.textTheme.headlineLarge,
-                              ),
-                              AnimatedGreetingsWidget(),
-                              Visibility(
-                                visible: _topExpanded,
-                                child:VideoGif(),
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              spacing: AppConstant.appPadding,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SafeArea(
+                                  child: Text(
+                                    'BabyLook AI',
+                                    style: theme.textTheme.headlineLarge,
+                                  ),
+                                ),
+                                AnimatedGreetingsWidget(),
+                                Visibility(
+                                  visible: _topExpanded,
+                                  child:VideoGif(),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -141,46 +147,54 @@ class _AuthPageState extends State<AuthPage>
                           child: Center(
                             child: Padding(
                               padding: EdgeInsets.all(AppConstant.appPadding),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                spacing: AppConstant.appPadding,
-                                children: [
-                                  Visibility(
-                                    visible: _topExpanded,
-                                    child: Text(
-                                      'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
-                                      style: theme.textTheme.titleLarge,
-                                      textAlign: TextAlign.center,
-                                    ).animate(onPlay: (controller) => controller.repeat(reverse: true),).shimmer(color: theme.colorScheme.onPrimary, duration: 1500.ms , delay: 500.ms).scaleXY(end: 1.1),
-                                  ),
-
-                                  Visibility(
-                                    visible: !_topExpanded,
-                                    child: AppLogo()),
-
-                                  Visibility(
-                                    visible: !_topExpanded,
-                                    child: Column(
-                                      children: [
-                                        CupertinoSlidingSegmentedControl(
-                                          groupValue: _slidingIndex,
-                                          children: {
-                                            0: Text('Login'),
-                                            1: Text('Register'),
-                                          },
-                                          onValueChanged: changeSlidingIndex,
-                                        ),
-                                        SizedBox.fromSize(
-                                          size: Size.fromHeight(size.height * 0.35),
-                                          child: _slidingIndex == 0
-                                              ? LoginWidget()
-                                              : RegisterWidget(),
-                                        ),
-                                        LoginViaOtherMethods(),
-                                      ],
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  spacing: AppConstant.appPadding,
+                                  children: [
+                                    Visibility(
+                                      visible: _topExpanded,
+                                      child:
+                                      NoteWidget(
+                                        color: theme.colorScheme.primary,
+                                        icon: AppIcon.infoIcon,
+                                        note:'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!' ,).animate(onPlay: (controller) => controller.repeat(reverse: true),).shimmer(color: theme.colorScheme.onPrimary, duration: 1500.ms , delay: 500.ms).scaleXY(end: 1.1),
+                                      //  Text(
+                                      //   'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
+                                      //   style: theme.textTheme.titleLarge,
+                                      //   textAlign: TextAlign.center,
+                                      // ).animate(onPlay: (controller) => controller.repeat(reverse: true),).shimmer(color: theme.colorScheme.onPrimary, duration: 1500.ms , delay: 500.ms).scaleXY(end: 1.1),
                                     ),
-                                  ),
-                                ],
+                                
+                                    Visibility(
+                                      visible: !_topExpanded,
+                                      child: AppLogo()),
+                                
+                                    Visibility(
+                                      visible: !_topExpanded,
+                                      child: Column(
+                                        spacing: AppConstant.appPadding,
+                                        children: [
+                                          CupertinoSlidingSegmentedControl(
+                                            groupValue: _slidingIndex,
+                                            children: {
+                                              0: Text('Login'),
+                                              1: Text('Register'),
+                                            },
+                                            onValueChanged: changeSlidingIndex,
+                                          ),
+                                          SizedBox.fromSize(
+                                            size: Size.fromHeight(size.height * 0.35),
+                                            child: _slidingIndex == 0
+                                                ? LoginWidget()
+                                                : RegisterWidget(),
+                                          ),
+                                          LoginViaOtherMethods(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
