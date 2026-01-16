@@ -18,7 +18,7 @@ class StatisticWidget extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        childAspectRatio: 2 / 1,
+        childAspectRatio: 1.8 / 1,
         crossAxisSpacing: AppConstant.appPadding,
       ),
       itemCount: _statistic.length,
