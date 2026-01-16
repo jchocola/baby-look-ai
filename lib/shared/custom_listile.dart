@@ -8,14 +8,17 @@ class CustomListile extends StatelessWidget {
     this.title = 'Default',
     this.icon = Icons.add,
     this.tralingWidget = const Icon(AppIcon.arrowForwardIcon),
+    this.onTap
   });
 
   final String title;
   final IconData icon;
   final Widget tralingWidget;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: CustomRoundedIcon(icon: icon),
       title: Text(title),
       trailing: Transform.scale(scale: 0.7, child: tralingWidget),

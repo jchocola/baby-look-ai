@@ -6,6 +6,7 @@ import 'package:baby_look/features/feature_gallery/presentation/gallery_page.dar
 import 'package:baby_look/features/feature_gallery/presentation/prediction_detail_page.dart';
 import 'package:baby_look/features/feature_generate/presentation/generate_page.dart';
 import 'package:baby_look/features/feature_generate/presentation/image_viewer_after_generating.dart';
+import 'package:baby_look/features/feature_user/presentation/pages/help_faq/help_faq_page.dart';
 import 'package:baby_look/features/feature_user/presentation/user_page.dart';
 import 'package:baby_look/main.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,12 @@ import 'package:go_router/go_router.dart';
 final GoRouter appRouter = GoRouter(
   initialLocation: '/auth',
   routes: [
-    GoRoute(path: '/auth', builder: (context, state) => AuthPage(),),
+    GoRoute(path: '/auth', builder: (context, state) => AuthPage(),
+    routes: [
+      GoRoute(path: '/faq', builder: (context,state)=> HelpFaqPage())
+    ]
+    ),
+    
 
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -63,7 +69,11 @@ final GoRouter appRouter = GoRouter(
         ///
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/user', builder: (context, state) => UserPage()),
+            GoRoute(path: '/user', builder: (context, state) => UserPage(),
+            routes: [
+              GoRoute(path: '/faq', builder: (context,state)=> HelpFaqPage())
+            ]
+            ),
           ],
         ),
       ],
