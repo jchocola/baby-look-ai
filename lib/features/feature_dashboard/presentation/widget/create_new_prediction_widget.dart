@@ -3,6 +3,7 @@ import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class CreateNewPredictionWidget extends StatelessWidget {
   const CreateNewPredictionWidget({super.key, this.onTap});
@@ -45,6 +46,8 @@ class CreateNewPredictionWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ).animate(
+      onPlay: (controller) => controller.repeat(),
+    ).shimmer(delay: 400.ms, duration: 1800.ms, color: theme.colorScheme.onPrimary).shake(hz: 0.5, curve: Curves.easeInOutCubic,).scaleXY(end: 1.1, duration: 600.ms).then(delay: 600.ms).scaleXY(end:  1/1.1);
   }
 }
