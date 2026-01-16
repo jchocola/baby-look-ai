@@ -5,10 +5,11 @@ class CopyrightWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context);
     return Column(
       children: [
-        Text('BabyLook v1.0.0'),
-        Text('© 2025 BabyLook. All rights reserved.')
+        Text('BabyLook v1.0.0' , style: theme.textTheme.bodySmall),
+        Text('© 2025 BabyLook. All rights reserved.' , style: theme.textTheme.bodySmall)
       ],
     );
   }

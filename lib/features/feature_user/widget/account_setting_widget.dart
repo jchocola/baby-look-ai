@@ -7,10 +7,11 @@ class AccountSettingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Account'),
+        Text('Account', style: theme.textTheme.titleMedium,),
         CustomListile(title: 'Edit Profile',icon: AppIcon.editProfileIcon,),
         CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon,),
         CustomListile(title: 'Prediction History',icon: AppIcon.predictionHistoryIcon,),

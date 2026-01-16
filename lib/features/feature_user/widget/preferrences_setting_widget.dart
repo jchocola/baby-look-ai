@@ -8,10 +8,11 @@ class PreferrencesSettingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Preferences'),
+        Text('Preferences',  style: theme.textTheme.titleMedium,),
         CustomListile(title: 'Notifications', icon: AppIcon.notificationIcon, tralingWidget: CustomSwitch(),),
         CustomListile(title: 'Language', icon: AppIcon.languageIcon,),
         CustomListile(title: 'Help and FAQ', icon: AppIcon.helpIcon,),

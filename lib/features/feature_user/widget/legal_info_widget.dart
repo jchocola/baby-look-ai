@@ -7,10 +7,11 @@ class LegalInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Legal'),
+        Text('Legal' ,style: theme.textTheme.titleMedium),
         CustomListile(title: 'Terms Of Service', icon: AppIcon.termServiceIcon,),
         CustomListile(title: 'Pravicy Policy', icon: AppIcon.pravicyPolicyIcon,),
         CustomListile(title: 'About AI BabyLook', icon: AppIcon.infoIcon,),

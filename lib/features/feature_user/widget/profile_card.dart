@@ -7,6 +7,7 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       spacing: AppConstant.appPadding,
       children: [
@@ -14,11 +15,12 @@ class ProfileCard extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text('Expecting Parent'), Text('#13424353')],
+            children: [
+              Text('Expecting Parent', style: theme.textTheme.titleMedium),
+              Text('#13424353', style: theme.textTheme.bodySmall),
+            ],
           ),
         ),
-
-   
       ],
     );
   }
