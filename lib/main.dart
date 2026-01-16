@@ -2,6 +2,8 @@ import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context)=> AuthBloc(authRepository: getIt<AuthRepository>())),
         BlocProvider(
           create: (context) =>
               PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>()),
