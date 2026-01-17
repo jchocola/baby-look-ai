@@ -5,6 +5,8 @@ import 'package:baby_look/features/feature_auth/domain/repository/auth_repositor
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/data/image_picker_repo_impl.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
+import 'package:baby_look/features/feature_user/data/firebase_user_db_repo_impl.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -19,9 +21,10 @@ Future<void> DI() async {
   );
 
   getIt.registerSingleton<VibrattionRepository>(VibrationRepositoryImpl());
-  
 
   getIt.registerSingleton<AuthRepository>(FirebaseAuthRepositoryImpl());
+
+  getIt.registerSingleton<UserDbRepository>(FirebaseUserDbRepoImpl());
 
   logger.i('DI initialized!');
 }
