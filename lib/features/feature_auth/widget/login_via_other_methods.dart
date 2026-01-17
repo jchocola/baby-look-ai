@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginViaOtherMethods extends StatelessWidget {
-  const LoginViaOtherMethods({super.key});
-
+  const LoginViaOtherMethods({super.key, this.phoneAuthColor = Colors.black54});
+  final Color phoneAuthColor;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,6 +44,10 @@ class LoginViaOtherMethods extends StatelessWidget {
             ),
 
             IconButton.filled(
+              style: ButtonStyle(
+                backgroundColor:  WidgetStatePropertyAll(phoneAuthColor),
+              ),
+          
               onPressed: () {
                 showModalBottomSheet(
                   context: context,

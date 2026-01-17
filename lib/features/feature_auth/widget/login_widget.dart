@@ -67,7 +67,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 },
               );
             },
-            child: Text('Forgot password?'),
+            child: Text('Forgot password?', style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.tertiary),),
           ),
         ),
 

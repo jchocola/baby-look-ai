@@ -152,7 +152,7 @@ class _AuthPageState extends State<AuthPage>
                           ),
                         ),
                         child: Container(
-                          color: theme.colorScheme.onTertiary,
+                          color: _slidingIndex == 0 ? theme.colorScheme.onTertiary : theme.colorScheme.onPrimary,
                           child: Opacity(
                             opacity: bottomOpacity,
                             child: Center(
@@ -168,7 +168,7 @@ class _AuthPageState extends State<AuthPage>
                                         child:
                                             NoteWidget(
                                                   color:
-                                                      theme.colorScheme.primary,
+                                                      _slidingIndex == 0  ? theme.colorScheme.tertiary :  theme.colorScheme.primary,
                                                   icon: AppIcon.infoIcon,
                                                   note:
                                                       'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
@@ -221,7 +221,9 @@ class _AuthPageState extends State<AuthPage>
                                                   ? LoginWidget()
                                                   : RegisterWidget(),
                                             ),
-                                            LoginViaOtherMethods(),
+                                            LoginViaOtherMethods(
+                                              phoneAuthColor: _slidingIndex== 0 ? theme.colorScheme.tertiary : theme.colorScheme.primary,
+                                            ),
                                           ],
                                         ),
                                       ),
