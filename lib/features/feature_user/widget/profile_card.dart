@@ -30,10 +30,8 @@ class ProfileCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state.user.displayName!.isEmpty ||
-                                  state.user.displayName == null
-                              ? 'Expecting Parent'
-                              : state.user.displayName!,
+                          state.user.displayName ?? 'Expecting Parent',
+                              
                           style: theme.textTheme.titleMedium,
                         ),
                         Text(

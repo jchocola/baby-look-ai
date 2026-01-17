@@ -152,7 +152,25 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     ///
     /// AUTH WITH LOGIN PASSWORD
     ///
-    on<AuthBlocEvent_loginViaLoginPassword>((event, emit) {});
+    on<AuthBlocEvent_loginViaLoginPassword>((event, emit) async {
+      try {
+        logger.d('Sign in  user ${event.login} : ${event.password}');
+        if (event.login == null ||
+            event.login!.isEmpty ||
+            event.password == null ||
+            event.password!.isEmpty) {
+          throw 'Empty case';
+        }
+
+        await authRepository.authViaLoginPassword(
+          login: event.login!,
+          password: event.password!,
+        );
+        add(AuthBlocEvent_authCheck());
+      } catch (e) {
+        logger.e(e);
+      }
+    });
 
     ///
     /// REGISTER

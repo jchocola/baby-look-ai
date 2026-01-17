@@ -60,9 +60,12 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Future<void> authViaLoginPassword({
     required String login,
     required String password,
-  }) {
-    // TODO: implement authViaLoginPassword
-    throw UnimplementedError();
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: login, password: password);
+    } catch (e) {
+      logger.e(e);
+    }
   }
 
   @override
