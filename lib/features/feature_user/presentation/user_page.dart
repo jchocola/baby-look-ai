@@ -47,7 +47,7 @@ class UserPage extends StatelessWidget {
                 onPressed: () {
                   context.read<AuthBloc>().add(AuthBlocEvent_logout());
                 },
-                child: Text('lOG OUT'),
+                child: Text('LOG OUT'),
               ),
             ),
           ],

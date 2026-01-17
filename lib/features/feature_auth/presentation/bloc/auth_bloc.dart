@@ -234,8 +234,11 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         if (event.email == null || event.email!.isEmpty) {
           throw 'Empty case';
         }
-        await authRepository.sendPasswordRecoveyEmail(email: event.email!);
-        emit(AuthBlocState_sendedPasswordRecoverEmail());
+        await authRepository.sendPasswordRecoveyEmail(email: event.email!).then(
+          (_) {
+            emit(AuthBlocState_sendedPasswordRecoverEmail());
+          },
+        );
       } catch (e) {
         logger.e(e);
       } finally {

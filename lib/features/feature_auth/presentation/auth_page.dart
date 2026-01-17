@@ -152,7 +152,9 @@ class _AuthPageState extends State<AuthPage>
                           ),
                         ),
                         child: Container(
-                          color: _slidingIndex == 0 ? theme.colorScheme.onTertiary : theme.colorScheme.onPrimary,
+                          color: _slidingIndex == 0
+                              ? theme.colorScheme.onTertiary
+                              : theme.colorScheme.onPrimary,
                           child: Opacity(
                             opacity: bottomOpacity,
                             child: Center(
@@ -167,8 +169,13 @@ class _AuthPageState extends State<AuthPage>
                                         visible: _topExpanded,
                                         child:
                                             NoteWidget(
-                                                  color:
-                                                      _slidingIndex == 0  ? theme.colorScheme.tertiary :  theme.colorScheme.primary,
+                                                  color: _slidingIndex == 0
+                                                      ? theme
+                                                            .colorScheme
+                                                            .tertiary
+                                                      : theme
+                                                            .colorScheme
+                                                            .primary,
                                                   icon: AppIcon.infoIcon,
                                                   note:
                                                       'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
@@ -196,7 +203,11 @@ class _AuthPageState extends State<AuthPage>
 
                                       Visibility(
                                         visible: !_topExpanded,
-                                        child: AppLogo(),
+                                        child: AppLogo().animate(
+                                          onPlay: (controller) {
+                                            controller.repeat(reverse: true);
+                                          },
+                                        ).fadeIn().shimmer(duration: 500.ms). shake(duration: 1.seconds, hz: 2).scaleXY(end: 1.1).then(delay: 500.ms).scaleXY(end: 1/1.1),
                                       ),
 
                                       Visibility(
@@ -222,7 +233,9 @@ class _AuthPageState extends State<AuthPage>
                                                   : RegisterWidget(),
                                             ),
                                             LoginViaOtherMethods(
-                                              phoneAuthColor: _slidingIndex== 0 ? theme.colorScheme.tertiary : theme.colorScheme.primary,
+                                              phoneAuthColor: _slidingIndex == 0
+                                                  ? theme.colorScheme.tertiary
+                                                  : theme.colorScheme.primary,
                                             ),
                                           ],
                                         ),

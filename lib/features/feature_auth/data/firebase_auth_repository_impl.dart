@@ -131,9 +131,11 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Future<void> sendPasswordRecoveyEmail({required String email}) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-       logger.d('Sended paswword recover  email to ${email}');
-    } catch (e) {
-      logger.e(e);
+      logger.d('Sended paswword recover  email to ${email}');
+    } on FirebaseAuthException catch (e) {
+      
+      logger.e(e.code);
+      throw 'SEND PASSWORD REVOVER ERROR';
     }
   }
 }
