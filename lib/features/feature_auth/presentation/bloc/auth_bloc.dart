@@ -39,9 +39,11 @@ class AuthBlocState_unauthenticated extends AuthBlocState {}
 class AuthBlocState_authenticated extends AuthBlocState {
   final User user;
 
+  bool get verifiedUser => user.emailVerified || user.phoneNumber != null;
+
   AuthBlocState_authenticated({required this.user});
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [user, verifiedUser];
 }
 
 ///
@@ -93,8 +95,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
 
-
-     ///
+    ///
     /// AUTH VIA GITHUB
     ///
     on<AuthBlocEvent_authViaGitHub>((event, emit) async {
@@ -109,7 +110,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
 
-      ///
+    ///
     /// AUTH VIA GOOGLE
     ///
     on<AuthBlocEvent_authViaGoogle>((event, emit) async {

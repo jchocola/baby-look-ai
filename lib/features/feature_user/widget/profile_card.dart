@@ -18,14 +18,38 @@ class ProfileCard extends StatelessWidget {
             children: [
               CustomCircleAvatar(url: state.user.photoURL ?? AppConstant.defaultAvatarUrl,),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      state.user.displayName ?? 'Expecting Parent',
-                      style: theme.textTheme.titleMedium,
+
+                    ///
+                    /// USER INFO 
+                    ///
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          state.user.displayName ?? 'Expecting Parent',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        Text('#'+ state.user.uid.substring(0,10), style: theme.textTheme.bodySmall),
+                      ],
                     ),
-                    Text(state.user.uid, style: theme.textTheme.bodySmall),
+
+
+                    ///
+                    /// COIN INFO
+                    ///
+                      Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '20',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        Text('coins', style: theme.textTheme.bodySmall),
+                      ],
+                    ),
                   ],
                 ),
               ),

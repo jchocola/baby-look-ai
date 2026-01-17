@@ -1,6 +1,9 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class AccountSettingWidget extends StatelessWidget {
   const AccountSettingWidget({super.key});
@@ -12,7 +15,7 @@ class AccountSettingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Account', style: theme.textTheme.titleMedium,),
-        CustomListile(title: 'Edit Profile',icon: AppIcon.editProfileIcon,),
+        BlocBuilder<AuthBloc,AuthBlocState>(builder:(context,state)=> CustomListile(title: state is AuthBlocState_authenticated && state.verifiedUser ?  'Profile Verified' : 'Profile Unverified',icon:state is AuthBlocState_authenticated && state.verifiedUser ?  LucideIcons.userRoundCheck : LucideIcons.userRoundX,)),
         CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon,),
         CustomListile(title: 'Prediction History',icon: AppIcon.predictionHistoryIcon,),
 
