@@ -8,6 +8,7 @@ import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +43,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AuthBloc(authRepository: getIt<AuthRepository>())
-                ..add(AuthBlocEvent_authCheck()),
+          create: (context) => AuthBloc(
+            authRepository: getIt<AuthRepository>(),
+            userDbRepository: getIt<UserDbRepository>(),
+          )..add(AuthBlocEvent_authCheck()),
         ),
         BlocProvider(
           create: (context) =>
