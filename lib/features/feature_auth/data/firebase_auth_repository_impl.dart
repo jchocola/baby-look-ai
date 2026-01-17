@@ -83,4 +83,30 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Stream<User?> userStream() {
     return _auth.authStateChanges();
   }
+
+  @override
+  Future<UserCredential?> registerNewUser({
+    required String login,
+    required String password,
+  }) async {
+    try {
+      return await _auth.createUserWithEmailAndPassword(
+        email: login,
+        password: password,
+      );
+    } catch (e) {
+      logger.e(e);
+    }
+  }
+
+  @override
+  Future<void> authWithUserCredential({
+    required UserCredential userCredential,
+  }) async {
+    try {
+     // await _auth.signInWithCredential(userCredential)
+    } catch (e) {
+      logger.e(e);
+    }
+  }
 }

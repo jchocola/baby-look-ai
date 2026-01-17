@@ -6,6 +6,13 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<UserCredential?> registerNewUser({
+    required String login,
+    required String password,
+  });
+
+  Future<void> authWithUserCredential({required UserCredential userCredential});
+
   Future<void> authViaGoogle();
   Future<UserCredential> authViaFacebook();
 

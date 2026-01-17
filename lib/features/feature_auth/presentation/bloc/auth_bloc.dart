@@ -1,10 +1,13 @@
 // ignore_for_file: camel_case_types
 
-import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
-import 'package:baby_look/main.dart';
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/main.dart';
 
 ///
 /// EVENT
@@ -23,6 +26,25 @@ class AuthBlocEvent_authViaGitHub extends AuthBlocEvent {}
 class AuthBlocEvent_authViaGoogle extends AuthBlocEvent {}
 
 class AuthBlocEvent_logout extends AuthBlocEvent {}
+
+class AuthBlocEvent_loginViaLoginPassword extends AuthBlocEvent {
+  final String? login;
+  final String? password;
+  AuthBlocEvent_loginViaLoginPassword({this.login, this.password});
+
+  @override
+  List<Object?> get props => [login, password];
+}
+
+class AuthBlocEvent_register extends AuthBlocEvent {
+  final String? login;
+  final String? password;
+  final String? confirmPassword;
+  AuthBlocEvent_register({this.login, this.password, this.confirmPassword});
+
+  @override
+  List<Object?> get props => [login, password, confirmPassword];
+}
 
 ///
 /// STATE
@@ -120,6 +142,42 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         await authRepository.authViaGoogle();
 
         add(AuthBlocEvent_authCheck());
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+    ///
+    /// AUTH WITH LOGIN PASSWORD
+    ///
+    on<AuthBlocEvent_loginViaLoginPassword>((event, emit) {});
+
+    ///
+    /// REGISTER
+    ///
+    on<AuthBlocEvent_register>((event, emit) async {
+      try {
+        logger.d('Register user');
+
+        if (event.confirmPassword == null ||
+            event.confirmPassword!.isEmpty ||
+            event.login == null ||
+            event.login!.isEmpty ||
+            event.password == null ||
+            event.password!.isEmpty) {
+          throw 'Empty case';
+        }
+        if (event.password != event.confirmPassword) {
+          throw 'passwords doesnt matched';
+        }
+
+        final userCredential = await authRepository.registerNewUser(
+          login: event.login!,
+          password: event.password!,
+        );
+
+       add(AuthBlocEvent_authCheck());
+        
       } catch (e) {
         logger.e(e);
       }
