@@ -1,11 +1,10 @@
 // ignore_for_file: camel_case_types
 
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/main.dart';
 
@@ -70,6 +69,20 @@ class AuthBlocState_unauthenticated extends AuthBlocState {}
 
 class AuthBlocState_sendedPasswordRecoverEmail extends AuthBlocState {}
 
+class AuthBlocState_error extends AuthBlocState {
+  final AppException exception;
+  AuthBlocState_error({required this.exception});
+  @override
+  List<Object?> get props => [exception];
+}
+
+class AuthBlocState_success extends AuthBlocState {
+  final AppException exception;
+  AuthBlocState_success({required this.exception});
+  @override
+  List<Object?> get props => [exception];
+}
+
 class AuthBlocState_authenticated extends AuthBlocState {
   final User user;
 
@@ -108,10 +121,11 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.d('Auth via facebook');
 
         await authRepository.authViaFacebook();
-
-        add(AuthBlocEvent_authCheck());
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -123,9 +137,12 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.d('Log out');
         await authRepository.logOut();
 
-        add(AuthBlocEvent_authCheck());
+       
       } catch (e) {
         logger.e(e);
+         emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+         add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -135,12 +152,12 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     on<AuthBlocEvent_authViaGitHub>((event, emit) async {
       try {
         logger.d('Auth via github');
-
         await authRepository.authViaGithub();
-
-        add(AuthBlocEvent_authCheck());
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -152,10 +169,11 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.d('Auth via google');
 
         await authRepository.authViaGoogle();
-
-        add(AuthBlocEvent_authCheck());
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -169,16 +187,18 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
             event.login!.isEmpty ||
             event.password == null ||
             event.password!.isEmpty) {
-          throw 'Empty case';
+          throw AppException.empty_case;
         }
 
         await authRepository.authViaLoginPassword(
           login: event.login!,
           password: event.password!,
         );
-        add(AuthBlocEvent_authCheck());
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -195,20 +215,21 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
             event.login!.isEmpty ||
             event.password == null ||
             event.password!.isEmpty) {
-          throw 'Empty case';
+          throw AppException.empty_case;
         }
         if (event.password != event.confirmPassword) {
-          throw 'passwords doesnt matched';
+          throw AppException.password_does_not_matched;
         }
 
         await authRepository.registerNewUser(
           login: event.login!,
           password: event.password!,
         );
-
-        add(AuthBlocEvent_authCheck());
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -223,6 +244,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         }
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
       }
     });
 
@@ -232,7 +254,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     on<AuthBlocEvent_sendPassRecoverToEmail>((event, emit) async {
       try {
         if (event.email == null || event.email!.isEmpty) {
-          throw 'Empty case';
+          throw AppException.empty_case;
         }
         await authRepository.sendPasswordRecoveyEmail(email: event.email!).then(
           (_) {
@@ -241,6 +263,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         );
       } catch (e) {
         logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
       } finally {
         add(AuthBlocEvent_authCheck());
       }

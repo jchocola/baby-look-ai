@@ -5,6 +5,7 @@ void showErrorCustomToastification({required String title}) {
   toastification.show(
     title: Text(title),
     style: ToastificationStyle.flatColored,
+    type: ToastificationType.error,
     autoCloseDuration: Duration(seconds: 3),
   );
 }

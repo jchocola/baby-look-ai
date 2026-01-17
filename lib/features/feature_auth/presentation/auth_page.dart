@@ -1,6 +1,8 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
+import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_auth/widget/animated_greetings_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/login_via_other_methods.dart';
@@ -72,6 +74,12 @@ class _AuthPageState extends State<AuthPage>
       onTap: () => FocusScope.of(context).unfocus(),
       child: BlocListener<AuthBloc, AuthBlocState>(
         listener: (context, state) {
+          if (state is AuthBlocState_error) {
+            showErrorCustomToastification(
+              title: AppExceptionConverter(context, excetion: state.exception ),
+            );
+          }
+
           if (state is AuthBlocState_authenticated) {
             context.go('/home');
           }
@@ -203,11 +211,20 @@ class _AuthPageState extends State<AuthPage>
 
                                       Visibility(
                                         visible: !_topExpanded,
-                                        child: AppLogo().animate(
-                                          onPlay: (controller) {
-                                            controller.repeat(reverse: true);
-                                          },
-                                        ).fadeIn().shimmer(duration: 500.ms). shake(duration: 1.seconds, hz: 2).scaleXY(end: 1.1).then(delay: 500.ms).scaleXY(end: 1/1.1),
+                                        child: AppLogo()
+                                            .animate(
+                                              onPlay: (controller) {
+                                                controller.repeat(
+                                                  reverse: true,
+                                                );
+                                              },
+                                            )
+                                            .fadeIn()
+                                            .shimmer(duration: 500.ms)
+                                            .shake(duration: 1.seconds, hz: 2)
+                                            .scaleXY(end: 1.1)
+                                            .then(delay: 500.ms)
+                                            .scaleXY(end: 1 / 1.1),
                                       ),
 
                                       Visibility(
