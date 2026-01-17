@@ -40,7 +40,9 @@ class LoginViaOtherMethods extends StatelessWidget {
               ),
             ),
             GithubAuthButton(
-              onPressed: () {},
+              onPressed: () {
+                 context.read<AuthBloc>().add(AuthBlocEvent_authViaGitHub());
+              },
               style: AuthButtonStyle(
                 buttonType: AuthButtonType.icon,
                 iconType: AuthIconType.secondary,

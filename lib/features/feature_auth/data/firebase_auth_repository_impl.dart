@@ -23,9 +23,14 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> authViaGithub() {
-    // TODO: implement authViaGithub
-    throw UnimplementedError();
+  Future<void> authViaGithub() async {
+    try {
+      // Create a new provider
+      GithubAuthProvider githubProvider = GithubAuthProvider();
+      await _auth.signInWithProvider(githubProvider);
+    } catch (e) {
+      logger.e(e);
+    }
   }
 
   @override

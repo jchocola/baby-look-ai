@@ -12,7 +12,20 @@
           "package_name": "vn.ai.babylook"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "850559747297-om8nid5uo03g482d5v3on0gc6e7ihidt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.ai.babylook",
+            "certificate_hash": "b0f66ca659bc51f41b244f17ef621970e029ce4d"
+          }
+        },
+        {
+          "client_id": "850559747297-id8o6b471mfgo97lvm1hcbmln2gck5nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAosUdFnxmBOndPU5T4XckNT57kP3EoG_4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850559747297-id8o6b471mfgo97lvm1hcbmln2gck5nm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
