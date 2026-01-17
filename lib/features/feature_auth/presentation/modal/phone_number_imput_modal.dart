@@ -1,4 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
+import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -50,17 +52,17 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
     });
   }
 
-  void _showErrorSnackBar(String error) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(error), backgroundColor: Colors.red));
-  }
+  // void _showErrorSnackBar(String error) {
+  //   ScaffoldMessenger.of(
+  //     context,
+  //   ).showSnackBar(SnackBar(content: Text(error), backgroundColor: Colors.red));
+  // }
 
-  void _showSuccessSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.green),
-    );
-  }
+  // void _showSuccessSnackBar(String message) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text(message), backgroundColor: Colors.green),
+  //   );
+  // }
 
   // ✅ Шаг 1: Отправка номера телефона
   Future<void> _sendPhoneNumber(String phoneNumber) async {
@@ -101,7 +103,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
               errorMessage = 'Ошибка верификации: ${error.message}';
           }
 
-          _showErrorSnackBar(errorMessage);
+         showErrorCustomToastification(title:  errorMessage);
           setState(() => _isLoading = false);
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -113,7 +115,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
           setState(() => _isLoading = false);
           changeToStep2();
 
-          _showSuccessSnackBar('SMS код отправлен на $formattedPhone');
+          showSuccessCustomToastification(title:  'SMS код отправлен на $formattedPhone');
         },
         timeout: const Duration(seconds: 60),
         codeAutoRetrievalTimeout: (String verificationId) {
@@ -124,7 +126,8 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
       );
     } catch (e) {
       logger.e('Ошибка при отправке номера: $e');
-      _showErrorSnackBar('Неизвестная ошибка: $e');
+
+      showErrorCustomToastification( title: 'Неизвестная ошибка: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -133,7 +136,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   Future<void> _verifySmsCode(String smsCode) async {
     try {
       if (_verificationId == null) {
-        _showErrorSnackBar('Не найден verificationId. Попробуйте заново');
+        showErrorCustomToastification(title:  'Не найден verificationId. Попробуйте заново');
         return;
       }
 
@@ -165,7 +168,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
         errorMessage = 'Неизвестная ошибка: $e';
       }
 
-      _showErrorSnackBar(errorMessage);
+      showErrorCustomToastification(title:  errorMessage);
       setState(() => _isLoading = false);
     }
   }
@@ -191,7 +194,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       logger.e('Ошибка входа: ${e.code} - ${e.message}');
-      _showErrorSnackBar('Ошибка входа: ${e.message}');
+      showErrorCustomToastification(title:  'Ошибка входа: ${e.message}');
       setState(() => _isLoading = false);
     }
   }
@@ -220,7 +223,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   // ✅ Повторная отправка SMS кода
   Future<void> _resendSmsCode() async {
     if (_phoneNumber == null) {
-      _showErrorSnackBar('Номер телефона не найден');
+      showErrorCustomToastification(title:  'Номер телефона не найден');
       return;
     }
 
@@ -312,7 +315,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
               if (phoneNumber != null && phoneNumber!.isNotEmpty) {
                 _sendPhoneNumber(phoneNumber!);
               } else {
-                _showErrorSnackBar('Введите номер телефона');
+                showErrorCustomToastification(title:  'Введите номер телефона');
               }
             },
             style: ElevatedButton.styleFrom(
@@ -411,7 +414,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
               if (smsCode.length == 6) {
                 _verifySmsCode(smsCode);
               } else {
-                _showErrorSnackBar('Введите 6-значный код');
+                showErrorCustomToastification(title:  'Введите 6-значный код');
               }
             },
             style: ElevatedButton.styleFrom(

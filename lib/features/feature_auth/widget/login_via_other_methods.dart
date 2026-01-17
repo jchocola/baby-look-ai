@@ -1,5 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_auth/presentation/modal/phone_number_imput_modal.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,9 @@ class LoginViaOtherMethods extends StatelessWidget {
 
             IconButton.filled(
               style: ButtonStyle(
-                backgroundColor:  WidgetStatePropertyAll(phoneAuthColor),
+                backgroundColor: WidgetStatePropertyAll(phoneAuthColor),
               ),
-          
+
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -55,11 +56,15 @@ class LoginViaOtherMethods extends StatelessWidget {
                   isScrollControlled: true,
                   builder: (context) {
                     return SizedBox.fromSize(
-                      size: Size.fromHeight(MediaQuery.of(context).size.height * 0.8),
+                      size: Size.fromHeight(
+                        MediaQuery.of(context).size.height * 0.8,
+                      ),
                       child: PhoneNumberImputModal(),
                     );
                   },
-                );
+                ).then((_) {
+                  context.read<AuthBloc>().add(AuthBlocEvent_authCheck());
+                });
               },
               icon: Icon(Icons.phone),
             ),
