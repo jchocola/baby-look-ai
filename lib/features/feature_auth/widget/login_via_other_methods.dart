@@ -1,6 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_auth/presentation/modal/phone_number_imput_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,9 +42,37 @@ class LoginViaOtherMethods extends StatelessWidget {
                 iconType: AuthIconType.secondary,
               ),
             ),
+
+            IconButton.filled(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  showDragHandle: true,
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return SizedBox.fromSize(
+                      size: Size.fromHeight(MediaQuery.of(context).size.height * 0.8),
+                      child: PhoneNumberImputModal(),
+                    );
+                  },
+                );
+              },
+              icon: Icon(Icons.phone),
+            ),
+
             GithubAuthButton(
               onPressed: () {
-                 context.read<AuthBloc>().add(AuthBlocEvent_authViaGitHub());
+                context.read<AuthBloc>().add(AuthBlocEvent_authViaGitHub());
+              },
+              style: AuthButtonStyle(
+                buttonType: AuthButtonType.icon,
+                iconType: AuthIconType.secondary,
+              ),
+            ),
+
+            TwitterAuthButton(
+              onPressed: () {
+                //context.read<AuthBloc>().add(AuthBlocEvent_authViaGitHub());
               },
               style: AuthButtonStyle(
                 buttonType: AuthButtonType.icon,

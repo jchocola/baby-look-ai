@@ -41,7 +41,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
         .authenticate();
 
     if (googleUser?.authentication == null) {
-        throw 'Failed to auth via google';
+      throw 'Failed to auth via google';
     }
 
     // Obtain the auth details from the request
