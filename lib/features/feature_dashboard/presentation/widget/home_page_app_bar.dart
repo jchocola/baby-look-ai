@@ -4,6 +4,7 @@ import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart
 import 'package:baby_look/shared/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomePageAppBar({super.key});
@@ -24,6 +25,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(AppIcon.notificationIcon)),
           CustomCircleAvatar(
+            onTap: () => context.go('/user'),
             url: state is AuthBlocState_authenticated ? state.user.photoURL ?? AppConstant.defaultAvatarUrl : AppConstant.defaultAvatarUrl,
           ),
         ],
