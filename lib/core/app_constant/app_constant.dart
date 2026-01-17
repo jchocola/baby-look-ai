@@ -4,4 +4,7 @@ class AppConstant {
   static double borderRadius = 12;
 
   static String heroTag = 'BABY_VIEW';
+
+  static String defaultAvatarUrl =
+      "https://firebasestorage.googleapis.com/v0/b/baby-look-ai.firebasestorage.app/o/default_photo%2Fdefault_avatar.png?alt=media&token=44b03ab7-344a-4762-8292-e76fb790965b";
 }

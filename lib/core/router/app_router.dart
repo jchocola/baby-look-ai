@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:baby_look/features/feature_auth/presentation/auth_gate.dart';
 import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_dashboard/presentation/home_page/home_page.dart';
 import 'package:baby_look/features/feature_gallery/presentation/gallery_page.dart';
@@ -12,8 +13,10 @@ import 'package:baby_look/main.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/auth',
+  initialLocation: '/auth_gate',
   routes: [
+    GoRoute(path: '/auth_gate', builder: (context, state) => AuthGate(),),
+
     GoRoute(path: '/auth', builder: (context, state) => AuthPage(),
     routes: [
       GoRoute(path: '/faq', builder: (context,state)=> HelpFaqPage())

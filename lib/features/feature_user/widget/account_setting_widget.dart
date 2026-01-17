@@ -1,6 +1,11 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/main.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class AccountSettingWidget extends StatelessWidget {
   const AccountSettingWidget({super.key});
@@ -11,11 +16,31 @@ class AccountSettingWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Account', style: theme.textTheme.titleMedium,),
-        CustomListile(title: 'Edit Profile',icon: AppIcon.editProfileIcon,),
-        CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon,),
-        CustomListile(title: 'Prediction History',icon: AppIcon.predictionHistoryIcon,),
-
+        Text('Account', style: theme.textTheme.titleMedium),
+        BlocBuilder<AuthBloc, AuthBlocState>(
+          builder: (context, state) => CustomListile(
+            onTap: state is AuthBlocState_authenticated && state.verifiedUser
+                ? () {
+                    logger.i('This account verified or login via telephone');
+                  }
+                : () {
+                    context.read<AuthBloc>().add(
+                      AuthBlocEvent_sendVerifyEmail(),
+                    );
+                  },
+            title: state is AuthBlocState_authenticated && state.verifiedUser
+                ? 'Profile Verified'
+                : 'Profile Unverified',
+            icon: state is AuthBlocState_authenticated && state.verifiedUser
+                ? LucideIcons.userRoundCheck
+                : LucideIcons.userRoundX,
+          ),
+        ),
+        CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon),
+        CustomListile(
+          title: 'Prediction History',
+          icon: AppIcon.predictionHistoryIcon,
+        ),
       ],
     );
   }

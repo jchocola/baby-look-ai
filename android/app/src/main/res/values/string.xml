@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resource> 
+
+<string name="app_name">BabyLook AI</string>
+<string name="facebook_app_id">1606640884111948</string>
+<string name="fb_login_protocol_scheme">fb1606640884111948</string>
+<string name="facebook_client_token">031421345ce6de3a72815ae14ec69cfd</string>
+
+
+
+</resource>

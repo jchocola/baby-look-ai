@@ -2,10 +2,14 @@ import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
+import 'package:baby_look/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,9 +22,12 @@ final logger = Logger();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // .env
   await dotenv.load(fileName: ".env");
+
+  // Firebase Init
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // DI
   await DI();
@@ -34,8 +41,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>())),
-         BlocProvider(create: (context)=> GeneratingBloc(bananaProService: getIt<BananaProService>())),
+        BlocProvider(
+          create: (context) =>
+              AuthBloc(authRepository: getIt<AuthRepository>())
+                ..add(AuthBlocEvent_authCheck()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              GeneratingBloc(bananaProService: getIt<BananaProService>()),
+        ),
       ],
       child: Wiredash(
         projectId: dotenv.get("WIREDASH_PROJECT_ID"),

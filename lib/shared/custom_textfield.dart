@@ -8,12 +8,14 @@ class CustomTextfield extends StatefulWidget {
     this.labelText = 'Default',
     this.isObscure = false,
     this.focusBorderColor,
-    this.cursorColor
+    this.cursorColor,
+    this.controller
   });
   final String labelText;
   final bool isObscure;
   final Color? focusBorderColor;
   final Color? cursorColor;
+  final TextEditingController? controller;
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
 }
@@ -24,9 +26,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     final theme = Theme.of(context);
     return TextField(
       obscureText: widget.isObscure,
-
-    cursorColor: widget.cursorColor ?? theme.colorScheme.primary,
-
+  controller: widget.controller,
+      cursorColor: widget.cursorColor ?? theme.colorScheme.primary,
 
       decoration: InputDecoration(
         // suffix: widget.isObscure ? Icon(AppIcon.eyeIcon) : null,
@@ -35,18 +36,16 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           color: theme.colorScheme.secondary,
         ),
 
-        
-
         enabledBorder: OutlineInputBorder(
-           borderRadius: BorderRadius.circular(AppConstant.borderRadius),
-            borderSide: BorderSide(color: theme.colorScheme.secondary,)
+          borderRadius: BorderRadius.circular(AppConstant.borderRadius),
+          borderSide: BorderSide(color: theme.colorScheme.secondary),
         ),
-
-      
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstant.borderRadius),
-          borderSide: BorderSide(color: widget.focusBorderColor ??  theme.colorScheme.primary),
+          borderSide: BorderSide(
+            color: widget.focusBorderColor ?? theme.colorScheme.primary,
+          ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstant.borderRadius),

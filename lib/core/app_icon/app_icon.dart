@@ -66,4 +66,5 @@ class AppIcon {
   static const saveIcon = LucideIcons.download;
   static const retryIcon = LucideIcons.repeat;
 
+  static const emailIcon = LucideIcons.mail;
 }
