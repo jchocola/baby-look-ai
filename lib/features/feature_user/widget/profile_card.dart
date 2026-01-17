@@ -1,5 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('20', style: theme.textTheme.titleMedium),
+                        BlocBuilder<UserBloc,UserBlocState>(builder:(context,state)=> Text( state is UserBlocState_loaded ? state.userEntity.coins.toString() : '0', style: theme.textTheme.titleMedium)),
                         Text('coins', style: theme.textTheme.bodySmall),
                       ],
                     ),
