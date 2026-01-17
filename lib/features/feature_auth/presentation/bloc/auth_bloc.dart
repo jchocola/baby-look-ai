@@ -29,6 +29,14 @@ class AuthBlocEvent_logout extends AuthBlocEvent {}
 
 class AuthBlocEvent_sendVerifyEmail extends AuthBlocEvent {}
 
+class AuthBlocEvent_sendPassRecoverToEmail extends AuthBlocEvent {
+  final String? email;
+  AuthBlocEvent_sendPassRecoverToEmail({required this.email});
+
+  @override
+  List<Object?> get props => [email];
+}
+
 class AuthBlocEvent_loginViaLoginPassword extends AuthBlocEvent {
   final String? login;
   final String? password;
@@ -59,6 +67,8 @@ abstract class AuthBlocState extends Equatable {
 class AuthBlocState_init extends AuthBlocState {}
 
 class AuthBlocState_unauthenticated extends AuthBlocState {}
+
+class AuthBlocState_sendedPasswordRecoverEmail extends AuthBlocState {}
 
 class AuthBlocState_authenticated extends AuthBlocState {
   final User user;
@@ -213,6 +223,23 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         }
       } catch (e) {
         logger.e(e);
+      }
+    });
+
+    ///
+    /// SEND RECOVER PASSWORD EMAIL TO
+    ///
+    on<AuthBlocEvent_sendPassRecoverToEmail>((event, emit) async {
+      try {
+        if (event.email == null || event.email!.isEmpty) {
+          throw 'Empty case';
+        }
+        await authRepository.sendPasswordRecoveyEmail(email: event.email!);
+        emit(AuthBlocState_sendedPasswordRecoverEmail());
+      } catch (e) {
+        logger.e(e);
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
   }
