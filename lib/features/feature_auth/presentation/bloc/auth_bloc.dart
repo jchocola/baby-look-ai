@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -107,8 +108,12 @@ class AuthBlocState_authenticated extends AuthBlocState {
 class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   final AuthRepository authRepository;
   final UserDbRepository userDbRepository;
-  AuthBloc({required this.authRepository, required this.userDbRepository})
-    : super(AuthBlocState_init()) {
+  final UserBloc userBloc;
+  AuthBloc({
+    required this.authRepository,
+    required this.userDbRepository,
+    required this.userBloc,
+  }) : super(AuthBlocState_init()) {
     ///
     /// AUTH CHECK
     ///
@@ -118,6 +123,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
 
       if (user != null) {
         emit(AuthBlocState_authenticated(user: user));
+        userBloc.add(UserBlocEvent_setUser(user: user));
       } else {
         emit(AuthBlocState_unauthenticated());
       }
@@ -130,14 +136,13 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         logger.d('Auth via facebook');
 
-       final userCredential =  await authRepository.authViaFacebook();
+        final userCredential = await authRepository.authViaFacebook();
 
         add(
           AuthBlocEvent_checkSetupUserDataFirstTime(
             userCredential: userCredential,
           ),
         );
-       
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));

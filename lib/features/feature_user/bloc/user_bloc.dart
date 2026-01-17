@@ -57,7 +57,11 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
     ///
     on<UserBlocEvent_setUser>((event, emit) async {
       try {
-       
+        final userEntity = await userDbRepository.getUserEntityFromUid(
+          uid: event.user.uid,
+        );
+        logger.d("$userEntity");
+        emit(UserBlocState_loaded(userEntity: userEntity));
       } catch (e) {
         logger.e(e);
       }
