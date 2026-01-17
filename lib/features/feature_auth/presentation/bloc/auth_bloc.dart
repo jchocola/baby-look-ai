@@ -27,6 +27,8 @@ class AuthBlocEvent_authViaGoogle extends AuthBlocEvent {}
 
 class AuthBlocEvent_logout extends AuthBlocEvent {}
 
+class AuthBlocEvent_sendVerifyEmail extends AuthBlocEvent {}
+
 class AuthBlocEvent_loginViaLoginPassword extends AuthBlocEvent {
   final String? login;
   final String? password;
@@ -171,13 +173,26 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           throw 'passwords doesnt matched';
         }
 
-        final userCredential = await authRepository.registerNewUser(
+        await authRepository.registerNewUser(
           login: event.login!,
           password: event.password!,
         );
 
-       add(AuthBlocEvent_authCheck());
-        
+        add(AuthBlocEvent_authCheck());
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+    ///
+    /// SEND VERIFY EMAIL
+    ///
+    on<AuthBlocEvent_sendVerifyEmail>((event, emit) async {
+      try {
+        final currentState = state;
+        if (currentState is AuthBlocState_authenticated) {
+          await authRepository.sendVerifyEmail(user: currentState.user);
+        }
       } catch (e) {
         logger.e(e);
       }

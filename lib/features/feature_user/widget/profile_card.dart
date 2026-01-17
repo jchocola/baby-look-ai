@@ -16,37 +16,40 @@ class ProfileCard extends StatelessWidget {
           return Row(
             spacing: AppConstant.appPadding,
             children: [
-              CustomCircleAvatar(url: state.user.photoURL ?? AppConstant.defaultAvatarUrl,),
+              CustomCircleAvatar(
+                url: state.user.photoURL ?? AppConstant.defaultAvatarUrl,
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     ///
-                    /// USER INFO 
+                    /// USER INFO
                     ///
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state.user.displayName ?? 'Expecting Parent',
+                          state.user.displayName!.isEmpty ||
+                                  state.user.displayName == null
+                              ? 'Expecting Parent'
+                              : state.user.displayName!,
                           style: theme.textTheme.titleMedium,
                         ),
-                        Text('#'+ state.user.uid.substring(0,10), style: theme.textTheme.bodySmall),
+                        Text(
+                          '#' + state.user.uid.substring(0, 10),
+                          style: theme.textTheme.bodySmall,
+                        ),
                       ],
                     ),
-
 
                     ///
                     /// COIN INFO
                     ///
-                      Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          '20',
-                          style: theme.textTheme.titleMedium,
-                        ),
+                        Text('20', style: theme.textTheme.titleMedium),
                         Text('coins', style: theme.textTheme.bodySmall),
                       ],
                     ),

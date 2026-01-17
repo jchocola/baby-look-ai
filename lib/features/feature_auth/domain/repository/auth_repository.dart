@@ -11,6 +11,8 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<void> sendVerifyEmail({required User user});
+
   Future<void> authWithUserCredential({required UserCredential userCredential});
 
   Future<void> authViaGoogle();

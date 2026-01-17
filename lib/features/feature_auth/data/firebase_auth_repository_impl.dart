@@ -104,7 +104,21 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
     required UserCredential userCredential,
   }) async {
     try {
-     // await _auth.signInWithCredential(userCredential)
+      // await _auth.signInWithCredential(userCredential)
+    } catch (e) {
+      logger.e(e);
+    }
+  }
+
+  @override
+  Future<void> sendVerifyEmail({required User user}) async {
+    try {
+      if (!user.emailVerified && user.phoneNumber == null) {
+        await user.sendEmailVerification();
+        logger.d('Sended email verify to ${user.email}');
+      } else {
+        logger.d('This user verified or signed via telephone');
+      }
     } catch (e) {
       logger.e(e);
     }
