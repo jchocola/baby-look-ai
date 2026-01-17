@@ -24,7 +24,9 @@ class LoginViaOtherMethods extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GoogleAuthButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<AuthBloc>().add(AuthBlocEvent_authViaGoogle());
+              },
               style: AuthButtonStyle(
                 buttonType: AuthButtonType.icon,
                 iconType: AuthIconType.secondary,

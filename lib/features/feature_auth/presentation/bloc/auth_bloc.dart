@@ -20,6 +20,8 @@ class AuthBlocEvent_authViaFacebook extends AuthBlocEvent {}
 
 class AuthBlocEvent_authViaGitHub extends AuthBlocEvent {}
 
+class AuthBlocEvent_authViaGoogle extends AuthBlocEvent {}
+
 class AuthBlocEvent_logout extends AuthBlocEvent {}
 
 ///
@@ -100,6 +102,21 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.d('Auth via github');
 
         await authRepository.authViaGithub();
+
+        add(AuthBlocEvent_authCheck());
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+      ///
+    /// AUTH VIA GOOGLE
+    ///
+    on<AuthBlocEvent_authViaGoogle>((event, emit) async {
+      try {
+        logger.d('Auth via google');
+
+        await authRepository.authViaGoogle();
 
         add(AuthBlocEvent_authCheck());
       } catch (e) {
