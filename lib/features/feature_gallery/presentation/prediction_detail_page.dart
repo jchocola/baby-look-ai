@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/features/feature_gallery/widget/generated_image_card.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/shared/big_button.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/tips_card.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class PredictionDetailPage extends StatelessWidget {
   const PredictionDetailPage({super.key});
-
+  //final PredictionEntity prediction;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class PredictionDetailPage extends StatelessWidget {
           spacing: AppConstant.appPadding,
           children: [
             Hero(tag: AppConstant.heroTag, child: GeneratedImageCard()),
-        
+
             Row(
               children: [
                 Expanded(
@@ -74,7 +75,7 @@ class PredictionDetailPage extends StatelessWidget {
               buttonColor: theme.colorScheme.tertiaryFixed,
               icon: Icon(AppIcon.shareIcon),
             ),
-              BigButton(
+            BigButton(
               title: "Save to Gallery",
               borderColor: theme.colorScheme.tertiary,
               buttonColor: theme.colorScheme.tertiaryFixed,

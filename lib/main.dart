@@ -5,7 +5,7 @@ import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
-import 'package:baby_look/features/feature_generate/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:baby_look/features/feature_generate/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';

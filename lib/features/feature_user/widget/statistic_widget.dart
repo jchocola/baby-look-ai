@@ -1,7 +1,7 @@
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/core/utils/get_diffent_day.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
-import 'package:baby_look/features/feature_generate/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
