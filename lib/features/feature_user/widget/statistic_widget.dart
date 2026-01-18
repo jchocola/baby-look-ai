@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/core/utils/get_diffent_day.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_generate/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,12 +21,12 @@ class StatisticWidget extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: BlocBuilder<UserBloc, UserBlocState>(
+          child: BlocBuilder<PredictionsBloc, PredictionsBlocState>(
             builder: (context, state) => _statisticCard(
               color: AppColor.pinkColor,
               title: 'Predictions',
-              value: state is UserBlocState_loaded
-                  ? state.userEntity.predictions.length.toString()
+              value: state is PredictionsBlocState_loaded
+                  ? state.predictionList.length.toString()
                   : '0',
             ),
           ),

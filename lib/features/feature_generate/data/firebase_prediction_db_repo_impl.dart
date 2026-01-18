@@ -25,9 +25,19 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
   }
 
   @override
-  Future<List<PredictionEntity>> getPredictionListByUid({required String uid}) {
-    // TODO: implement getPredictionListByUid
-    throw UnimplementedError();
+  Future<List<PredictionEntity>> getPredictionListByUid({
+    required String uid,
+  }) async {
+    try {
+      final snapshot = await _db.where("ownerId", isEqualTo: uid).get();
+
+      final docs = snapshot.docs;
+
+      return docs.map((e) => PredictionModel.fromMap(e.data()).toEntity()).toList();
+    } catch (e) {
+      logger.e(e);
+      throw 'Fialed get prediction list';
+    }
   }
 
   @override

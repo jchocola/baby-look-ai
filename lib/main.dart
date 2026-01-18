@@ -5,6 +5,7 @@ import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
+import 'package:baby_look/features/feature_generate/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
@@ -48,12 +49,18 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               UserBloc(userDbRepository: getIt<UserDbRepository>()),
         ),
+         BlocProvider(
+          create: (context) =>
+             PredictionsBloc(predictionDbRepository: getIt<PredictionDbRepository>()),
+        ),
+
 
         BlocProvider(
           create: (context) => AuthBloc(
             authRepository: getIt<AuthRepository>(),
             userDbRepository: getIt<UserDbRepository>(),
             userBloc: context.read<UserBloc>(),
+            predictionsBloc: context.read<PredictionsBloc>()
           )..add(AuthBlocEvent_authCheck()),
         ),
         BlocProvider(
