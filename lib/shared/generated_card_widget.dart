@@ -78,7 +78,7 @@ class GeneratedCardWidget extends StatelessWidget {
                         return [
                           PopupMenuItem(
                             onTap: () {
-                              context.push(
+                              context.go(
                                 '/gallery/prediction_detail',
                                 extra: prediction,
                               );

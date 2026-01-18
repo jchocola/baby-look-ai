@@ -142,7 +142,7 @@ class _GalleryFavourites extends StatelessWidget {
                 tag: AppConstant.heroTag,
                 child: GeneratedCardWidget(
                   prediction: state.favouriteList[index],
-                  onCardTap: () => context.push('/gallery/prediction_detail'),
+                  onCardTap: () => context.push('/gallery/prediction_detail', extra: state.favouriteList[index]),
                 ),
               );
             },

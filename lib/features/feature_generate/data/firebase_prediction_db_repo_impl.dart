@@ -40,9 +40,13 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
 
       final docs = snapshot.docs;
 
-      return docs
+      final predictionList = docs
           .map((e) => PredictionModel.fromMap(e.data()).toEntity())
           .toList();
+
+      // Sort by created date — newest first
+      predictionList.sort((a, b) => b.created.compareTo(a.created));
+      return predictionList;
     } catch (e) {
       logger.e(e);
       throw 'Fialed get prediction list';
@@ -117,9 +121,9 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
 
       final favouriteList = user.favourites;
 
-
-
-      return allPrediction.where((prediction)=> favouriteList.contains(prediction.id)).toList();
+      return allPrediction
+          .where((prediction) => favouriteList.contains(prediction.id))
+          .toList();
     } catch (e) {
       logger.e(e);
       return [];

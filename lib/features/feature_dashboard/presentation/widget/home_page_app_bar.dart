@@ -18,7 +18,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Welcome back,', style: theme.textTheme.bodySmall),
-            Text(state is AuthBlocState_authenticated ? state.user.displayName ?? 'Expecting Parent!' : '', style: theme.textTheme.titleMedium),
+            Text(state is AuthBlocState_authenticated ? state.user.email?.split("@")[0] ?? 'Expecting Parent!' : '', style: theme.textTheme.titleMedium),
           ],
         ),
       
