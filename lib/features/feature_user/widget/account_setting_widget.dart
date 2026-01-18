@@ -4,6 +4,7 @@ import 'package:baby_look/main.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -38,6 +39,7 @@ class AccountSettingWidget extends StatelessWidget {
         ),
         CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon),
         CustomListile(
+          onTap: () => context.go('/user/history'),
           title: 'Prediction History',
           icon: AppIcon.predictionHistoryIcon,
         ),
