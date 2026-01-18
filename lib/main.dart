@@ -13,6 +13,8 @@ import 'package:baby_look/features/feature_generate/domain/prediction_db_reposit
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +29,9 @@ final logger = Logger();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // localizations
+  await EasyLocalization.ensureInitialized();
+
   // .env
   await dotenv.load(fileName: ".env");
 
@@ -36,7 +41,14 @@ Future<void> main() async {
   // DI
   await DI();
 
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('vi'),Locale('ru')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en', 'US'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +57,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-          BlocProvider(
+        BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),
           ),
@@ -54,10 +66,9 @@ class MyApp extends StatelessWidget {
           create: (context) => UserBloc(
             userDbRepository: getIt<UserDbRepository>(),
             authRepository: getIt<AuthRepository>(),
-            predictionsBloc: context.read<PredictionsBloc>()
+            predictionsBloc: context.read<PredictionsBloc>(),
           ),
         ),
-      
 
         BlocProvider(
           create: (context) => AuthBloc(
