@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_user/data/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,8 +68,13 @@ class UserBlocState_error extends UserBlocState {}
 class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
   final UserDbRepository userDbRepository;
   final AuthRepository authRepository;
+  final PredictionsBloc predictionsBloc;
 
-  UserBloc({required this.userDbRepository,required this.authRepository}) : super(UserBlocState_init()) {
+  UserBloc({
+    required this.userDbRepository,
+    required this.authRepository,
+    required this.predictionsBloc,
+  }) : super(UserBlocState_init()) {
     ///
     /// UserBlocEvent_setUser
     ///
@@ -95,6 +101,9 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
 
         if (currentUser != null) {
           add(UserBlocEvent_setUser(user: currentUser));
+          predictionsBloc.add(
+            PredictionsBlocEvent_loadPredictions(user: currentUser),
+          );
         }
       } catch (e) {
         logger.e(e);
@@ -104,7 +113,7 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
     ///
     /// LIKE OR UNLINE PREDICTION
     ///
-   on<UserBlocEvent_likeOrUnlikePrediction>((event, emit) async {
+    on<UserBlocEvent_likeOrUnlikePrediction>((event, emit) async {
       try {
         final currentState = state;
 
@@ -137,8 +146,9 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
         }
       } catch (e) {
         logger.e(e);
-      } 
-    finally { add(UserBlocEvent_reloadUser()); }
+      } finally {
+        add(UserBlocEvent_reloadUser());
+      }
     });
   }
 }

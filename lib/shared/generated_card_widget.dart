@@ -42,8 +42,8 @@ class GeneratedCardWidget extends StatelessWidget {
                   ),
 
                   Positioned(
-                    right: AppConstant.appPadding / 2,
-                    top: AppConstant.appPadding / 2,
+                    right: AppConstant.appPadding / 4,
+                    top: AppConstant.appPadding / 4,
                     child: BlocBuilder<UserBloc, UserBlocState>(
                       builder: (context, state) => CustomCircleIcon(
                         onPressed: () {
@@ -69,9 +69,11 @@ class GeneratedCardWidget extends StatelessWidget {
                   ),
 
                   Positioned(
-                    left: AppConstant.appPadding / 2,
-                    top: AppConstant.appPadding / 2,
+                    left: AppConstant.appPadding / 4,
+                    top: AppConstant.appPadding / 4,
                     child: PopupMenuButton(
+                      icon: Icon(AppIcon.verticalMoreIcon, color: theme.colorScheme.secondary,),
+                     
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(

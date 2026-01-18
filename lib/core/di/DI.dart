@@ -10,6 +10,7 @@ import 'package:baby_look/features/feature_generate/domain/prediction_db_reposit
 import 'package:baby_look/features/feature_user/data/firebase_user_db_repo_impl.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
@@ -29,7 +30,7 @@ Future<void> DI() async {
   getIt.registerSingleton<UserDbRepository>(FirebaseUserDbRepoImpl());
 
   getIt.registerSingleton<PredictionDbRepository>(
-    FirebasePredictionDbRepoImpl(),
+    FirebasePredictionDbRepoImpl(userDbRepository: getIt<UserDbRepository>()),
   );
 
   logger.i('DI initialized!');

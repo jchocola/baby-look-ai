@@ -3,16 +3,23 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:baby_look/features/feature_generate/data/prediction_model.dart';
-import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
-import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
-import 'package:baby_look/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_generate/data/prediction_model.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
+import 'package:baby_look/features/feature_user/domain/user_entity.dart';
+import 'package:baby_look/main.dart';
+
 class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
+  final UserDbRepository userDbRepository;
+  FirebasePredictionDbRepoImpl({required this.userDbRepository});
+
   final _db = FirebaseFirestore.instance.collection('PREDICTIONS');
   final _storageRef = FirebaseStorage.instance.ref();
   @override
@@ -33,7 +40,9 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
 
       final docs = snapshot.docs;
 
-      return docs.map((e) => PredictionModel.fromMap(e.data()).toEntity()).toList();
+      return docs
+          .map((e) => PredictionModel.fromMap(e.data()).toEntity())
+          .toList();
     } catch (e) {
       logger.e(e);
       throw 'Fialed get prediction list';
@@ -94,6 +103,26 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
     } catch (e) {
       logger.e(e);
       throw 'Failed convert butes to file';
+    }
+  }
+
+  @override
+  Future<List<PredictionEntity>> getPredictionFavouriteListByUid({
+    required String uid,
+  }) async {
+    try {
+      final allPrediction = await getPredictionListByUid(uid: uid);
+
+      final user = await userDbRepository.getUserEntityFromUid(uid: uid);
+
+      final favouriteList = user.favourites;
+
+
+
+      return allPrediction.where((prediction)=> favouriteList.contains(prediction.id)).toList();
+    } catch (e) {
+      logger.e(e);
+      return [];
     }
   }
 }

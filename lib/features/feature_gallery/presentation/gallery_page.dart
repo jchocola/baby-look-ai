@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,18 +50,23 @@ class _GalleryPageState extends State<GalleryPage> {
       child: Column(
         spacing: AppConstant.appPadding,
         children: [
-          BlocBuilder<PredictionsBloc, PredictionsBlocState>(
-            builder: (context, state) => CupertinoSlidingSegmentedControl(
-              // backgroundColor: theme.colorScheme.secondary,
-              groupValue: currentValue,
-              children: {
-                0: Text(
-                  "All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
+          BlocBuilder<UserBloc, UserBlocState>(
+            builder: (context, userState) =>
+                BlocBuilder<PredictionsBloc, PredictionsBlocState>(
+                  builder: (context, state) => CupertinoSlidingSegmentedControl(
+                    // backgroundColor: theme.colorScheme.secondary,
+                    groupValue: currentValue,
+                    children: {
+                      0: Text(
+                        "All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
+                      ),
+                      1: Text(
+                        'Favourites ${userState is UserBlocState_loaded ? '(${userState.userEntity.favourites.length})' : ''}',
+                      ),
+                    },
+                    onValueChanged: _changePage,
+                  ),
                 ),
-                1: Text('Favourites (4)'),
-              },
-              onValueChanged: _changePage,
-            ),
           ),
 
           Expanded(
@@ -120,21 +126,30 @@ class _GalleryFavourites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: AppConstant.appPadding,
-        crossAxisSpacing: AppConstant.appPadding,
-        childAspectRatio: 3 / 4,
-      ),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return Hero(
-          tag: AppConstant.heroTag,
-          child: GeneratedCardWidget(
-            onCardTap: () => context.push('/gallery/prediction_detail'),
-          ),
-        );
+    return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
+      builder: (context, state) {
+        if (state is PredictionsBlocState_loaded) {
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: AppConstant.appPadding,
+              crossAxisSpacing: AppConstant.appPadding,
+              childAspectRatio: 3 / 4,
+            ),
+            itemCount: state.favouriteList.length,
+            itemBuilder: (context, index) {
+              return Hero(
+                tag: AppConstant.heroTag,
+                child: GeneratedCardWidget(
+                  prediction: state.favouriteList[index],
+                  onCardTap: () => context.push('/gallery/prediction_detail'),
+                ),
+              );
+            },
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
       },
     );
   }

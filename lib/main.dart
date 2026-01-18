@@ -45,17 +45,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => UserBloc(
-            userDbRepository: getIt<UserDbRepository>(),
-            authRepository: getIt<AuthRepository>(),
-          ),
-        ),
-        BlocProvider(
+          BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),
           ),
         ),
+        BlocProvider(
+          create: (context) => UserBloc(
+            userDbRepository: getIt<UserDbRepository>(),
+            authRepository: getIt<AuthRepository>(),
+            predictionsBloc: context.read<PredictionsBloc>()
+          ),
+        ),
+      
 
         BlocProvider(
           create: (context) => AuthBloc(

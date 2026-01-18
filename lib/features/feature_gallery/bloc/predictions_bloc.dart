@@ -37,9 +37,13 @@ class PredictionsBlocState_loading extends PredictionsBlocState {}
 
 class PredictionsBlocState_loaded extends PredictionsBlocState {
   final List<PredictionEntity> predictionList;
-  PredictionsBlocState_loaded({required this.predictionList});
+  final List<PredictionEntity> favouriteList;
+  PredictionsBlocState_loaded({
+    required this.predictionList,
+    required this.favouriteList,
+  });
   @override
-  List<Object?> get props => [predictionList];
+  List<Object?> get props => [predictionList, favouriteList];
 }
 
 class PredictionsBlocState_error extends PredictionsBlocState {}
@@ -60,17 +64,19 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
         if (event.user != null) {
           final predictionList = await predictionDbRepository
               .getPredictionListByUid(uid: event.user!.uid);
+          final favoritePredictionList = await predictionDbRepository
+              .getPredictionFavouriteListByUid(uid: event.user!.uid);
 
           logger.d('Prediction list : ${predictionList.length}');
 
-          emit(PredictionsBlocState_loaded(predictionList: predictionList));
+          emit(PredictionsBlocState_loaded(predictionList: predictionList , favouriteList: favoritePredictionList));
         } else {
           logger.d('Empty User');
-          emit(PredictionsBlocState_loaded(predictionList: []));
+          emit(PredictionsBlocState_loaded(predictionList: [], favouriteList: []));
         }
       } catch (e) {
         logger.e(e);
-        emit(PredictionsBlocState_loaded(predictionList: []));
+        emit(PredictionsBlocState_loaded(predictionList: [], favouriteList: []));
       }
     });
   }

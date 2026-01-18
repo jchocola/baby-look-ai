@@ -11,8 +11,6 @@ abstract class UserDbRepository {
 
   Future<UserEntity> getUserEntityFromUid({required String uid});
 
-  //Future<User?> getCurrentUser();
-
   Future<bool> isNewUser({required UserCredential userCredential});
 
   Future<void> likeOrUnlikePrediction({

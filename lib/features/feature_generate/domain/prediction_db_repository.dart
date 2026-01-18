@@ -14,5 +14,7 @@ abstract class PredictionDbRepository {
 
   Future<List<PredictionEntity>> getPredictionListByUid({required String uid});
 
+  Future<List<PredictionEntity>> getPredictionFavouriteListByUid({required String uid});
+
   Future<void> deletePrediction({required PredictionEntity prediction});
 }
