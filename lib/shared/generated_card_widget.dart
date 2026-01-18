@@ -3,6 +3,7 @@ import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GeneratedCardWidget extends StatelessWidget {
   const GeneratedCardWidget({super.key, this.onCardTap, this.prediction});
@@ -54,11 +55,15 @@ class GeneratedCardWidget extends StatelessWidget {
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(
+                            onTap: () {
+                               context.push('/gallery/prediction_detail', extra: prediction );
+                            },
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.eyeIcon),
                                 Text('View detail'),
+
                               ],
                             ),
                           ),
@@ -72,6 +77,9 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
+                            onTap: () {
+                              context.go('/gallery/fullscreen_view', extra: prediction);
+                            },
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
@@ -94,7 +102,7 @@ class GeneratedCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${prediction?.gender} / Gest. week (${prediction?.gestationWeek})',
+                    '${prediction?.gender ?? ''} / Gest. week (${prediction?.gestationWeek ?? 0})',
                     style: theme.textTheme.titleSmall,
                   ),
                   Text(

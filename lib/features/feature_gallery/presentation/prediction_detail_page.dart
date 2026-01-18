@@ -32,7 +32,11 @@ class PredictionDetailPage extends StatelessWidget {
           children: [
             Hero(
               tag: AppConstant.heroTag,
-              child: GeneratedImageCard(imageUrl: prediction?.photoUrl),
+              child: GeneratedImageCard(
+                onTap: () {
+                   context.go('/gallery/fullscreen_view', extra: prediction);
+                },
+                imageUrl: prediction?.photoUrl),
             ),
 
             Row(

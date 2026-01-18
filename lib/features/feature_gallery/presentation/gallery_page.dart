@@ -49,11 +49,18 @@ class _GalleryPageState extends State<GalleryPage> {
       child: Column(
         spacing: AppConstant.appPadding,
         children: [
-          CupertinoSlidingSegmentedControl(
-            // backgroundColor: theme.colorScheme.secondary,
-            groupValue: currentValue,
-            children: {0: Text("All (12)"), 1: Text('Favourites (4)')},
-            onValueChanged: _changePage,
+          BlocBuilder<PredictionsBloc, PredictionsBlocState>(
+            builder: (context, state) => CupertinoSlidingSegmentedControl(
+              // backgroundColor: theme.colorScheme.secondary,
+              groupValue: currentValue,
+              children: {
+                0: Text(
+                  "All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
+                ),
+                1: Text('Favourites (4)'),
+              },
+              onValueChanged: _changePage,
+            ),
           ),
 
           Expanded(
@@ -91,7 +98,10 @@ class _GalleryAll extends StatelessWidget {
                 child: GeneratedCardWidget(
                   prediction: state.predictionList[index],
                   onCardTap: () {
-                    context.push('/gallery/prediction_detail', extra: state.predictionList[index] );
+                    context.push(
+                      '/gallery/prediction_detail',
+                      extra: state.predictionList[index],
+                    );
                   },
                 ),
               );
