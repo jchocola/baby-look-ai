@@ -10,6 +10,7 @@ import 'package:baby_look/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 
 class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
   final _db = FirebaseFirestore.instance.collection('PREDICTIONS');
@@ -60,21 +61,29 @@ class FirebasePredictionDbRepoImpl implements PredictionDbRepository {
       final spaceRef = _storageRef.child(fullname);
 
       // prepare file
-      final file = _convertByteToFile(imageBytes);
+      final file = await _convertByteToFile(imageBytes);
 
       // save file to storage
       await spaceRef.putFile(file);
 
       // return download url
       return await spaceRef.getDownloadURL();
-      
     } catch (e) {
       logger.e(e);
       throw 'Failed to save image';
     }
   }
 
-  File _convertByteToFile(Uint8List bytes) {
-    return File.fromRawPath(bytes);
+  Future<File> _convertByteToFile(Uint8List bytes) async {
+    try {
+      final tempDir = await getTemporaryDirectory();
+      File file = await File('${tempDir.path}/image.png').create();
+      file.writeAsBytesSync(bytes);
+
+      return file;
+    } catch (e) {
+      logger.e(e);
+      throw 'Failed convert butes to file';
+    }
   }
 }

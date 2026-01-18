@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/widget/baby_gender_picker.dart';
@@ -149,25 +150,28 @@ class GeneratePage3 extends StatelessWidget {
             ///
             /// BUTTONS
             ///
-            BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
-              builder: (context, state) => BigButton(
-                buttonColor: theme.colorScheme.onPrimary,
-                borderColor:theme.colorScheme.primary,
-                title: 'Generate Prediction',
-                onTap: () {
-                  if (state is PrepareDataBlocState_loaded) {
-                    context.read<GeneratingBloc>().add(
-                      GeneratingBlocEvent_generatePrediction(
-                        ultrasoundImage: File(state.ultrasoundImage!.path),
-                        gestationWeek: state.gestationWeek ?? 1,
-                        motherImage: File(state.motherImage!.path),
-                        fatherImage: File(state.fatherImage!.path),
-                        gender: state.babyGender.name,
-                      ),
-                    );
-                  }
-                },
-              ).animate(onPlay: (controller) => controller.repeat(),).shimmer(duration: 2000.ms, delay: 1800.ms,color: theme.colorScheme.onPrimary).then(delay: 400.ms),
+            BlocBuilder<AuthBloc,AuthBlocState>(
+              builder:(context,authState)=> BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
+                builder: (context, state) => BigButton(
+                  buttonColor: theme.colorScheme.onPrimary,
+                  borderColor:theme.colorScheme.primary,
+                  title: 'Generate Prediction',
+                  onTap: () {
+                    if (state is PrepareDataBlocState_loaded) {
+                      context.read<GeneratingBloc>().add(
+                        GeneratingBlocEvent_generatePrediction(
+                          ultrasoundImage: File(state.ultrasoundImage!.path),
+                          gestationWeek: state.gestationWeek ?? 1,
+                          motherImage: File(state.motherImage!.path),
+                          fatherImage: File(state.fatherImage!.path),
+                          gender: state.babyGender.name,
+                          user: authState is AuthBlocState_authenticated ? authState.user : null
+                        ),
+                      );
+                    }
+                  },
+                ).animate(onPlay: (controller) => controller.repeat(),).shimmer(duration: 2000.ms, delay: 1800.ms,color: theme.colorScheme.onPrimary).then(delay: 400.ms),
+              ),
             ),
             BigButton(
               borderColor: theme.colorScheme.error , buttonColor: theme.colorScheme.errorContainer,

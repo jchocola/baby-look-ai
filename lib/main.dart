@@ -8,6 +8,7 @@ import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
@@ -43,13 +44,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> UserBloc(userDbRepository: getIt<UserDbRepository>())),
+        BlocProvider(
+          create: (context) =>
+              UserBloc(userDbRepository: getIt<UserDbRepository>()),
+        ),
 
         BlocProvider(
           create: (context) => AuthBloc(
             authRepository: getIt<AuthRepository>(),
             userDbRepository: getIt<UserDbRepository>(),
-            userBloc: context.read<UserBloc>()
+            userBloc: context.read<UserBloc>(),
           )..add(AuthBlocEvent_authCheck()),
         ),
         BlocProvider(
@@ -57,8 +61,10 @@ class MyApp extends StatelessWidget {
               PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>()),
         ),
         BlocProvider(
-          create: (context) =>
-              GeneratingBloc(bananaProService: getIt<BananaProService>()),
+          create: (context) => GeneratingBloc(
+            bananaProService: getIt<BananaProService>(),
+            predictionDbRepository: getIt<PredictionDbRepository>(),
+          ),
         ),
       ],
       child: Wiredash(
