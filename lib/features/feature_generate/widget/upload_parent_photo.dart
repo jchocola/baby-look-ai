@@ -14,13 +14,14 @@ class UploadParentPhotoCard extends StatelessWidget {
     this.title = 'title',
     this.subtitle = 'subtitle',
     this.icon = Icons.person,
-    this.pickedImage
+    this.pickedImage,
+    this.bgColor = Colors.lightBlue
   });
 
   final String title;
   final String subtitle;
   final IconData icon;
-
+  final Color bgColor;
   final Widget? pickedImage;
 
   final void Function()? onGalleryTapped;
@@ -28,49 +29,50 @@ class UploadParentPhotoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-     final theme = Theme.of(context);
+    final theme = Theme.of(context);
     return DottedBorder(
-       options: RoundedRectDottedBorderOptions(
+      options: RoundedRectDottedBorderOptions(
         color: theme.colorScheme.secondary.withOpacity(0.5),
         strokeWidth: 3,
-        padding: EdgeInsets.all(AppConstant.appPadding/2),
-        dashPattern: [
-          5,10,
-        ],
-        radius: Radius.circular(AppConstant.borderRadius * 1.3,)),
+        padding: EdgeInsets.all(AppConstant.appPadding / 2),
+        dashPattern: [5, 10],
+        radius: Radius.circular(AppConstant.borderRadius * 1.3),
+      ),
 
       child: ClipRRect(
         borderRadius: BorderRadiusGeometry.circular(AppConstant.borderRadius),
         child: Container(
           width: double.infinity,
           height: size.height * 0.3,
-          color: theme.colorScheme.tertiaryFixed,
-          child: pickedImage ?? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: AppConstant.appPadding,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomRoundedIcon(icon: icon),
-              Text(title,  style: theme.textTheme.titleMedium),
-              Text(subtitle , style: theme.textTheme.bodySmall,),
-        
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+          color: bgColor,
+          child:
+              pickedImage ??
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: AppConstant.appPadding,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CustomButtonWithIcon(
-                    icon: AppIcon.imageIcon,
-                    title: 'Gallery',
-                    onTap: onGalleryTapped,
-                  ),
-                  CustomButtonWithIcon(
-                    icon: AppIcon.cameratIcon,
-                    title: 'Camera',
-                    onTap: onTapCameraTapped,
+                  CustomRoundedIcon(icon: icon),
+                  Text(title, style: theme.textTheme.titleMedium),
+                  Text(subtitle, style: theme.textTheme.bodySmall),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomButtonWithIcon(
+                        icon: AppIcon.imageIcon,
+                        title: 'Gallery',
+                        onTap: onGalleryTapped,
+                      ),
+                      CustomButtonWithIcon(
+                        icon: AppIcon.cameratIcon,
+                        title: 'Camera',
+                        onTap: onTapCameraTapped,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
         ),
       ),
     );

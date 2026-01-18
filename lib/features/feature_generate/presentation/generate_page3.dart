@@ -109,6 +109,8 @@ class GeneratePage3 extends StatelessWidget {
             ///
             BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
               builder: (context, state) => UploadParentPhotoCard(
+                bgColor: theme.colorScheme.onPrimary,
+                icon: AppIcon.motherIcon,
                 title: "Mother's Photo",
                 subtitle: "Clear frontal photo for best results",
                 onTapCameraTapped: () => context.read<PrepareDataBloc>().add(
@@ -130,6 +132,8 @@ class GeneratePage3 extends StatelessWidget {
             ///
             BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
               builder: (context, state) => UploadParentPhotoCard(
+                  bgColor: theme.colorScheme.tertiaryFixed,
+                icon: AppIcon.fatherIcon,
                 title: "Father's Photo",
                 subtitle: "Clear frontal photo for best results",
                 pickedImage:

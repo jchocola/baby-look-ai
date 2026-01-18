@@ -37,6 +37,9 @@ class AppIcon {
   static const faceFillIcon = LucideIcons.scanFace;
   static const naturalIcon = LucideIcons.leaf;
 
+  static const motherIcon = Icons.woman_2_rounded;
+  static const fatherIcon = Icons.man_2_rounded;
+
   ///
   /// SETTINGS
   ///
