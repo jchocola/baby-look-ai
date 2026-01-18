@@ -58,9 +58,12 @@ class GeneratedCardWidget extends StatelessWidget {
                                 state.userEntity.favourites.contains(
                                   prediction?.id,
                                 )
-                            ? AppIcon.favouriteSolodIcon
+                            ? AppIcon.favouriteSolidIcon
                             : AppIcon.favouriteRoundedIcon,
-                        bgColor: theme.colorScheme.primary,
+                        iconColor: state is UserBlocState_loaded &&
+                                state.userEntity.favourites.contains(
+                                  prediction?.id,
+                                ) ? theme.colorScheme.primary : theme.colorScheme.secondary,
                       ),
                     ),
                   ),

@@ -55,7 +55,7 @@ class AppIcon {
   ///
   ///
   static const favouriteRoundedIcon = LucideIcons.heart;
-    static const favouriteSolodIcon = Icons.favorite_outlined;
+  static const favouriteSolidIcon = Icons.favorite_outlined;
   static const verticalMoreIcon = Icons.more_vert_outlined;
 
   static const calendarIcon = LucideIcons.calendar;

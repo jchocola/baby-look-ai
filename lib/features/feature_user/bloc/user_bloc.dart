@@ -104,36 +104,32 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
     ///
     /// LIKE OR UNLINE PREDICTION
     ///
-    on<UserBlocEvent_likeOrUnlikePrediction>((event, emit) async {
+   on<UserBlocEvent_likeOrUnlikePrediction>((event, emit) async {
       try {
         final currentState = state;
 
         if (currentState is UserBlocState_loaded) {
-          final favList = currentState.userEntity.favourites;
-          //
+          // Создаём копию списка, не мутируем оригинал
+          final favList = List<String>.from(currentState.userEntity.favourites);
+
           // POSITIVE UI
-          //
           final bool isLiked = favList.contains(event.prediction.id);
 
           if (isLiked) {
             // remove
             favList.remove(event.prediction.id);
-            final updatedUser = UserModel.fromEntity(
-              currentState.userEntity,
-            ).copyWith(favourites: favList).toEntity();
-            emit(currentState.copyWith(userEntity: updatedUser));
           } else {
-            //add
+            // add
             favList.add(event.prediction.id);
-            final updatedUser = UserModel.fromEntity(
-              currentState.userEntity,
-            ).copyWith(favourites: favList).toEntity();
-            emit(currentState.copyWith(userEntity: updatedUser));
           }
 
-          ///
-          /// update on db
-          ///
+          // Создаём новый userEntity с новым списком и эмитим новый стейт
+          final updatedUser = UserModel.fromEntity(
+            currentState.userEntity,
+          ).copyWith(favourites: favList).toEntity();
+          emit(currentState.copyWith(userEntity: updatedUser));
+
+          // update on db (если упадёт — можно откатить или показать ошибку)
           await userDbRepository.likeOrUnlikePrediction(
             user: currentState.userEntity,
             prediction: event.prediction,
@@ -141,9 +137,8 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
         }
       } catch (e) {
         logger.e(e);
-      } finally {
-        add(UserBlocEvent_reloadUser());
-      }
+      } 
+    finally { add(UserBlocEvent_reloadUser()); }
     });
   }
 }
