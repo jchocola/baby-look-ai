@@ -1,12 +1,15 @@
 // ignore_for_file: camel_case_types
 
-import 'package:baby_look/main.dart';
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_user/data/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/features/feature_user/domain/user_entity.dart';
+import 'package:baby_look/main.dart';
 
 ///
 /// EVENT
@@ -21,6 +24,15 @@ class UserBlocEvent_setUser extends UserBlocEvent {
   UserBlocEvent_setUser({required this.user});
   @override
   List<Object?> get props => [user];
+}
+
+class UserBlocEvent_reloadUser extends UserBlocEvent {}
+
+class UserBlocEvent_likeOrUnlikePrediction extends UserBlocEvent {
+  final PredictionEntity prediction;
+  UserBlocEvent_likeOrUnlikePrediction({required this.prediction});
+  @override
+  List<Object?> get props => [prediction];
 }
 
 ///
@@ -41,6 +53,10 @@ class UserBlocState_loaded extends UserBlocState {
 
   @override
   List<Object?> get props => [userEntity];
+
+  UserBlocState_loaded copyWith({UserEntity? userEntity}) {
+    return UserBlocState_loaded(userEntity: userEntity ?? this.userEntity);
+  }
 }
 
 class UserBlocState_error extends UserBlocState {}
@@ -49,9 +65,10 @@ class UserBlocState_error extends UserBlocState {}
 /// BLOC
 ///
 class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
-  UserDbRepository userDbRepository;
+  final UserDbRepository userDbRepository;
+  final AuthRepository authRepository;
 
-  UserBloc({required this.userDbRepository}) : super(UserBlocState_init()) {
+  UserBloc({required this.userDbRepository,required this.authRepository}) : super(UserBlocState_init()) {
     ///
     /// UserBlocEvent_setUser
     ///
@@ -64,6 +81,68 @@ class UserBloc extends Bloc<UserBlocEvent, UserBlocState> {
         emit(UserBlocState_loaded(userEntity: userEntity));
       } catch (e) {
         logger.e(e);
+      }
+    });
+
+    ///
+    /// RELOAD USER
+    ///
+    on<UserBlocEvent_reloadUser>((event, emit) async {
+      try {
+        logger.d('RELOAD USER');
+
+        final currentUser = await authRepository.getCurrentUser();
+
+        if (currentUser != null) {
+          add(UserBlocEvent_setUser(user: currentUser));
+        }
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+    ///
+    /// LIKE OR UNLINE PREDICTION
+    ///
+    on<UserBlocEvent_likeOrUnlikePrediction>((event, emit) async {
+      try {
+        final currentState = state;
+
+        if (currentState is UserBlocState_loaded) {
+          final favList = currentState.userEntity.favourites;
+          //
+          // POSITIVE UI
+          //
+          final bool isLiked = favList.contains(event.prediction.id);
+
+          if (isLiked) {
+            // remove
+            favList.remove(event.prediction.id);
+            final updatedUser = UserModel.fromEntity(
+              currentState.userEntity,
+            ).copyWith(favourites: favList).toEntity();
+            emit(currentState.copyWith(userEntity: updatedUser));
+          } else {
+            //add
+            favList.add(event.prediction.id);
+            final updatedUser = UserModel.fromEntity(
+              currentState.userEntity,
+            ).copyWith(favourites: favList).toEntity();
+            emit(currentState.copyWith(userEntity: updatedUser));
+          }
+
+          ///
+          /// update on db
+          ///
+          await userDbRepository.likeOrUnlikePrediction(
+            user: currentState.userEntity,
+            prediction: event.prediction,
+          );
+        }
+      } catch (e) {
+        logger.e(e);
+      } finally {
+        add(UserBlocEvent_reloadUser());
       }
     });
   }

@@ -1,3 +1,4 @@
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/data/user_model.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/features/feature_user/domain/user_entity.dart';
@@ -58,4 +59,48 @@ class FirebaseUserDbRepoImpl implements UserDbRepository {
       throw 'FAILED TO USER ENTITY';
     }
   }
+
+  @override
+  Future<void> likeOrUnlikePrediction({
+    required UserEntity? user,
+    required PredictionEntity prediction,
+  }) async {
+    try {
+      if (user != null) {
+        final userEntity = await getUserEntityFromUid(uid: user.id);
+        final userModel = UserModel.fromEntity(userEntity);
+        if (userEntity.favourites.contains(prediction.id)) {
+          logger.d('REMOVE FROM FAVOURITE');
+          // REMOVE
+          final updatedList = userEntity.favourites;
+          updatedList.remove(prediction.id);
+
+          // updated model
+          final updatedModel = userModel.copyWith(favourites: updatedList);
+          await updateUser(user: updatedModel.toEntity());
+        } else {
+          logger.d('ADD  TO FAVOURITE');
+          // ADD
+          final updatedList = userEntity.favourites;
+          updatedList.add(prediction.id);
+          // updated model
+          final updatedModel = userModel.copyWith(favourites: updatedList);
+          await updateUser(user: updatedModel.toEntity());
+        }
+      }
+    } catch (e) {
+      logger.e(e);
+    }
+  }
+
+  @override
+  Future<void> updateUser({required UserEntity user}) async {
+    try {
+      logger.d("UPDATED USER");
+      await _db.doc(user.id).update(UserModel.fromEntity(user).toMap());
+    } catch (e) {
+      logger.e(e);
+    }
+  }
 }
+

@@ -1,8 +1,10 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class GeneratedCardWidget extends StatelessWidget {
@@ -42,9 +44,24 @@ class GeneratedCardWidget extends StatelessWidget {
                   Positioned(
                     right: AppConstant.appPadding / 2,
                     top: AppConstant.appPadding / 2,
-                    child: CustomCircleIcon(
-                      icon: AppIcon.favouriteRoundedIcon,
-                      bgColor: theme.colorScheme.primary,
+                    child: BlocBuilder<UserBloc, UserBlocState>(
+                      builder: (context, state) => CustomCircleIcon(
+                        onPressed: () {
+                          context.read<UserBloc>().add(
+                            UserBlocEvent_likeOrUnlikePrediction(
+                              prediction: prediction!,
+                            ),
+                          );
+                        },
+                        icon:
+                            state is UserBlocState_loaded &&
+                                state.userEntity.favourites.contains(
+                                  prediction?.id,
+                                )
+                            ? AppIcon.favouriteSolodIcon
+                            : AppIcon.favouriteRoundedIcon,
+                        bgColor: theme.colorScheme.primary,
+                      ),
                     ),
                   ),
 
@@ -56,14 +73,16 @@ class GeneratedCardWidget extends StatelessWidget {
                         return [
                           PopupMenuItem(
                             onTap: () {
-                               context.push('/gallery/prediction_detail', extra: prediction );
+                              context.push(
+                                '/gallery/prediction_detail',
+                                extra: prediction,
+                              );
                             },
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.eyeIcon),
                                 Text('View detail'),
-
                               ],
                             ),
                           ),
@@ -78,7 +97,10 @@ class GeneratedCardWidget extends StatelessWidget {
                           ),
                           PopupMenuItem(
                             onTap: () {
-                              context.go('/gallery/fullscreen_view', extra: prediction);
+                              context.go(
+                                '/gallery/fullscreen_view',
+                                extra: prediction,
+                              );
                             },
                             child: Row(
                               spacing: AppConstant.appPadding,

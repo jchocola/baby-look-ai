@@ -52,4 +52,18 @@ class UserModel {
 
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source));
+
+  UserModel copyWith({
+    String? id,
+    int? coins,
+    List<String>? predictions,
+    List<String>? favourites,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      coins: coins ?? this.coins,
+      predictions: predictions ?? this.predictions,
+      favourites: favourites ?? this.favourites,
+    );
+  }
 }
