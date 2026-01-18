@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/features/feature_user/presentation/modal/languages_modal.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:baby_look/shared/custom_switch.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,18 @@ class PreferrencesSettingWidget extends StatelessWidget {
           icon: AppIcon.notificationIcon,
           tralingWidget: CustomSwitch(),
         ),
-        CustomListile(title: 'Language', icon: AppIcon.languageIcon),
+        CustomListile(
+          title: 'Language',
+          icon: AppIcon.languageIcon,
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return LanguagesModal();
+              },
+            );
+          },
+        ),
         CustomListile(
           title: 'Help and FAQ',
           icon: AppIcon.helpIcon,
@@ -28,9 +40,13 @@ class PreferrencesSettingWidget extends StatelessWidget {
             context.push('/user/faq');
           },
         ),
-        CustomListile(title: 'Send Feedback', icon: AppIcon.feedbackIcon, onTap: () async{
-           Wiredash.of(context).show(inheritMaterialTheme: true);
-        },),
+        CustomListile(
+          title: 'Send Feedback',
+          icon: AppIcon.feedbackIcon,
+          onTap: () async {
+            Wiredash.of(context).show(inheritMaterialTheme: true);
+          },
+        ),
 
         // CustomListile(title: 'Invite Friends',),
       ],
