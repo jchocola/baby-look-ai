@@ -1,1 +1,8 @@
-{}
+{
+  "navbar": {
+    "create": "Create",
+    "gallery": "Gallery",
+    "home": "Home",
+    "user": "User"
+  }
+}

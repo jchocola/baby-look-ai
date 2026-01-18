@@ -1,1 +1,8 @@
-{}
+{
+  "navbar": {
+    "create": "Tạo ",
+    "gallery": "Album",
+    "home": "Nhà ",
+    "user": "Profile"
+  }
+}

@@ -30,7 +30,7 @@ final GoRouter appRouter = GoRouter(
 
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return MainPage(navigationShell: navigationShell);
+        return MainPage(navigationShell: navigationShell,);
       },
       branches: [
         ///

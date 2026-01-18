@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
@@ -43,9 +44,9 @@ Future<void> main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('vi'),Locale('ru')],
+      supportedLocales: [Locale('en'), Locale('vi'), Locale('ru')],
       path: 'assets/translations',
-      fallbackLocale: Locale('en', 'US'),
+      fallbackLocale: Locale('en'),
       child: const MyApp(),
     ),
   );
@@ -106,7 +107,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key, required this.navigationShell});
+  const MainPage({super.key, required this.navigationShell,});
   final StatefulNavigationShell navigationShell;
   @override
   Widget build(BuildContext context) {
@@ -118,16 +119,22 @@ class MainPage extends StatelessWidget {
           navigationShell.goBranch(value);
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(AppIcon.homeIcon), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(AppIcon.homeIcon),
+            label: context.tr(AppText.home),
+          ),
           BottomNavigationBarItem(
             icon: Icon(AppIcon.createIcon),
-            label: 'Create',
+            label: context.tr(AppText.create),
           ),
           BottomNavigationBarItem(
             icon: Icon(AppIcon.galleryIcon),
-            label: 'Gallery',
+            label: context.tr(AppText.gallery),
           ),
-          BottomNavigationBarItem(icon: Icon(AppIcon.userIcon), label: 'User'),
+          BottomNavigationBarItem(
+            icon: Icon(AppIcon.userIcon),
+            label: context.tr(AppText.user),
+          ),
         ],
       ),
     );
