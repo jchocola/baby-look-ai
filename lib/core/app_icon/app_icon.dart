@@ -68,4 +68,9 @@ class AppIcon {
   static const retryIcon = LucideIcons.repeat;
 
   static const emailIcon = LucideIcons.mail;
+  static const techStackIcon = LucideIcons.squareTerminal;
+  static const developerIcon = LucideIcons.usersRound;
+  static const AIIcon = LucideIcons.star;
+  static const buildDateIcon = LucideIcons.calendarCheck;
+  static const versionIcon = LucideIcons.box;
 }

@@ -21,7 +21,7 @@ class CustomListile extends StatelessWidget {
       onTap: onTap,
       leading: CustomRoundedIcon(icon: icon),
       title: Text(title),
-      trailing: Transform.scale(scale: 0.7, child: tralingWidget),
+      trailing: Transform.scale(scale: 0.8, child: tralingWidget),
     );
   }
 }

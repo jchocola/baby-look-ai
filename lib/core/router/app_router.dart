@@ -9,6 +9,7 @@ import 'package:baby_look/features/feature_gallery/presentation/prediction_detai
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_generate/presentation/generate_page.dart';
 import 'package:baby_look/features/feature_generate/presentation/image_viewer_after_generating.dart';
+import 'package:baby_look/features/feature_user/presentation/pages/about_app/about_app_page.dart';
 import 'package:baby_look/features/feature_user/presentation/pages/help_faq/help_faq_page.dart';
 import 'package:baby_look/features/feature_user/presentation/pages/prediction_history/prediction_history_page.dart';
 import 'package:baby_look/features/feature_user/presentation/user_page.dart';
@@ -79,7 +80,8 @@ final GoRouter appRouter = GoRouter(
             GoRoute(path: '/user', builder: (context, state) => UserPage(),
             routes: [
               GoRoute(path: '/faq', builder: (context,state)=> HelpFaqPage()),
-               GoRoute(path: '/history', builder: (context,state)=> PredictionHistoryPage())
+               GoRoute(path: '/history', builder: (context,state)=> PredictionHistoryPage()),
+               GoRoute(path: '/about', builder: (context,state)=> AboutAppPage())
             ]
             ),
           ],
