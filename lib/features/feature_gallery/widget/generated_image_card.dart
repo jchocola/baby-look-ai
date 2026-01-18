@@ -2,8 +2,8 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:flutter/material.dart';
 
 class GeneratedImageCard extends StatelessWidget {
-  const GeneratedImageCard({super.key});
-
+  const GeneratedImageCard({super.key, this.imageUrl});
+  final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -14,8 +14,8 @@ class GeneratedImageCard extends StatelessWidget {
         width: size.width * 0.8,
         height: size.width * 0.8,
         child: Image.network(
-           'https://raisingchildren.net.au/__data/assets/image/0026/47816/newborn-behaviour-nutshellnarrow.jpg',
-           fit: BoxFit.cover,
+         imageUrl ??  AppConstant.defaultAvatarUrl,
+          fit: BoxFit.cover,
         ),
       ),
     );

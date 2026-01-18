@@ -31,7 +31,7 @@ class GeneratedCardWidget extends StatelessWidget {
                       topRight: Radius.circular(AppConstant.borderRadius),
                     ),
                     child: Image.network(
-                      prediction?.photoUrl ?? '',
+                      prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
                       //'https://raisingchildren.net.au/__data/assets/image/0026/47816/newborn-behaviour-nutshellnarrow.jpg',
                       fit: BoxFit.cover,
                       height: double.maxFinite,

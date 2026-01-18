@@ -6,10 +6,11 @@ import 'package:baby_look/shared/big_button.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/tips_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PredictionDetailPage extends StatelessWidget {
-  const PredictionDetailPage({super.key});
-  //final PredictionEntity prediction;
+  const PredictionDetailPage({super.key, this.prediction});
+  final PredictionEntity? prediction;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,10 @@ class PredictionDetailPage extends StatelessWidget {
         child: Column(
           spacing: AppConstant.appPadding,
           children: [
-            Hero(tag: AppConstant.heroTag, child: GeneratedImageCard()),
+            Hero(
+              tag: AppConstant.heroTag,
+              child: GeneratedImageCard(imageUrl: prediction?.photoUrl),
+            ),
 
             Row(
               children: [
@@ -40,7 +44,7 @@ class PredictionDetailPage extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.calendarIcon,
                     title: "Gestation",
-                    subtitle: "Week 12",
+                    subtitle: "Week ${prediction?.gestationWeek}",
                   ),
                 ),
                 Expanded(
@@ -50,7 +54,7 @@ class PredictionDetailPage extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.genderIcon,
                     title: "Gender",
-                    subtitle: "Unknown",
+                    subtitle: prediction?.gender ?? "Unknown",
                   ),
                 ),
               ],
@@ -61,13 +65,16 @@ class PredictionDetailPage extends StatelessWidget {
               cardColor: theme.colorScheme.tertiaryFixed,
               icon: AppIcon.dateIcon,
               title: "Date",
-              subtitle: "Nov 1, 2025",
+              subtitle: prediction?.created.toLocal().toString() ?? '',
             ),
             BigButton(
               title: 'View Full Image',
               borderColor: theme.colorScheme.primary,
               buttonColor: theme.colorScheme.onPrimary,
               icon: Icon(AppIcon.fullImageIcon),
+              onTap: () {
+                context.go('/gallery/fullscreen_view', extra: prediction);
+              },
             ),
             BigButton(
               title: "Share Prediction",
@@ -81,7 +88,6 @@ class PredictionDetailPage extends StatelessWidget {
               buttonColor: theme.colorScheme.tertiaryFixed,
               icon: Icon(AppIcon.shareIcon),
             ),
-            BigButton(title: 'Back to Gallery'),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -90,7 +91,7 @@ class _GalleryAll extends StatelessWidget {
                 child: GeneratedCardWidget(
                   prediction: state.predictionList[index],
                   onCardTap: () {
-                    context.push('/gallery/prediction_detail');
+                    context.push('/gallery/prediction_detail', extra: state.predictionList[index] );
                   },
                 ),
               );

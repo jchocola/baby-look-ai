@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'package:baby_look/features/feature_auth/presentation/auth_gate.dart';
 import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_dashboard/presentation/home_page/home_page.dart';
+import 'package:baby_look/features/feature_gallery/presentation/full_screen_view_page.dart';
 import 'package:baby_look/features/feature_gallery/presentation/gallery_page.dart';
 import 'package:baby_look/features/feature_gallery/presentation/prediction_detail_page.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_generate/presentation/generate_page.dart';
 import 'package:baby_look/features/feature_generate/presentation/image_viewer_after_generating.dart';
 import 'package:baby_look/features/feature_user/presentation/pages/help_faq/help_faq_page.dart';
@@ -61,7 +63,8 @@ final GoRouter appRouter = GoRouter(
               builder: (context, state) => GalleryPage(),
               routes: [
                 GoRoute(path: '/image_viewer_after_generating', builder: (context, state) => ImageViewerAfterGenerating(imageBytes: state.extra as Uint8List),),
-                GoRoute(path: '/prediction_detail', builder: (context, state) => PredictionDetailPage(),)
+                GoRoute(path: '/prediction_detail', builder: (context, state) => PredictionDetailPage(prediction: state.extra as PredictionEntity?,),),
+                GoRoute(path: '/fullscreen_view', builder: (context, state) => FullScreenViewPage(prediction: state.extra as PredictionEntity?,),)
               ]
             ),
           ],
