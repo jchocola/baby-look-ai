@@ -1,7 +1,9 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
+import 'package:baby_look/core/bloc/app_config_bloc.dart';
 import 'package:baby_look/core/di/DI.dart';
+import 'package:baby_look/core/domain/local_db_repository.dart';
 import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
@@ -61,6 +63,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) =>
+              AppConfigBloc(localDbRepository: getIt<LocalDbRepository>())
+                ..add(AppConfigBlocEvent_load()),
+        ),
+
         BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),

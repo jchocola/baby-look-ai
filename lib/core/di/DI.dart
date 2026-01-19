@@ -1,4 +1,6 @@
+import 'package:baby_look/core/data/shared_localDBrepository_impl.dart';
 import 'package:baby_look/core/data/vibration_repository_impl.dart';
+import 'package:baby_look/core/domain/local_db_repository.dart';
 import 'package:baby_look/core/domain/vibrattion_repository.dart';
 import 'package:baby_look/features/feature_auth/data/firebase_auth_repository_impl.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
@@ -15,6 +17,7 @@ import 'package:baby_look/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
@@ -38,6 +41,9 @@ Future<void> DI() async {
   getIt.registerSingleton<LocalNotifcationRepository>(
     FlutterLocalNotificationRepositoryImpl(),
   );
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  getIt.registerSingleton<LocalDbRepository>(SharedLocaldbrepositoryImpl(prefs: prefs));
 
   logger.i('DI initialized!');
 }

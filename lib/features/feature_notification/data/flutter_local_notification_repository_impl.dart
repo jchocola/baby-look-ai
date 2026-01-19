@@ -35,11 +35,7 @@ class FlutterLocalNotificationRepositoryImpl
     String? channel_name,
   }) async {
     try {
-      final isGranted = await _checkNotificationPermission();
-      
-      if (!isGranted) {
-        await _requestNotificationPermission();
-      }
+     
 
       AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
@@ -68,23 +64,5 @@ class FlutterLocalNotificationRepositoryImpl
     }
   }
 
-  Future<PermissionStatus> _requestNotificationPermission() async {
-    try {
-      final status = await Permission.notification.request();
-      logger.f(status);
-      return status;
-    } catch (e) {
-      logger.e(e);
-      throw 'SOME ERROR';
-    }
-  }
 
-  Future<bool> _checkNotificationPermission() async {
-    try {
-      return await Permission.notification.isGranted;
-    } catch (e) {
-      logger.e(e);
-      return false;
-    }
-  }
 }
