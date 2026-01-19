@@ -7,6 +7,8 @@ import 'package:baby_look/features/feature_generate/data/firebase_prediction_db_
 import 'package:baby_look/features/feature_generate/data/image_picker_repo_impl.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_notification/data/flutter_local_notification_repository_impl.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:baby_look/features/feature_user/data/firebase_user_db_repo_impl.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
@@ -31,6 +33,10 @@ Future<void> DI() async {
 
   getIt.registerSingleton<PredictionDbRepository>(
     FirebasePredictionDbRepoImpl(userDbRepository: getIt<UserDbRepository>()),
+  );
+
+  getIt.registerSingleton<LocalNotifcationRepository>(
+    FlutterLocalNotificationRepositoryImpl(),
   );
 
   logger.i('DI initialized!');

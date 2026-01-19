@@ -1,5 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:baby_look/features/feature_user/widget/account_setting_widget.dart';
 import 'package:baby_look/features/feature_user/widget/copyright_widget.dart';
 import 'package:baby_look/features/feature_user/widget/legal_info_widget.dart';
@@ -49,6 +51,16 @@ class UserPage extends StatelessWidget {
                 },
                 child: Text('LOG OUT'),
               ),
+            ),
+
+            TextButton(
+              onPressed: () async{
+                await getIt<LocalNotifcationRepository>().showNotification(
+                  title: 'titi',
+                  body: 'boday',
+                );
+              },
+              child: Text('show notififcation'),
             ),
           ],
         ),

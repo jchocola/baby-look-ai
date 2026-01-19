@@ -11,6 +11,7 @@ import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart'
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
@@ -40,6 +41,9 @@ Future<void> main() async {
 
   // DI
   await DI();
+
+  // local notification
+  await getIt<LocalNotifcationRepository>().init();
 
   runApp(
     EasyLocalization(
