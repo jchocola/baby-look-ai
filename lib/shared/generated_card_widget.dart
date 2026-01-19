@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
@@ -128,9 +129,15 @@ class GeneratedCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${prediction?.gender ?? ''} / Gest. week (${prediction?.gestationWeek ?? 0})',
-                    style: theme.textTheme.titleSmall,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Gest. week (${prediction?.gestationWeek ?? 0})',
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      Icon(genderToIcon(gender: prediction?.gender), color: genderFromStr(gender: prediction?.gender ?? '') == BABY_GENDER.BOY ? theme.colorScheme.tertiary : theme.colorScheme.primary,)
+                    ],
                   ),
                   Text(
                     prediction?.created.toLocal().toString() ?? '',
