@@ -15,7 +15,6 @@ import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,6 +86,8 @@ class MyApp extends StatelessWidget {
           create: (context) => GeneratingBloc(
             bananaProService: getIt<BananaProService>(),
             predictionDbRepository: getIt<PredictionDbRepository>(),
+            userBloc: context.read<UserBloc>(),
+            userDbRepository: getIt<UserDbRepository>()
           ),
         ),
       ],

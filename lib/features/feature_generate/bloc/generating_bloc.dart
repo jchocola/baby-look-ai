@@ -4,17 +4,21 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
-import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image/image.dart' show Image;
-
-import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
-import 'package:baby_look/main.dart';
 import 'package:uuid/uuid.dart';
+
+import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_exception/app_exception.dart';
+import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
+import 'package:baby_look/main.dart';
 
 ///
 /// EVENTS
@@ -39,7 +43,7 @@ class GeneratingBlocEvent_generatePrediction extends GeneratingBlocEvent {
     this.motherImage,
     this.gender,
     this.additionalNotes,
-     this.user,
+    this.user,
   });
 
   @override
@@ -92,7 +96,12 @@ class GeneratingBlocState_generated extends GeneratingBlocState {
   List<Object?> get props => [generatedImage];
 }
 
-class GeneratingBlocState_error extends GeneratingBlocState {}
+class GeneratingBlocState_error extends GeneratingBlocState {
+  final AppException error;
+  GeneratingBlocState_error({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
 
 class GeneratingBlocState_success extends GeneratingBlocState {}
 
@@ -102,45 +111,74 @@ class GeneratingBlocState_success extends GeneratingBlocState {}
 class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
   final BananaProService bananaProService;
   final PredictionDbRepository predictionDbRepository;
-
+  final UserBloc userBloc;
+  final UserDbRepository userDbRepository;
   GeneratingBloc({
     required this.bananaProService,
     required this.predictionDbRepository,
+    required this.userBloc,
+    required this.userDbRepository,
   }) : super(GeneratingBlocState_initial()) {
     ///
     /// GeneratingBlocEvent_generatePrediction
     ///
     on<GeneratingBlocEvent_generatePrediction>((event, emit) async {
-      final Completer completer = Completer();
+      //  final Completer completer = Completer();
+
       try {
-        emit(GeneratingBlocState_generating());
+        final userBlocState = userBloc.state;
+        // check balance
+        if (userBlocState is UserBlocState_loaded) {
+          final isEnoughtBalance = await userDbRepository.haveEnoughCoin(
+            coinPrice: AppConstant.REQUEST_PRICE,
+            user: userBlocState.userEntity,
+          );
 
-        // await Future.delayed(Duration(seconds: 5));
+          // if enoughtBalance
+          if (isEnoughtBalance) {
+            // update balance
+            await userDbRepository.updateUserCoin(
+              coinPrice: AppConstant.REQUEST_PRICE,
+              user: userBlocState.userEntity,
+            );
 
-        final response = await bananaProService.generateBabyPrediction(
-          ultrasoundImage: event.ultrasoundImage,
-          fatherImage: event.fatherImage,
-          motherImage: event.motherImage,
-          gestationWeek: event.gestationWeek,
-          gender: event.gender,
-          additionalNotes: event.additionalNotes,
-        );
-        logger.f(response);
-        if (response != null) {
-          emit(GeneratingBlocState_generated(generatedImage: response));
-          add(
-            GeneratingBlocEvent_saveGeneratePredictionImage(
-              user: event.user!,
-              imageBytes: response,
+            // start generating
+            emit(GeneratingBlocState_generating());
+
+            // SEND REQUEST TO AI
+            final response = await bananaProService.generateBabyPrediction(
+              ultrasoundImage: event.ultrasoundImage,
+              fatherImage: event.fatherImage,
+              motherImage: event.motherImage,
               gestationWeek: event.gestationWeek,
               gender: event.gender,
-            ),
-          );
-        } else {
-          emit(GeneratingBlocState_error());
+              additionalNotes: event.additionalNotes,
+            );
+            logger.f(response);
+            if (response != null) {
+              emit(GeneratingBlocState_generated(generatedImage: response));
+              add(
+                GeneratingBlocEvent_saveGeneratePredictionImage(
+                  user: event.user!,
+                  imageBytes: response,
+                  gestationWeek: event.gestationWeek,
+                  gender: event.gender,
+                ),
+              );
+            } else {
+              throw AppException.invalid_response;
+            }
+          } else {
+            throw AppException.balance_not_enought;
+          }
         }
+
+        // await Future.delayed(Duration(seconds: 5));
       } catch (e) {
         logger.e(e);
+        emit(GeneratingBlocState_error(error: e as AppException));
+      } finally {
+        emit(GeneratingBlocState_initial());
       }
     });
 

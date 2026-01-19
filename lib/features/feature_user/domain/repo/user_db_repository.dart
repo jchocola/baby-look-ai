@@ -17,4 +17,13 @@ abstract class UserDbRepository {
     required UserEntity? user,
     required PredictionEntity prediction,
   });
+
+  Future<bool> haveEnoughCoin({
+    required int coinPrice,
+    required UserEntity user,
+  });
+  Future<void> updateUserCoin({
+    required int coinPrice,
+    required UserEntity user,
+  });
 }

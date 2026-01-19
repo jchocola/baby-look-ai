@@ -42,6 +42,8 @@ enum AppException {
   ///
   empty_case,
   password_does_not_matched,
+  balance_not_enought,
+  invalid_response,
 }
 
 String AppExceptionConverter(
@@ -93,6 +95,10 @@ String AppExceptionConverter(
       return 'empty_case';
     case AppException.password_does_not_matched:
       return "password_does_not_matched";
+    case AppException.balance_not_enought:
+      return "balance_not_enought";
+    case AppException.invalid_response:
+      return "invalid_response";  
 
     // DEFAULT
     default:

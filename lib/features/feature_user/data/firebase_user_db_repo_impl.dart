@@ -5,6 +5,7 @@ import 'package:baby_look/features/feature_user/domain/user_entity.dart';
 import 'package:baby_look/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logger/web.dart';
 
 class FirebaseUserDbRepoImpl implements UserDbRepository {
   final _db = FirebaseFirestore.instance.collection('USER');
@@ -102,5 +103,45 @@ class FirebaseUserDbRepoImpl implements UserDbRepository {
       logger.e(e);
     }
   }
-}
 
+  @override
+  Future<bool> haveEnoughCoin({
+    required int coinPrice,
+    required UserEntity user,
+  }) async {
+    try {
+      logger.d('CHECK USER BALANCE WITH $coinPrice COINS');
+      // check from DB every time
+      final userEntity = await getUserEntityFromUid(uid: user.id);
+      if (userEntity.coins - coinPrice >= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      logger.e(e);
+      throw 'haveEnoughCoin';
+    }
+  }
+
+  @override
+  Future<void> updateUserCoin({
+    required int coinPrice,
+    required UserEntity user,
+  }) async {
+    try {
+      logger.e('UPDATE USER COIN $coinPrice');
+
+      // check from db every time
+      final userEntity = await getUserEntityFromUid(uid: user.id);
+      final updatedCoins = userEntity.coins - coinPrice;
+      final updatedUser = UserModel.fromEntity(
+        userEntity,
+      ).copyWith(coins: updatedCoins);
+
+      await updateUser(user: updatedUser.toEntity());
+    } catch (e) {
+      logger.e(e);
+    }
+  }
+}
