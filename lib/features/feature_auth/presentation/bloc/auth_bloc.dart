@@ -283,10 +283,16 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         final currentState = state;
         if (currentState is AuthBlocState_authenticated) {
           await authRepository.sendVerifyEmail(user: currentState.user);
+
+          emit(
+            AuthBlocState_success(exception: AppException.sended_verify_email),
+          );
         }
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+          add(AuthBlocEvent_authCheck());
       }
     });
 

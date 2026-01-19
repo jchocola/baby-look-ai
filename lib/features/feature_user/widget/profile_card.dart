@@ -31,7 +31,7 @@ class ProfileCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state.user.email?.split('@')[0] ?? 'Expecting Parent',
+                          state.user.email ?? 'Expecting Parent',
                               
                           style: theme.textTheme.titleMedium,
                         ),

@@ -156,62 +156,49 @@ class GeneratePage3 extends StatelessWidget {
             ///
             /// BUTTONS
             ///
-            BlocListener<GeneratingBloc, GeneratingBlocState>(
-              listener: (context, state) {
-                if (state is GeneratingBlocState_error) {
-                  showErrorCustomToastification(
-                    title: AppExceptionConverter(
-                      context,
-                      excetion: state.error,
-                    ),
-                  );
-                }
-              },
-
-              child: BlocBuilder<AuthBloc, AuthBlocState>(
-                builder: (context, authState) =>
-                    BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
-                      builder: (context, state) =>
-                          BigButton(
-                                buttonColor: theme.colorScheme.onPrimary,
-                                borderColor: theme.colorScheme.primary,
-                                title: 'Generate Prediction',
-                                onTap: () {
-                                  if (state is PrepareDataBlocState_loaded) {
-                                    context.read<GeneratingBloc>().add(
-                                      GeneratingBlocEvent_generatePrediction(
-                                        ultrasoundImage: File(
-                                          state.ultrasoundImage!.path,
-                                        ),
-                                        gestationWeek: state.gestationWeek ?? 1,
-                                        motherImage: File(
-                                          state.motherImage!.path,
-                                        ),
-                                        fatherImage: File(
-                                          state.fatherImage!.path,
-                                        ),
-                                        gender: state.babyGender.name,
-                                        user:
-                                            authState
-                                                is AuthBlocState_authenticated
-                                            ? authState.user
-                                            : null,
+            BlocBuilder<AuthBloc, AuthBlocState>(
+              builder: (context, authState) =>
+                  BlocBuilder<PrepareDataBloc, PrepareDataBlocState>(
+                    builder: (context, state) =>
+                        BigButton(
+                              buttonColor: theme.colorScheme.onPrimary,
+                              borderColor: theme.colorScheme.primary,
+                              title: 'Generate Prediction',
+                              onTap: () {
+                                if (state is PrepareDataBlocState_loaded) {
+                                  context.read<GeneratingBloc>().add(
+                                    GeneratingBlocEvent_generatePrediction(
+                                      ultrasoundImage: File(
+                                        state.ultrasoundImage!.path,
                                       ),
-                                    );
-                                  }
-                                },
-                              )
-                              .animate(
-                                onPlay: (controller) => controller.repeat(),
-                              )
-                              .shimmer(
-                                duration: 2000.ms,
-                                delay: 1800.ms,
-                                color: theme.colorScheme.onPrimary,
-                              )
-                              .then(delay: 400.ms),
-                    ),
-              ),
+                                      gestationWeek: state.gestationWeek ?? 1,
+                                      motherImage: File(
+                                        state.motherImage!.path,
+                                      ),
+                                      fatherImage: File(
+                                        state.fatherImage!.path,
+                                      ),
+                                      gender: state.babyGender.name,
+                                      user:
+                                          authState
+                                              is AuthBlocState_authenticated
+                                          ? authState.user
+                                          : null,
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                            .animate(
+                              onPlay: (controller) => controller.repeat(),
+                            )
+                            .shimmer(
+                              duration: 2000.ms,
+                              delay: 1800.ms,
+                              color: theme.colorScheme.onPrimary,
+                            )
+                            .then(delay: 400.ms),
+                  ),
             ),
             BigButton(
               borderColor: theme.colorScheme.error,

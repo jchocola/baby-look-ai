@@ -13,6 +13,9 @@ enum AppException {
   failed_register_user,
   failed_verify_email,
   failed_recovery_password_email,
+  account_unverified,
+  account_verified,
+  sended_verify_email,
 
   ///
   /// FIREBASE EXCEPTION
@@ -68,6 +71,12 @@ String AppExceptionConverter(
       return "failed_verify_email";
     case AppException.failed_recovery_password_email:
       return "failed_recovery_password_email";
+     case AppException.account_unverified:
+      return "account_unverified";
+       case AppException.account_verified:
+      return "account_verified";  
+      case AppException.sended_verify_email:
+      return "sended_verify_email";    
 
     case AppException.invalid_email:
       return 'invalid_email';

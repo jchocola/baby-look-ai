@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -113,11 +114,13 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
   final PredictionDbRepository predictionDbRepository;
   final UserBloc userBloc;
   final UserDbRepository userDbRepository;
+  final AuthBloc authBloc;
   GeneratingBloc({
     required this.bananaProService,
     required this.predictionDbRepository,
     required this.userBloc,
     required this.userDbRepository,
+    required this.authBloc,
   }) : super(GeneratingBlocState_initial()) {
     ///
     /// GeneratingBlocEvent_generatePrediction
@@ -126,50 +129,59 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
       //  final Completer completer = Completer();
 
       try {
-        final userBlocState = userBloc.state;
-        // check balance
-        if (userBlocState is UserBlocState_loaded) {
-          final isEnoughtBalance = await userDbRepository.haveEnoughCoin(
-            coinPrice: AppConstant.REQUEST_PRICE,
-            user: userBlocState.userEntity,
-          );
+        //1) check this user verified or not
+        final authState = authBloc.state;
 
-          // if enoughtBalance
-          if (isEnoughtBalance) {
-            // update balance
-            await userDbRepository.updateUserCoin(
-              coinPrice: AppConstant.REQUEST_PRICE,
-              user: userBlocState.userEntity,
-            );
+        if (authState is AuthBlocState_authenticated) {
+          if (authState.verifiedUser) {
+            final userBlocState = userBloc.state;
+            //2) check balance
+            if (userBlocState is UserBlocState_loaded) {
+              final isEnoughtBalance = await userDbRepository.haveEnoughCoin(
+                coinPrice: AppConstant.REQUEST_PRICE,
+                user: userBlocState.userEntity,
+              );
 
-            // start generating
-            emit(GeneratingBlocState_generating());
+              //2.1) if enoughtBalance
+              if (isEnoughtBalance) {
+                // update balance
+                await userDbRepository.updateUserCoin(
+                  coinPrice: AppConstant.REQUEST_PRICE,
+                  user: userBlocState.userEntity,
+                );
 
-            // SEND REQUEST TO AI
-            final response = await bananaProService.generateBabyPrediction(
-              ultrasoundImage: event.ultrasoundImage,
-              fatherImage: event.fatherImage,
-              motherImage: event.motherImage,
-              gestationWeek: event.gestationWeek,
-              gender: event.gender,
-              additionalNotes: event.additionalNotes,
-            );
-            logger.f(response);
-            if (response != null) {
-              emit(GeneratingBlocState_generated(generatedImage: response));
-              add(
-                GeneratingBlocEvent_saveGeneratePredictionImage(
-                  user: event.user!,
-                  imageBytes: response,
+                //3) start generating
+                emit(GeneratingBlocState_generating());
+
+                // SEND REQUEST TO AI
+                final response = await bananaProService.generateBabyPrediction(
+                  ultrasoundImage: event.ultrasoundImage,
+                  fatherImage: event.fatherImage,
+                  motherImage: event.motherImage,
                   gestationWeek: event.gestationWeek,
                   gender: event.gender,
-                ),
-              );
-            } else {
-              throw AppException.invalid_response;
+                  additionalNotes: event.additionalNotes,
+                );
+                logger.f(response);
+                if (response != null) {
+                  emit(GeneratingBlocState_generated(generatedImage: response));
+                  add(
+                    GeneratingBlocEvent_saveGeneratePredictionImage(
+                      user: event.user!,
+                      imageBytes: response,
+                      gestationWeek: event.gestationWeek,
+                      gender: event.gender,
+                    ),
+                  );
+                } else {
+                  throw AppException.invalid_response;
+                }
+              } else {
+                throw AppException.balance_not_enought;
+              }
             }
           } else {
-            throw AppException.balance_not_enought;
+            throw AppException.account_unverified;
           }
         }
 

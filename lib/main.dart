@@ -87,7 +87,8 @@ class MyApp extends StatelessWidget {
             bananaProService: getIt<BananaProService>(),
             predictionDbRepository: getIt<PredictionDbRepository>(),
             userBloc: context.read<UserBloc>(),
-            userDbRepository: getIt<UserDbRepository>()
+            userDbRepository: getIt<UserDbRepository>(),
+            authBloc: context.read<AuthBloc>()
           ),
         ),
       ],
