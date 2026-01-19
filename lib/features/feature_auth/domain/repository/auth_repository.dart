@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
-  Future<void> authViaLoginPassword({
+  Future<UserCredential> authViaLoginPassword({
     required String login,
     required String password,
   });
@@ -13,16 +13,16 @@ abstract class AuthRepository {
 
   Future<void> sendVerifyEmail({required User user});
 
-    Future<void> sendPasswordRecoveyEmail({required String email});
+  Future<void> sendPasswordRecoveyEmail({required String email});
 
   Future<void> authWithUserCredential({required UserCredential userCredential});
 
-  Future<void> authViaGoogle();
+  Future<UserCredential> authViaGoogle();
   Future<UserCredential> authViaFacebook();
 
   Future<User?> getCurrentUser();
 
-  Future<void> authViaGithub();
+  Future<UserCredential> authViaGithub();
 
   Future<void> logOut();
 

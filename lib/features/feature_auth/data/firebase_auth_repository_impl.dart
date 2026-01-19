@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_nullable_for_final_variable_declarations, curly_braces_in_flow_control_structures, unnecessary_brace_in_string_interps
+
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/main.dart';
@@ -43,11 +45,11 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> authViaGithub() async {
+  Future<UserCredential> authViaGithub() async {
     try {
       // Create a new provider
       GithubAuthProvider githubProvider = GithubAuthProvider();
-      await _auth.signInWithProvider(githubProvider);
+      return await _auth.signInWithProvider(githubProvider);
     } on FirebaseAuthException catch (e) {
       logger.e(e);
       if (e.code == "user-disabled") throw AppException.user_disabled;
@@ -56,7 +58,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> authViaGoogle() async {
+  Future<UserCredential> authViaGoogle() async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
@@ -75,7 +77,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       );
 
       // Once signed in, return the UserCredential
-      await _auth.signInWithCredential(credential);
+      return await _auth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       logger.e(e);
       if (e.code == "account-exists-with-different-credential")
@@ -96,12 +98,15 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> authViaLoginPassword({
+  Future<UserCredential> authViaLoginPassword({
     required String login,
     required String password,
   }) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: login, password: password);
+      return await _auth.signInWithEmailAndPassword(
+        email: login,
+        password: password,
+      );
     } on FirebaseAuthException catch (e) {
       logger.e(e);
       if (e.code == "invalid-email") throw AppException.invalid_email;

@@ -1,14 +1,20 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
+import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +29,9 @@ final logger = Logger();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // localizations
+  await EasyLocalization.ensureInitialized();
+
   // .env
   await dotenv.load(fileName: ".env");
 
@@ -32,7 +41,14 @@ Future<void> main() async {
   // DI
   await DI();
 
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('vi'), Locale('ru')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -42,28 +58,57 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AuthBloc(authRepository: getIt<AuthRepository>())
-                ..add(AuthBlocEvent_authCheck()),
+          create: (context) => PredictionsBloc(
+            predictionDbRepository: getIt<PredictionDbRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UserBloc(
+            userDbRepository: getIt<UserDbRepository>(),
+            authRepository: getIt<AuthRepository>(),
+            predictionsBloc: context.read<PredictionsBloc>(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: getIt<AuthRepository>(),
+            userDbRepository: getIt<UserDbRepository>(),
+            userBloc: context.read<UserBloc>(),
+            predictionsBloc: context.read<PredictionsBloc>(),
+          )..add(AuthBlocEvent_authCheck()),
         ),
         BlocProvider(
           create: (context) =>
               PrepareDataBloc(pickerRepository: getIt<ImagePickerRepository>()),
         ),
         BlocProvider(
-          create: (context) =>
-              GeneratingBloc(bananaProService: getIt<BananaProService>()),
+          create: (context) => GeneratingBloc(
+            bananaProService: getIt<BananaProService>(),
+            predictionDbRepository: getIt<PredictionDbRepository>(),
+            userBloc: context.read<UserBloc>(),
+            userDbRepository: getIt<UserDbRepository>(),
+            authBloc: context.read<AuthBloc>(),
+            predictionsBloc: context.read<PredictionsBloc>(),
+          ),
         ),
       ],
       child: Wiredash(
         projectId: dotenv.get("WIREDASH_PROJECT_ID"),
         secret: dotenv.get("WIREDASH_SECRET_KEY"),
         child: ToastificationWrapper(
-          child: MaterialApp.router(
-            theme: appTheme,
-            debugShowCheckedModeBanner: false,
-            routerConfig: appRouter,
-            title: 'AI BabyLook',
+          child: Builder(
+            // Builder so we can access EasyLocalization's context here
+            builder: (context) => MaterialApp.router(
+              theme: appTheme,
+              debugShowCheckedModeBanner: false,
+              routerConfig: appRouter,
+              title: 'AI BabyLook',
+              // Provide localization delegates/locales/locale from EasyLocalization
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+            ),
           ),
         ),
       ),
@@ -84,16 +129,22 @@ class MainPage extends StatelessWidget {
           navigationShell.goBranch(value);
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(AppIcon.homeIcon), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(AppIcon.homeIcon),
+            label: context.tr(AppText.home),
+          ),
           BottomNavigationBarItem(
             icon: Icon(AppIcon.createIcon),
-            label: 'Create',
+            label: context.tr(AppText.create),
           ),
           BottomNavigationBarItem(
             icon: Icon(AppIcon.galleryIcon),
-            label: 'Gallery',
+            label: context.tr(AppText.gallery),
           ),
-          BottomNavigationBarItem(icon: Icon(AppIcon.userIcon), label: 'User'),
+          BottomNavigationBarItem(
+            icon: Icon(AppIcon.userIcon),
+            label: context.tr(AppText.user),
+          ),
         ],
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/domain/vibrattion_repository.dart';
+import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/presentation/generate_page1.dart';
@@ -46,7 +48,7 @@ class _GeneratePageState extends State<GeneratePage> {
 
               }
               if (state is GeneratingBlocState_error) {
-                showSuccessCustomToastification(title: 'Failed'); 
+                showErrorCustomToastification(title: AppExceptionConverter(context, excetion: state.error)); 
 
               }
             },

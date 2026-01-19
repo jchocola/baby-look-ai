@@ -7,7 +7,7 @@ class CustomListile extends StatelessWidget {
     super.key,
     this.title = 'Default',
     this.icon = Icons.add,
-    this.tralingWidget = const Icon(AppIcon.arrowForwardIcon),
+    this.tralingWidget = const Icon(AppIcon.arrowForwardIcon,color: Colors.black54,),
     this.onTap
   });
 
@@ -21,7 +21,7 @@ class CustomListile extends StatelessWidget {
       onTap: onTap,
       leading: CustomRoundedIcon(icon: icon),
       title: Text(title),
-      trailing: Transform.scale(scale: 0.7, child: tralingWidget),
+      trailing: Transform.scale(scale: 0.8, child: tralingWidget),
     );
   }
 }

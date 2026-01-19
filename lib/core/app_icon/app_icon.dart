@@ -37,6 +37,9 @@ class AppIcon {
   static const faceFillIcon = LucideIcons.scanFace;
   static const naturalIcon = LucideIcons.leaf;
 
+  static const motherIcon = Icons.woman_2_rounded;
+  static const fatherIcon = Icons.man_2_rounded;
+
   ///
   /// SETTINGS
   ///
@@ -55,6 +58,7 @@ class AppIcon {
   ///
   ///
   static const favouriteRoundedIcon = LucideIcons.heart;
+  static const favouriteSolidIcon = Icons.favorite_outlined;
   static const verticalMoreIcon = Icons.more_vert_outlined;
 
   static const calendarIcon = LucideIcons.calendar;
@@ -67,4 +71,9 @@ class AppIcon {
   static const retryIcon = LucideIcons.repeat;
 
   static const emailIcon = LucideIcons.mail;
+  static const techStackIcon = LucideIcons.squareTerminal;
+  static const developerIcon = LucideIcons.usersRound;
+  static const AIIcon = LucideIcons.star;
+  static const buildDateIcon = LucideIcons.calendarCheck;
+  static const versionIcon = LucideIcons.box;
 }

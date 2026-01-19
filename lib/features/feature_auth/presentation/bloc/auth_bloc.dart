@@ -1,11 +1,14 @@
 // ignore_for_file: camel_case_types
 
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
 
 ///
@@ -34,6 +37,13 @@ class AuthBlocEvent_sendPassRecoverToEmail extends AuthBlocEvent {
 
   @override
   List<Object?> get props => [email];
+}
+
+class AuthBlocEvent_checkSetupUserDataFirstTime extends AuthBlocEvent {
+  final UserCredential? userCredential;
+  AuthBlocEvent_checkSetupUserDataFirstTime({required this.userCredential});
+  @override
+  List<Object?> get props => [userCredential];
 }
 
 class AuthBlocEvent_loginViaLoginPassword extends AuthBlocEvent {
@@ -98,7 +108,15 @@ class AuthBlocState_authenticated extends AuthBlocState {
 ///
 class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   final AuthRepository authRepository;
-  AuthBloc({required this.authRepository}) : super(AuthBlocState_init()) {
+  final UserDbRepository userDbRepository;
+  final UserBloc userBloc;
+  final PredictionsBloc predictionsBloc;
+  AuthBloc({
+    required this.authRepository,
+    required this.userDbRepository,
+    required this.userBloc,
+    required this.predictionsBloc,
+  }) : super(AuthBlocState_init()) {
     ///
     /// AUTH CHECK
     ///
@@ -108,6 +126,8 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
 
       if (user != null) {
         emit(AuthBlocState_authenticated(user: user));
+        userBloc.add(UserBlocEvent_setUser(user: user));
+        predictionsBloc.add(PredictionsBlocEvent_loadPredictions(user: user));
       } else {
         emit(AuthBlocState_unauthenticated());
       }
@@ -120,7 +140,13 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         logger.d('Auth via facebook');
 
-        await authRepository.authViaFacebook();
+        final userCredential = await authRepository.authViaFacebook();
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
+        );
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
@@ -136,13 +162,11 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         logger.d('Log out');
         await authRepository.logOut();
-
-       
       } catch (e) {
         logger.e(e);
-         emit(AuthBlocState_error(exception: e as AppException));
+        emit(AuthBlocState_error(exception: e as AppException));
       } finally {
-         add(AuthBlocEvent_authCheck());
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -152,7 +176,13 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     on<AuthBlocEvent_authViaGitHub>((event, emit) async {
       try {
         logger.d('Auth via github');
-        await authRepository.authViaGithub();
+        final userCredential = await authRepository.authViaGithub();
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
+        );
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
@@ -168,7 +198,13 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         logger.d('Auth via google');
 
-        await authRepository.authViaGoogle();
+        final userCredential = await authRepository.authViaGoogle();
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
+        );
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
@@ -221,9 +257,15 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           throw AppException.password_does_not_matched;
         }
 
-        await authRepository.registerNewUser(
+        final userCredential = await authRepository.registerNewUser(
           login: event.login!,
           password: event.password!,
+        );
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
         );
       } catch (e) {
         logger.e(e);
@@ -241,10 +283,16 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         final currentState = state;
         if (currentState is AuthBlocState_authenticated) {
           await authRepository.sendVerifyEmail(user: currentState.user);
+
+          emit(
+            AuthBlocState_success(exception: AppException.sended_verify_email),
+          );
         }
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+          add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -266,6 +314,29 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         emit(AuthBlocState_error(exception: e as AppException));
       } finally {
         add(AuthBlocEvent_authCheck());
+      }
+    });
+
+    ///
+    /// CHECK SET UP USER DATA FIRST TIME
+    ///
+    on<AuthBlocEvent_checkSetupUserDataFirstTime>((event, emit) async {
+      try {
+        logger.d("SET UP USER DATA FIRST TIME");
+        if (event.userCredential != null) {
+          final isNewUser = await userDbRepository.isNewUser(
+            userCredential: event.userCredential!,
+          );
+
+          if (isNewUser) {
+            final currentUser = await authRepository.getCurrentUser();
+            if (currentUser != null) {
+              await userDbRepository.firstTimeSetup(user: currentUser);
+            }
+          }
+        }
+      } catch (e) {
+        logger.e(e);
       }
     });
   }
