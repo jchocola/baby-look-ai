@@ -133,7 +133,7 @@ class GeneratedCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Gest. week (${prediction?.gestationWeek ?? 0})',
+                        'Week ${prediction?.gestationWeek ?? 0}',
                         style: theme.textTheme.titleSmall,
                       ),
                       Icon(genderToIcon(gender: prediction?.gender), color: genderFromStr(gender: prediction?.gender ?? '') == BABY_GENDER.BOY ? theme.colorScheme.tertiary : theme.colorScheme.primary,)
