@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -115,12 +116,14 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
   final UserBloc userBloc;
   final UserDbRepository userDbRepository;
   final AuthBloc authBloc;
+  final PredictionsBloc predictionsBloc;
   GeneratingBloc({
     required this.bananaProService,
     required this.predictionDbRepository,
     required this.userBloc,
     required this.userDbRepository,
     required this.authBloc,
+    required this.predictionsBloc,
   }) : super(GeneratingBlocState_initial()) {
     ///
     /// GeneratingBlocEvent_generatePrediction
@@ -165,6 +168,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
                 logger.f(response);
                 if (response != null) {
                   emit(GeneratingBlocState_generated(generatedImage: response));
+                  // save image
                   add(
                     GeneratingBlocEvent_saveGeneratePredictionImage(
                       user: event.user!,
@@ -173,6 +177,10 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
                       gender: event.gender,
                     ),
                   );
+
+                   // reload predcitions
+                  predictionsBloc.add(PredictionsBlocEvent_loadPredictions());
+                  userBloc.add(UserBlocEvent_reloadUser());
                 } else {
                   throw AppException.invalid_response;
                 }
@@ -191,6 +199,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
         emit(GeneratingBlocState_error(error: e as AppException));
       } finally {
         emit(GeneratingBlocState_initial());
+       
       }
     });
 

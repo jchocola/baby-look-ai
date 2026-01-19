@@ -88,7 +88,8 @@ class MyApp extends StatelessWidget {
             predictionDbRepository: getIt<PredictionDbRepository>(),
             userBloc: context.read<UserBloc>(),
             userDbRepository: getIt<UserDbRepository>(),
-            authBloc: context.read<AuthBloc>()
+            authBloc: context.read<AuthBloc>(),
+            predictionsBloc: context.read<PredictionsBloc>(),
           ),
         ),
       ],

@@ -3,7 +3,7 @@ class AppConstant {
   static double appPadding = 15;
   static double borderRadius = 12;
 
-  static int REQUEST_PRICE = 10;
+  static int REQUEST_PRICE = 1;
 
   static String heroTag = 'BABY_VIEW';
 
