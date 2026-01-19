@@ -94,11 +94,18 @@ class MyApp extends StatelessWidget {
         projectId: dotenv.get("WIREDASH_PROJECT_ID"),
         secret: dotenv.get("WIREDASH_SECRET_KEY"),
         child: ToastificationWrapper(
-          child: MaterialApp.router(
-            theme: appTheme,
-            debugShowCheckedModeBanner: false,
-            routerConfig: appRouter,
-            title: 'AI BabyLook',
+          child: Builder(
+            // Builder so we can access EasyLocalization's context here
+            builder: (context) => MaterialApp.router(
+              theme: appTheme,
+              debugShowCheckedModeBanner: false,
+              routerConfig: appRouter,
+              title: 'AI BabyLook',
+              // Provide localization delegates/locales/locale from EasyLocalization
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+            ),
           ),
         ),
       ),
@@ -107,7 +114,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key, required this.navigationShell,});
+  const MainPage({super.key, required this.navigationShell});
   final StatefulNavigationShell navigationShell;
   @override
   Widget build(BuildContext context) {
