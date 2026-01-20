@@ -23,6 +23,7 @@ class GenderCardPicker extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+       // padding: EdgeInsets.all(AppConstant.appPadding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppConstant.borderRadius),
           border: Border.all(color: showColor),
@@ -35,6 +36,7 @@ class GenderCardPicker extends StatelessWidget {
               Text(
                 title,
                 style: theme.textTheme.titleSmall!.copyWith(color: showColor),
+                textAlign: TextAlign.center,
               ),
             ],
           ),

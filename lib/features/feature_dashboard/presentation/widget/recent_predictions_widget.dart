@@ -1,6 +1,8 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,13 +19,13 @@ class RecentPredictionsWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Recent Predictions', style: theme.textTheme.titleMedium),
+            Text(context.tr(AppText.recent_predictions), style: theme.textTheme.titleMedium),
             TextButton(
               onPressed: () {
                 context.go('/gallery');
               },
               child: Text(
-                'View All',
+                context.tr(AppText.view_all),
                 style: theme.textTheme.bodyMedium!.copyWith(
                   color: theme.colorScheme.primary,
                   fontWeight: FontWeight.bold,

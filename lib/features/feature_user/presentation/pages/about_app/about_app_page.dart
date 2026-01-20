@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/shared/app_logo.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/custom_listile.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -14,7 +16,7 @@ class AboutAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'BabyLook AI'),
+      appBar: CustomAppBar(title: context.tr(AppText.about_us)),
       body: buildBody(context),
     );
   }
@@ -35,17 +37,17 @@ class AboutAppPage extends StatelessWidget {
           SizedBox(height: AppConstant.appPadding * 2,),
           CustomListile(
             icon: AppIcon.versionIcon,
-            title: 'Version',
+            title:  context.tr(AppText.version),
             tralingWidget: Text('1.0.0', style: theme.textTheme.titleMedium),
           ),
           CustomListile(
             icon: AppIcon.buildDateIcon,
-            title: 'Build Date',
+            title:  context.tr(AppText.build_date),
             tralingWidget: Text('1.0.0', style: theme.textTheme.titleMedium),
           ),
           CustomListile(
             icon: AppIcon.developerIcon,
-            title: 'Developer',
+            title:  context.tr(AppText.developer),
             tralingWidget: Text(
               'Nguen T.B',
               style: theme.textTheme.titleMedium,
@@ -53,7 +55,7 @@ class AboutAppPage extends StatelessWidget {
           ),
           CustomListile(
             icon: AppIcon.AIIcon, 
-            title: 'AI Model',
+            title:  context.tr(AppText.ai_model),
             tralingWidget: Text(
               'Nano Banana Pro',
               style: theme.textTheme.titleMedium,
@@ -61,7 +63,7 @@ class AboutAppPage extends StatelessWidget {
           ),
           CustomListile(
             icon: AppIcon.techStackIcon,
-            title: 'Tech Stack',
+            title:  context.tr(AppText.tech_stack),
             tralingWidget: Text(
               'Flutter/Dart',
               style: theme.textTheme.titleMedium,
@@ -69,7 +71,7 @@ class AboutAppPage extends StatelessWidget {
           ),
           CustomListile(
             icon: AppIcon.emailIcon,
-            title: 'Contact',
+            title:  context.tr(AppText.contact),
             tralingWidget: Text(
               'egmail.com',
               style: theme.textTheme.titleMedium,

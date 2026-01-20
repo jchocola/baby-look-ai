@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
@@ -12,6 +13,7 @@ import 'package:baby_look/features/feature_auth/widget/register_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/video_gif.dart';
 import 'package:baby_look/shared/app_logo.dart';
 import 'package:baby_look/shared/note_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -236,8 +238,8 @@ class _AuthPageState extends State<AuthPage>
                                             CupertinoSlidingSegmentedControl(
                                               groupValue: _slidingIndex,
                                               children: {
-                                                0: Text('Login'),
-                                                1: Text('Register'),
+                                                0: Text(context.tr(AppText.login)),
+                                                1: Text(context.tr(AppText.register)),
                                               },
                                               onValueChanged:
                                                   changeSlidingIndex,

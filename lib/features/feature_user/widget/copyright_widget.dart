@@ -1,3 +1,5 @@
+import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CopyrightWidget extends StatelessWidget {
@@ -5,11 +7,11 @@ class CopyrightWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Column(
       children: [
-        Text('BabyLook v1.0.0' , style: theme.textTheme.bodySmall),
-        Text('© 2025 BabyLook. All rights reserved.' , style: theme.textTheme.bodySmall)
+        Text(context.tr(AppText.app_version), style: theme.textTheme.bodySmall),
+        Text(context.tr(AppText.copyright), style: theme.textTheme.bodySmall),
       ],
     );
   }

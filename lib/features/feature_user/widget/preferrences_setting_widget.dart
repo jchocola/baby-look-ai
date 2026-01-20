@@ -1,8 +1,12 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/core/bloc/app_config_bloc.dart';
 import 'package:baby_look/features/feature_user/presentation/modal/languages_modal.dart';
 import 'package:baby_look/shared/custom_listile.dart';
 import 'package:baby_look/shared/custom_switch.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -15,14 +19,21 @@ class PreferrencesSettingWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Preferences', style: theme.textTheme.titleMedium),
-        CustomListile(
-          title: 'Notifications',
-          icon: AppIcon.notificationIcon,
-          tralingWidget: CustomSwitch(),
+        Text(context.tr(AppText.preferences), style: theme.textTheme.titleMedium),
+        BlocBuilder<AppConfigBloc, AppConfigBlocState>(
+          builder: (context, state) => CustomListile(
+            onTap: () => context.read<AppConfigBloc>().add(
+              AppConfigBlocEvent_toogleNotificationEnabilityValue(),
+            ),
+            title: context.tr(AppText.notification),
+            icon: AppIcon.notificationIcon,
+            tralingWidget: state is AppConfigBlocState_loaded
+                ? CustomSwitch(value: state.notificationEnability)
+                : SizedBox(),
+          ),
         ),
         CustomListile(
-          title: 'Language',
+          title: context.tr(AppText.language),
           icon: AppIcon.languageIcon,
           onTap: () {
             showModalBottomSheet(
@@ -34,14 +45,14 @@ class PreferrencesSettingWidget extends StatelessWidget {
           },
         ),
         CustomListile(
-          title: 'Help and FAQ',
+          title: context.tr(AppText.help_faq),
           icon: AppIcon.helpIcon,
           onTap: () {
             context.push('/user/faq');
           },
         ),
         CustomListile(
-          title: 'Send Feedback',
+          title: context.tr(AppText.send_feedback),
           icon: AppIcon.feedbackIcon,
           onTap: () async {
             Wiredash.of(context).show(inheritMaterialTheme: true);

@@ -1,7 +1,9 @@
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_theme.dart';
+import 'package:baby_look/core/bloc/app_config_bloc.dart';
 import 'package:baby_look/core/di/DI.dart';
+import 'package:baby_look/core/domain/local_db_repository.dart';
 import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
@@ -11,12 +13,14 @@ import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart'
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/image_picker_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +45,17 @@ Future<void> main() async {
   // DI
   await DI();
 
+  // local notification
+  await getIt<LocalNotifcationRepository>().init();
+
+  // orientation
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]
+  );
+
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('vi'), Locale('ru')],
@@ -57,6 +72,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) =>
+              AppConfigBloc(localDbRepository: getIt<LocalDbRepository>())
+                ..add(AppConfigBlocEvent_load()),
+        ),
+
         BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),

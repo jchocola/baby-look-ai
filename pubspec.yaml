@@ -70,6 +70,9 @@ dependencies:
   easy_localization: ^3.0.8
   easy_localization_loader: ^2.0.2
   url_launcher: ^6.3.2
+  flutter_local_notifications: ^19.5.0
+  permission_handler: ^12.0.1
+  shared_preferences: ^2.5.4
 
 dev_dependencies:
   flutter_test:

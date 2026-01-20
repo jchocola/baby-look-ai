@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:baby_look/core/app_theme/app_color.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedGreetingsWidget extends StatelessWidget {
@@ -17,13 +18,13 @@ class AnimatedGreetingsWidget extends StatelessWidget {
           pause: Duration.zero,
           repeatForever: true,
           animatedTexts: [
-            FadeAnimatedText('Добро пожаловать в волшебный мир ожидания!'),
-            FadeAnimatedText('Скоро вы увидите самое прекрасное лицо на свете'),
-            FadeAnimatedText('За каждой улыбкой малыша - история любви'),
+            FadeAnimatedText(context.tr(AppText.greeting1)),
+            FadeAnimatedText(context.tr(AppText.greeting2)),
+            FadeAnimatedText(context.tr(AppText.greeting3)),
             FadeAnimatedText(
-              'Место, где мечты родителей становятся реальностью',
+              context.tr(AppText.greeting4),
             ),
-            FadeAnimatedText('Первая встреча с вашим чудом начинается здесь'),
+            FadeAnimatedText(context.tr(AppText.greeting5)),
           ],
           onTap: () {
             print("Tap Event");

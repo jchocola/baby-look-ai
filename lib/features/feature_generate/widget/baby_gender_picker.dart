@@ -1,8 +1,10 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/shared/gender_card_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +16,10 @@ class BabyGenderPicker extends StatelessWidget {
     final theme = Theme.of(context);
 
     final _genderOption = [
-      {"title": "Boy", "gender": BABY_GENDER.BOY, "icon": AppIcon.boyIcon},
-      {"title": "Girl", "gender": BABY_GENDER.GIRL, "icon": AppIcon.girlIcon},
+      {"title": context.tr(AppText.boy), "gender": BABY_GENDER.BOY, "icon": AppIcon.boyIcon},
+      {"title": context.tr(AppText.girl), "gender": BABY_GENDER.GIRL, "icon": AppIcon.girlIcon},
       {
-        "title": "Don't know",
+        "title": context.tr(AppText.dont_know),
         "gender": BABY_GENDER.DONT_KNOW,
         "icon": AppIcon.dontKnowIcon,
       },
@@ -27,9 +29,9 @@ class BabyGenderPicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       //spacing: AppConstant.appPadding,
       children: [
-        Text('Baby Gender', style: theme.textTheme.titleMedium),
+        Text(context.tr(AppText.baby_gender), style: theme.textTheme.titleMedium),
         Text(
-          "Choose the baby's gender or select if you don't know yet",
+          context.tr(AppText.choose_the_baby_gender),
           style: theme.textTheme.bodySmall,
         ),
         SizedBox(height: AppConstant.appPadding,),
