@@ -47,6 +47,13 @@ class AppText {
   static const predictions = 'prediction.predictions';
   static const favourites = 'prediction.favourites';
   static const days_active = 'prediction.days_active';
+  static const prediction_details = 'prediction.prediction_details';
+  static const gestation = 'prediction.gestation';
+  static const gender = 'prediction.gender';
+  static const date = 'prediction.date';
+  static const view_full_image = 'prediction.view_full_image';
+  static const share_prediction = 'prediction.share_prediction';
+  static const save_to_gallery = 'prediction.save_to_gallery';
 
   ///
   /// GALLERY
@@ -86,4 +93,16 @@ class AppText {
   static const greeting3 = 'greeting.greeting3';
   static const greeting4 = 'greeting.greeting4';
   static const greeting5 = 'greeting.greeting5';
+
+  ///
+  /// HOME
+  ///
+  static const home_note = 'home.home_note';
+  static const create_new_prediction = 'home.create_new_prediction';
+  static const upload_ultrasound_parent_photos =
+      'home.upload_ultrasound_parent_photos';
+  static const welcome_back = 'home.welcome_back';
+  static const expecting_parent = 'home.expecting_parent';
+  static const recent_predictions = 'home.recent_predictions';
+  static const view_all = 'home.view_all';
 }

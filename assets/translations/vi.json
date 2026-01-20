@@ -31,6 +31,15 @@
     "greeting4": "",
     "greeting5": ""
   },
+  "home": {
+    "create_new_prediction": "",
+    "expecting_parent": "",
+    "home_note": "",
+    "recent_predictions": "",
+    "upload_ultrasound_parent_photos": "",
+    "view_all": "",
+    "welcome_back": ""
+  },
   "navbar": {
     "create": "Tạo ",
     "gallery": "Album",
@@ -38,9 +47,16 @@
     "user": "Profile"
   },
   "prediction": {
+    "date": "",
     "days_active": "",
     "favourites": "",
+    "gender": "",
+    "gestation": "",
+    "prediction_details": "",
     "predictions": "",
+    "save_to_gallery": "",
+    "share_prediction": "",
+    "view_full_image": "",
     "week_n": ""
   },
   "setting": {

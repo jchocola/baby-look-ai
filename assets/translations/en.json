@@ -31,6 +31,15 @@
     "greeting4": "Место, где мечты родителей становятся реальностью",
     "greeting5": "Первая встреча с вашим чудом начинается здесь"
   },
+  "home": {
+    "create_new_prediction": "Create New Prediction",
+    "expecting_parent": "Expecting Parent!",
+    "home_note": "Weeks 24-28 provide the clearest ultrasound images for AI analysis.",
+    "recent_predictions": "Recent Predictions",
+    "upload_ultrasound_parent_photos": "Upload ultrasound and parent photos",
+    "view_all": "View All",
+    "welcome_back": "Welcome back !"
+  },
   "navbar": {
     "create": "Create",
     "gallery": "Gallery",
@@ -38,9 +47,16 @@
     "user": "User"
   },
   "prediction": {
+    "date": "Date",
     "days_active": "Days Active",
     "favourites": "Favourites",
+    "gender": "Gender",
+    "gestation": "Gestation",
+    "prediction_details": "Prediction Details",
     "predictions": "Predictions",
+    "save_to_gallery": "Save to Gallery",
+    "share_prediction": "Share Prediction",
+    "view_full_image": "View Full Image",
     "week_n": "Week {}"
   },
   "setting": {

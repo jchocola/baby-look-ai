@@ -1,7 +1,9 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/shared/custom_rounded_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -35,12 +37,14 @@ class CreateNewPredictionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomRoundedIcon(icon: AppIcon.createIcon, iconColor: theme.colorScheme.primary,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Create New Prediction', style: theme.textTheme.titleLarge,),
-                Text('Upload ultrasound and parent photos',style: theme.textTheme.bodySmall,),
-              ],
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(context.tr(AppText.create_new_prediction), style: theme.textTheme.titleLarge,maxLines: 1,),
+                  Text(context.tr(AppText.upload_ultrasound_parent_photos),style: theme.textTheme.bodySmall,),
+                ],
+              ),
             ),
             Icon(AppIcon.arrowForwardIcon, color: theme.colorScheme.primary,),
           ],
