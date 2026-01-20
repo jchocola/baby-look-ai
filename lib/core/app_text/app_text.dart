@@ -54,6 +54,13 @@ class AppText {
   static const view_full_image = 'prediction.view_full_image';
   static const share_prediction = 'prediction.share_prediction';
   static const save_to_gallery = 'prediction.save_to_gallery';
+    static const your_baby_prediction = 'prediction.your_baby_prediction';
+      static const meet_your_baby = 'prediction.meet_your_baby';
+        static const ai_note1 = 'prediction.ai_note1';
+          static const ai_note2 = 'prediction.ai_note2';
+            static const re_generate = 'prediction.re_generate';
+              static const take_screenshot = 'prediction.take_screenshot';
+
 
   ///
   /// GALLERY

@@ -47,17 +47,23 @@
     "user": "User"
   },
   "prediction": {
+    "ai_note1": "Here's our AI prediction of what your little one might look like",
+    "ai_note2": "This prediction is generated using AI analysis of your ultrasound and parent photos. Results are for entertainment purposes and may vary from actual appearance.",
     "date": "Date",
     "days_active": "Days Active",
     "favourites": "Favourites",
     "gender": "Gender",
     "gestation": "Gestation",
+    "meet_your_baby": "Meet Your Baby!",
     "prediction_details": "Prediction Details",
     "predictions": "Predictions",
+    "re_generate": "Re-Generate",
     "save_to_gallery": "Save to Gallery",
     "share_prediction": "Share Prediction",
+    "take_screenshot": "Take Screenshot",
     "view_full_image": "View Full Image",
-    "week_n": "Week {}"
+    "week_n": "Week {}",
+    "your_baby_prediction": "Your Baby Prediction"
   },
   "setting": {
     "about_us": {

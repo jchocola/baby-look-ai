@@ -47,17 +47,23 @@
     "user": "Profile"
   },
   "prediction": {
+    "ai_note1": "",
+    "ai_note2": "",
     "date": "",
     "days_active": "",
     "favourites": "",
     "gender": "",
     "gestation": "",
+    "meet_your_baby": "",
     "prediction_details": "",
     "predictions": "",
+    "re_generate": "",
     "save_to_gallery": "",
     "share_prediction": "",
+    "take_screenshot": "",
     "view_full_image": "",
-    "week_n": ""
+    "week_n": "",
+    "your_baby_prediction": ""
   },
   "setting": {
     "about_us": {

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/main.dart';
 import 'package:baby_look/shared/big_button.dart';
@@ -10,6 +11,7 @@ import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:baby_look/shared/note_widget.dart';
 import 'package:baby_look/shared/small_picked_image_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,7 @@ class _ImageViewerAfterGeneratingState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Your Baby Prediction'),
+      appBar: CustomAppBar(title: context.tr(AppText.your_baby_prediction)),
       body: buildBody(context),
     );
   }
@@ -66,9 +68,9 @@ class _ImageViewerAfterGeneratingState
               child: Column(
                 spacing: AppConstant.appPadding,
                 children: [
-                  Text('Meet Your Baby!', style: theme.textTheme.titleLarge),
+                  Text(context.tr(AppText.meet_your_baby), style: theme.textTheme.titleLarge),
                   Text(
-                    "Here's our AI prediction of what your little one might look like",
+                   context.tr(AppText.ai_note1),
                     style: theme.textTheme.titleSmall,
                   ),
 
@@ -142,7 +144,7 @@ class _ImageViewerAfterGeneratingState
                 Expanded(
                   child: BigButton(
                     // TODO : SAVE TO GALLERY LOGIC
-                    title: 'Save to Gallery',
+                    title: context.tr(AppText.save_to_gallery),
                     icon: Icon(AppIcon.saveIcon),
                     borderColor: theme.colorScheme.primary,
 
@@ -152,7 +154,7 @@ class _ImageViewerAfterGeneratingState
                 Expanded(
                   child: BigButton(
                     // TODO : RE-GENERATE LOGIC
-                    title: 'Re-Generate',
+                    title: context.tr(AppText.re_generate),
                     icon: Icon(AppIcon.retryIcon),
                     borderColor: theme.colorScheme.secondary,
                   ),
@@ -171,7 +173,7 @@ class _ImageViewerAfterGeneratingState
                                   .capture();
                               logger.f(bytes);
                             },
-                            title: 'Take Screenshot',
+                            title: context.tr(AppText.take_screenshot),
                             icon: Icon(AppIcon.cameratIcon),
                             borderColor: theme.colorScheme.error,
                             buttonColor: theme.colorScheme.errorContainer,
@@ -185,7 +187,7 @@ class _ImageViewerAfterGeneratingState
             NoteWidget(
               icon: AppIcon.infoIcon,
               note:
-                  'This prediction is generated using AI analysis of your ultrasound and parent photos. Results are for entertainment purposes and may vary from actual appearance.',
+                  context.tr(AppText.ai_note2),
             ),
           ],
         ),
