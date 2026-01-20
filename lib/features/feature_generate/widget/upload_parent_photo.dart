@@ -1,9 +1,11 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/shared/custom_button_with_icon.dart';
 import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class UploadParentPhotoCard extends StatelessWidget {
@@ -53,20 +55,20 @@ class UploadParentPhotoCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomRoundedIcon(icon: icon),
-                  Text(title, style: theme.textTheme.titleMedium),
-                  Text(subtitle, style: theme.textTheme.bodySmall),
+                  Text(title, style: theme.textTheme.titleMedium, textAlign: TextAlign.center),
+                  Text(subtitle, style: theme.textTheme.bodySmall, textAlign: TextAlign.center,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       CustomButtonWithIcon(
                         icon: AppIcon.imageIcon,
-                        title: 'Gallery',
-                        onTap: onGalleryTapped,
+                        title: context.tr(AppText.gallery),
+                                                onTap: onGalleryTapped,
                       ),
                       CustomButtonWithIcon(
                         icon: AppIcon.cameratIcon,
-                        title: 'Camera',
+                        title: context.tr(AppText.camera),
                         onTap: onTapCameraTapped,
                       ),
                     ],

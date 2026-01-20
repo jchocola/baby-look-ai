@@ -53,6 +53,25 @@
       "step2_appbar": "",
       "tip_subtitle": "",
       "tip_title": ""
+    },
+    "step3": {
+      "cancel": "",
+      "clear_face": "",
+      "clear_frontal_photo_for_best_result": "",
+      "ensure_face": "",
+      "face_fills_frame": "",
+      "father_photo": "",
+      "generate_prediction": "",
+      "mother_photo": "",
+      "natural_expression": "",
+      "natural_expression_note": "",
+      "note": "",
+      "position_face_to_fill": "",
+      "step3_appbar": "",
+      "tip": "",
+      "upload_parent_photo": "",
+      "upload_parent_photo_note": "",
+      "use_natural_light": ""
     }
   },
   "greeting": {

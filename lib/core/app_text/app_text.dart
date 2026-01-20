@@ -147,9 +147,31 @@ class AppText {
   static const please_pick_gestation_week =
       'generating.step2.please_pick_gestation_week';
   static const baby_gender = 'generating.step2.baby_gender';
-  static const choose_the_baby_gender = 'generating.step2.choose_the_baby_gender';
-    static const boy = 'generating.step2.boy';
-      static const girl = 'generating.step2.girl';
-        static const dont_know = 'generating.step2.dont_know';
+  static const choose_the_baby_gender =
+      'generating.step2.choose_the_baby_gender';
+  static const boy = 'generating.step2.boy';
+  static const girl = 'generating.step2.girl';
+  static const dont_know = 'generating.step2.dont_know';
 
+  // STEP 3
+  static const step3_appbar = 'generating.step3.step3_appbar';
+  static const upload_parent_photo = 'generating.step3.upload_parent_photo';
+  static const upload_parent_photo_note =
+      'generating.step3.upload_parent_photo_note';
+  static const use_natural_light = 'generating.step3.use_natural_light';
+  static const clear_face = 'generating.step3.clear_face';
+  static const ensure_face = 'generating.step3.ensure_face';
+  static const face_fills_frame = 'generating.step3.face_fills_frame';
+  static const position_face_to_fill = 'generating.step3.position_face_to_fill';
+  static const natural_expression = 'generating.step3.natural_expression';
+  static const natural_expression_note =
+      'generating.step3.natural_expression_note';
+  static const step3_tip = 'generating.step3.tip';
+  static const mother_photo = 'generating.step3.mother_photo';
+  static const clear_frontal_photo_for_best_result =
+      'generating.step3.clear_frontal_photo_for_best_result';
+  static const father_photo = 'generating.step3.father_photo';
+  static const generate_prediction = 'generating.step3.generate_prediction';
+  static const cancel = 'generating.step3.cancel';
+  static const step3_note = 'generating.step3.note';
 }

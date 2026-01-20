@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:baby_look/shared/custom_button_with_icon.dart';
 import 'package:baby_look/shared/note_widget.dart';
 import 'package:baby_look/shared/picked_image_card.dart';
 import 'package:baby_look/shared/tips_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +30,7 @@ class GeneratePage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Step3: Parent Photos (Required)'),
+      appBar: CustomAppBar(title: context.tr(AppText.step3_appbar) ),
       body: _buildBody(context),
     );
   }
@@ -42,9 +44,9 @@ class GeneratePage3 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppConstant.appPadding,
           children: [
-            Text('Upload Parent Photos', style: theme.textTheme.titleMedium),
+            Text(context.tr(AppText.upload_parent_photo), style: theme.textTheme.titleMedium),
             Text(
-              "Clear photos of both parents help our AI generate a more accurate baby prediction",
+             context.tr(AppText.upload_parent_photo_note),
               style: theme.textTheme.bodySmall,
             ),
 
@@ -56,9 +58,9 @@ class GeneratePage3 extends StatelessWidget {
                     iconColor: theme.colorScheme.primary,
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.ideaIcon,
-                    title: "Good Lighting",
+                    title: context.tr(AppText.good_lighting),
                     subtitle:
-                        "Use natural light or well-lit indoor environment",
+                        context.tr(AppText.use_natural_light),
                   ),
                 ),
                 Expanded(
@@ -67,8 +69,8 @@ class GeneratePage3 extends StatelessWidget {
                     iconColor: theme.colorScheme.primary,
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.clearFaceIcon,
-                    title: "Clear Face",
-                    subtitle: "Ensure face is clearly visible and in focus",
+                    title: context.tr(AppText.clear_face),
+                    subtitle: context.tr(AppText.ensure_face),
                   ),
                 ),
               ],
@@ -82,8 +84,8 @@ class GeneratePage3 extends StatelessWidget {
                     iconColor: theme.colorScheme.primary,
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.faceFillIcon,
-                    title: "Face Fills Frame",
-                    subtitle: "Position face to fill most of the frame",
+                    title: context.tr(AppText.face_fills_frame),
+                    subtitle: context.tr(AppText.position_face_to_fill),
                   ),
                 ),
                 Expanded(
@@ -92,8 +94,8 @@ class GeneratePage3 extends StatelessWidget {
                     iconColor: theme.colorScheme.primary,
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.naturalIcon,
-                    title: "Natural Expression",
-                    subtitle: "Neutral or natural expression works best",
+                    title: context.tr(AppText.natural_expression),
+                    subtitle: context.tr(AppText.natural_expression_note),
                   ),
                 ),
               ],
@@ -103,7 +105,7 @@ class GeneratePage3 extends StatelessWidget {
               color: theme.colorScheme.error,
               icon: AppIcon.infoIcon,
               note:
-                  "Tip ! Frontal photos with neutral backgrounds work best for accurate predictions",
+                 context.tr(AppText.step3_tip),
             ),
 
             ///
@@ -113,8 +115,8 @@ class GeneratePage3 extends StatelessWidget {
               builder: (context, state) => UploadParentPhotoCard(
                 bgColor: theme.colorScheme.onPrimary,
                 icon: AppIcon.motherIcon,
-                title: "Mother's Photo",
-                subtitle: "Clear frontal photo for best results",
+                title: context.tr(AppText.mother_photo),
+                subtitle:context.tr(AppText.clear_frontal_photo_for_best_result),
                 onTapCameraTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickMotherImageFromCamera(),
                 ),
@@ -136,8 +138,8 @@ class GeneratePage3 extends StatelessWidget {
               builder: (context, state) => UploadParentPhotoCard(
                 bgColor: theme.colorScheme.tertiaryFixed,
                 icon: AppIcon.fatherIcon,
-                title: "Father's Photo",
-                subtitle: "Clear frontal photo for best results",
+                title: context.tr(AppText.father_photo),
+                subtitle: context.tr(AppText.clear_frontal_photo_for_best_result),
                 pickedImage:
                     state is PrepareDataBlocState_loaded &&
                         state.fatherImage != null
@@ -163,7 +165,7 @@ class GeneratePage3 extends StatelessWidget {
                         BigButton(
                               buttonColor: theme.colorScheme.onPrimary,
                               borderColor: theme.colorScheme.primary,
-                              title: 'Generate Prediction',
+                              title: context.tr(AppText.generate_prediction),
                               onTap: () {
                                 if (state is PrepareDataBlocState_loaded) {
                                   context.read<GeneratingBloc>().add(
@@ -204,14 +206,14 @@ class GeneratePage3 extends StatelessWidget {
               borderColor: theme.colorScheme.error,
               buttonColor: theme.colorScheme.errorContainer,
 
-              title: 'Cancel',
+              title: context.tr(AppText.cancel),
               onTap: () => context.read<PrepareDataBloc>().add(
                 PrepareDataBlocEvent_cancelAll(),
               ),
             ),
 
             Text(
-              "Both parent photos are required to generate an accurate prediction",
+              context.tr(AppText.step3_note),
               style: theme.textTheme.bodySmall,
               textAlign: TextAlign.center,
             ),

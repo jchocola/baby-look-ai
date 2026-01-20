@@ -53,6 +53,25 @@
       "step2_appbar": "Step2: Baby Information (Optional)",
       "tip_subtitle": "Weeks 24-28 provide the clearest ultrasound images for AI analysis.",
       "tip_title": "Best Results"
+    },
+    "step3": {
+      "cancel": "Cancel",
+      "clear_face": "Clear Face",
+      "clear_frontal_photo_for_best_result": "Clear frontal photo for best results",
+      "ensure_face": "Ensure face is clearly visible and in focus",
+      "face_fills_frame": "Face Fills Frame",
+      "father_photo": "Father's Photo",
+      "generate_prediction": "Generate Prediction",
+      "mother_photo": "Mother's Photo",
+      "natural_expression": "Natural Expression",
+      "natural_expression_note": "Neutral or natural expression works best",
+      "note": "Both parent photos are required to generate an accurate prediction",
+      "position_face_to_fill": "Position face to fill most of the frame",
+      "step3_appbar": "Step3: Parent Photos (Optional)",
+      "tip": "Tip! Frontal photos with neutral backgrounds work best for accurate predictions",
+      "upload_parent_photo": "Upload Parent Photos",
+      "upload_parent_photo_note": "Clear photos of both parents help our AI generate a more accurate baby prediction",
+      "use_natural_light": "Use natural light or well-lit indoor environment"
     }
   },
   "greeting": {
