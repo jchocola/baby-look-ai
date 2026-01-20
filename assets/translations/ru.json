@@ -4,5 +4,23 @@
     "gallery": "Галерея",
     "home": "Главная",
     "user": "Профиль"
+  },
+  "setting": {
+    "about_us": "О нас",
+    "account": "Аккаунт",
+    "app_version": "BabyLook v1.0.0",
+    "copyright": "© 2025 BabyLook. All rights reserved.",
+    "help_faq": "Помощь и FAQs",
+    "language": "Язык",
+    "legal_info": "Правовая информация",
+    "notification": "Уведомления",
+    "pravicy_policy": "Политика конфиденциальности",
+    "prediction_history": "История",
+    "preferences": "Предпочтения",
+    "profile_unverified": "Профиль НЕВЕРИФИЦИРОВАН",
+    "profile_verified": "Профиль ВЕРИФИЦИРОВАН",
+    "purchases": "Покупки",
+    "send_feedback": "Обратный отзыв",
+    "terms_of_services": "Условия предоставления услуг"
   }
 }

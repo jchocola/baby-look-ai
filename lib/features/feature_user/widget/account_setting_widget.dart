@@ -1,9 +1,11 @@
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/main.dart';
 import 'package:baby_look/shared/custom_listile.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +21,7 @@ class AccountSettingWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Account', style: theme.textTheme.titleMedium),
+        Text(context.tr(AppText.account), style: theme.textTheme.titleMedium),
         BlocConsumer<AuthBloc, AuthBlocState>(
           listener: (context, state) {
             if (state is AuthBlocState_success) {
@@ -48,17 +50,17 @@ class AccountSettingWidget extends StatelessWidget {
                     );
                   },
             title: state is AuthBlocState_authenticated && state.verifiedUser
-                ? 'Profile Verified'
-                : 'Profile Unverified',
+                ? context.tr(AppText.profile_verified)
+                : context.tr(AppText.profile_unverified),
             icon: state is AuthBlocState_authenticated && state.verifiedUser
                 ? LucideIcons.userRoundCheck
                 : LucideIcons.userRoundX,
           ),
         ),
-        CustomListile(title: 'Subscription', icon: AppIcon.subscriptionIcon),
+        CustomListile(title: context.tr(AppText.purchases), icon: AppIcon.subscriptionIcon),
         CustomListile(
           onTap: () => context.go('/user/history'),
-          title: 'Prediction History',
+          title: context.tr(AppText.prediction_history),
           icon: AppIcon.predictionHistoryIcon,
         ),
       ],

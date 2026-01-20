@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
@@ -9,6 +10,7 @@ import 'package:baby_look/features/feature_user/widget/preferrences_setting_widg
 import 'package:baby_look/features/feature_user/widget/profile_card.dart';
 import 'package:baby_look/features/feature_user/widget/statistic_widget.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +21,7 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Profile'),
+      appBar: CustomAppBar(title: context.tr(AppText.user)),
       body: buildBody(context),
     );
   }

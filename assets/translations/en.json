@@ -4,5 +4,23 @@
     "gallery": "Gallery",
     "home": "Home",
     "user": "User"
+  },
+  "setting": {
+    "about_us": "About Us",
+    "account": "Account",
+    "app_version": "BabyLook v1.0.0",
+    "copyright": "© 2025 BabyLook. All rights reserved.",
+    "help_faq": "Help & FAQs",
+    "language": "Language",
+    "legal_info": "Legal Information",
+    "notification": "Notification",
+    "pravicy_policy": "Pravicy Policy",
+    "prediction_history": "Prediction History",
+    "preferences": "Preferences",
+    "profile_unverified": "Profile Unverified",
+    "profile_verified": "Profile Vertified",
+    "purchases": "Purchases",
+    "send_feedback": "Send Feedback",
+    "terms_of_services": "Terms Of Services"
   }
 }

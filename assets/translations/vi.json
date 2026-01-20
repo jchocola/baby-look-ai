@@ -4,5 +4,23 @@
     "gallery": "Album",
     "home": "Nhà ",
     "user": "Profile"
+  },
+  "setting": {
+    "about_us": "",
+    "account": "",
+    "app_version": "",
+    "copyright": "",
+    "help_faq": "",
+    "language": "",
+    "legal_info": "",
+    "notification": "",
+    "pravicy_policy": "",
+    "prediction_history": "",
+    "preferences": "",
+    "profile_unverified": "",
+    "profile_verified": "",
+    "purchases": "",
+    "send_feedback": "",
+    "terms_of_services": ""
   }
 }
