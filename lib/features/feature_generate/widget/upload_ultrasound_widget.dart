@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/shared/custom_rounded_icon.dart';
 import 'package:baby_look/shared/picked_image_card.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,8 +59,8 @@ class UploadUltrasoundWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomRoundedIcon(icon: AppIcon.imageIcon,color: theme.colorScheme.onPrimary, iconColor: theme.colorScheme.primary,),
-                    Text('Upload Ultrasound Scan', style: theme.textTheme.titleMedium,),
-                    Text('Select your clearest ultrasound image', style: theme.textTheme.bodySmall),
+                    Text(context.tr(AppText.upload_ultrasound_scan), style: theme.textTheme.titleMedium, textAlign: TextAlign.center,),
+                    Text(context.tr(AppText.upload_ultrasound_scan_note), style: theme.textTheme.bodySmall,textAlign: TextAlign.center),
                   ],
                 ),
               );

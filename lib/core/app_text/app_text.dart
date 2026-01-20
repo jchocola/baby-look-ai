@@ -54,13 +54,12 @@ class AppText {
   static const view_full_image = 'prediction.view_full_image';
   static const share_prediction = 'prediction.share_prediction';
   static const save_to_gallery = 'prediction.save_to_gallery';
-    static const your_baby_prediction = 'prediction.your_baby_prediction';
-      static const meet_your_baby = 'prediction.meet_your_baby';
-        static const ai_note1 = 'prediction.ai_note1';
-          static const ai_note2 = 'prediction.ai_note2';
-            static const re_generate = 'prediction.re_generate';
-              static const take_screenshot = 'prediction.take_screenshot';
-
+  static const your_baby_prediction = 'prediction.your_baby_prediction';
+  static const meet_your_baby = 'prediction.meet_your_baby';
+  static const ai_note1 = 'prediction.ai_note1';
+  static const ai_note2 = 'prediction.ai_note2';
+  static const re_generate = 'prediction.re_generate';
+  static const take_screenshot = 'prediction.take_screenshot';
 
   ///
   /// GALLERY
@@ -112,4 +111,28 @@ class AppText {
   static const expecting_parent = 'home.expecting_parent';
   static const recent_predictions = 'home.recent_predictions';
   static const view_all = 'home.view_all';
+
+  ///
+  /// GENERATING
+  ///
+  static const generating_gallery = 'generating.gallery';
+  static const camera = 'generating.camera';
+
+  // STEP 1
+  static const step1_appbar = 'generating.step1.step1_appbar';
+  static const step1_note = 'generating.step1.note';
+  static const upload_ultrasound_scan =
+      'generating.step1.upload_ultrasound_scan';
+  static const upload_ultrasound_scan_note =
+      'generating.step1.upload_ultrasound_scan_note';
+  static const tips_for_best_result = 'generating.step1.tips_for_best_result';
+  static const clear_profile_view = 'generating.step1.clear_profile_view';
+  static const choose_an_image_showing_the_baby =
+      'generating.step1.choose_an_image_showing_the_baby';
+  static const good_lighting = 'generating.step1.good_lighting';
+  static const ensure_ultrasound_image =
+      'generating.step1.ensure_ultrasound_image';
+  static const recent_scan = 'generating.step1.recent_scan';
+  static const use_your_most_recent_ultrasound =
+      'generating.step1.use_your_most_recent_ultrasound';
 }

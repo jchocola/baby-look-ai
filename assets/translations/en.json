@@ -24,6 +24,23 @@
     "share": "Share",
     "view_detail": "View Detail"
   },
+  "generating": {
+    "camera": "Camera",
+    "gallery": "Gallery",
+    "step1": {
+      "choose_an_image_showing_the_baby": "Choose an image showing the baby's profile clearly",
+      "clear_profile_view": "Clear Profile View",
+      "ensure_ultrasound_image": "Ensure the ultrasound image is well-lit and not blurry",
+      "good_lighting": "Good Lighting",
+      "note": "Your ultrasound image is processed securely and never stored after prediction generation.",
+      "recent_scan": "Recent Scan",
+      "step1_appbar": "Step 1: Upload Ultrasound(required)",
+      "tips_for_best_result": "Tips for Best Results",
+      "upload_ultrasound_scan": "Upload Ultrasound Scan",
+      "upload_ultrasound_scan_note": "Select your clearest ultrasound image",
+      "use_your_most_recent_ultrasound": "Use your most recent ultrasound for best accuracy"
+    }
+  },
   "greeting": {
     "greeting1": "Добро пожаловать в волшебный мир ожидания!",
     "greeting2": "Скоро вы увидите самое прекрасное лицо на свете",

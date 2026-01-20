@@ -24,6 +24,23 @@
     "share": "",
     "view_detail": ""
   },
+  "generating": {
+    "camera": "",
+    "gallery": "",
+    "step1": {
+      "choose_an_image_showing_the_baby": "",
+      "clear_profile_view": "",
+      "ensure_ultrasound_image": "",
+      "good_lighting": "",
+      "note": "",
+      "recent_scan": "",
+      "step1_appbar": "",
+      "tips_for_best_result": "",
+      "upload_ultrasound_scan": "",
+      "upload_ultrasound_scan_note": "",
+      "use_your_most_recent_ultrasound": ""
+    }
+  },
   "greeting": {
     "greeting1": "",
     "greeting2": "",
