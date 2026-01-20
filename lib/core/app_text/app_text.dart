@@ -174,4 +174,38 @@ class AppText {
   static const generate_prediction = 'generating.step3.generate_prediction';
   static const cancel = 'generating.step3.cancel';
   static const step3_note = 'generating.step3.note';
+
+  //
+  // FAQs
+  //
+  static const faq_q1 = 'faq.q1';
+  static const faq_a1 = 'faq.a1';
+  static const faq_q2 = 'faq.q2';
+  static const faq_a2 = 'faq.a2';
+  static const faq_q3 = 'faq.q3';
+  static const faq_a3 = 'faq.a3';
+  static const faq_q4 = 'faq.q4';
+  static const faq_a4 = 'faq.a4';
+  static const faq_q5 = 'faq.q5';
+  static const faq_a5 = 'faq.a5';
+  static const faq_q6 = 'faq.q6';
+  static const faq_a6 = 'faq.a6';
+  static const faq_q7 = 'faq.q7';
+  static const faq_a7 = 'faq.a7';
+  static const faq_q8 = 'faq.q8';
+  static const faq_a8 = 'faq.a8';
+  static const faq_q9 = 'faq.q9';
+  static const faq_a9 = 'faq.a9';
+  static const faq_q10 = 'faq.q10';
+  static const faq_a10 = 'faq.a10';
+  static const faq_q11 = 'faq.q11';
+  static const faq_a11 = 'faq.a11';
+  static const faq_q12 = 'faq.q12';
+  static const faq_a12 = 'faq.a12';
+  static const faq_q13 = 'faq.q13';
+  static const faq_a13 = 'faq.a13';
+  static const faq_q14 = 'faq.q14';
+  static const faq_a14 = 'faq.a14';
+  static const faq_q15 = 'faq.q15';
+  static const faq_a15 = 'faq.a15';
 }
