@@ -39,6 +39,20 @@
       "upload_ultrasound_scan": "",
       "upload_ultrasound_scan_note": "",
       "use_your_most_recent_ultrasound": ""
+    },
+    "step2": {
+      "baby_gender": "",
+      "boy": "",
+      "choose_the_baby_gender": "",
+      "dont_know": "",
+      "gestation_week": "",
+      "girl": "",
+      "note": "",
+      "please_pick_gestation_week": "",
+      "select_the_current_week": "",
+      "step2_appbar": "",
+      "tip_subtitle": "",
+      "tip_title": ""
     }
   },
   "greeting": {

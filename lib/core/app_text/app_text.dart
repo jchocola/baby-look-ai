@@ -135,4 +135,21 @@ class AppText {
   static const recent_scan = 'generating.step1.recent_scan';
   static const use_your_most_recent_ultrasound =
       'generating.step1.use_your_most_recent_ultrasound';
+
+  // STEP 2
+  static const step2_appbar = 'generating.step2.step2_appbar';
+  static const step2_note = 'generating.step2.note';
+  static const step2_tip_title = 'generating.step2.tip_title';
+  static const step2_tip_subtitle = 'generating.step2.tip_subtitle';
+  static const gestation_week = 'generating.step2.gestation_week';
+  static const select_the_current_week =
+      'generating.step2.select_the_current_week';
+  static const please_pick_gestation_week =
+      'generating.step2.please_pick_gestation_week';
+  static const baby_gender = 'generating.step2.baby_gender';
+  static const choose_the_baby_gender = 'generating.step2.choose_the_baby_gender';
+    static const boy = 'generating.step2.boy';
+      static const girl = 'generating.step2.girl';
+        static const dont_know = 'generating.step2.dont_know';
+
 }

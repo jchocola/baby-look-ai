@@ -1,5 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
@@ -13,9 +15,9 @@ class GestationWeek extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Gestation Week', style: theme.textTheme.titleMedium),
+        Text(context.tr(AppText.gestation_week), style: theme.textTheme.titleMedium),
         Text(
-          'Select the current week of pregnancy',
+          context.tr(AppText.select_the_current_week),
           style: theme.textTheme.bodySmall,
         ),
        
@@ -51,7 +53,7 @@ class _weekPicker extends StatelessWidget {
                         : Colors.transparent,
                   ),
                   child: ListTile(
-                    title: Text("Week ${index + 1}" ,style: theme.textTheme.bodyMedium!.copyWith(
+                    title: Text(context.tr(AppText.week_n, args: ["${index+1}"]) ,style: theme.textTheme.bodyMedium!.copyWith(
                       fontWeight:  state is PrepareDataBlocState_loaded &&
                             state.gestationWeek == index + 1
                         ? FontWeight.bold
@@ -76,7 +78,7 @@ class _weekPicker extends StatelessWidget {
             ),
             child: ListTile(
               title: Text(
-                 state is PrepareDataBlocState_loaded && state.gestationWeek!=null ?  'Week ${ state.gestationWeek}' : 'Please pick gestation week',
+                 state is PrepareDataBlocState_loaded && state.gestationWeek!=null ?  context.tr(AppText.week_n, args: ["${state.gestationWeek}"]) : context.tr(AppText.please_pick_gestation_week),
                  style: theme.textTheme.titleMedium,
               ),
             ),

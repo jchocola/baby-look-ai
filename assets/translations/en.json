@@ -39,6 +39,20 @@
       "upload_ultrasound_scan": "Upload Ultrasound Scan",
       "upload_ultrasound_scan_note": "Select your clearest ultrasound image",
       "use_your_most_recent_ultrasound": "Use your most recent ultrasound for best accuracy"
+    },
+    "step2": {
+      "baby_gender": "Baby Gender",
+      "boy": "Boy",
+      "choose_the_baby_gender": "Choose the baby's gender or select if you don't know yet",
+      "dont_know": "Don't know",
+      "gestation_week": "Gestation Week",
+      "girl": "Girl",
+      "note": "This information helps our AI provide more accurate predictions tailored to your baby's development stage.",
+      "please_pick_gestation_week": "Please pick gestation week",
+      "select_the_current_week": "Select the current week of pregnancy",
+      "step2_appbar": "Step2: Baby Information (Optional)",
+      "tip_subtitle": "Weeks 24-28 provide the clearest ultrasound images for AI analysis.",
+      "tip_title": "Best Results"
     }
   },
   "greeting": {

@@ -38,7 +38,7 @@ class GeneratePage1 extends StatelessWidget {
               children: [
                 CustomButtonWithIcon(
                   icon: AppIcon.imageIcon,
-                  title: context.tr(AppText.generating_gallery),
+                  title: context.tr(AppText.gallery),
                   onTap: () {
                     context.read<PrepareDataBloc>().add(
                       PrepareDataBlocEvent_pickUltrasoundImageFromGallery(),
