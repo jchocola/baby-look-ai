@@ -20,6 +20,7 @@ import 'package:baby_look/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
@@ -46,6 +47,14 @@ Future<void> main() async {
 
   // local notification
   await getIt<LocalNotifcationRepository>().init();
+
+  // orientation
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]
+  );
 
   runApp(
     EasyLocalization(

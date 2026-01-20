@@ -1,4 +1,5 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_gallery/widget/generated_image_card.dart';
@@ -60,7 +61,7 @@ class PredictionDetailPage extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.genderIcon,
                     title:context.tr(AppText.gender),
-                    subtitle: prediction?.gender ?? "Unknown",
+                    subtitle: genderToStr(context, gender: context.tr(AppText.boy)),
                   ),
                 ),
               ],

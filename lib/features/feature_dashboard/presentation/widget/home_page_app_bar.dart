@@ -34,7 +34,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
 
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(AppIcon.notificationIcon)),
+        //  IconButton(onPressed: () {}, icon: Icon(AppIcon.notificationIcon)),
           CustomCircleAvatar(
             onTap: () => context.go('/user'),
             url: state is AuthBlocState_authenticated
