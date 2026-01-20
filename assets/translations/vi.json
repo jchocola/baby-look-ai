@@ -1,10 +1,35 @@
 {
+  "auth": {
+    "confirm": "",
+    "confirm_password": "",
+    "dont_receive_the_code": "",
+    "email": "",
+    "enter_sms_code": "",
+    "enter_your_phone_number": "",
+    "forgot_password": "",
+    "login": "",
+    "password": "",
+    "phone_note_text": "",
+    "phone_number": "",
+    "register": "",
+    "send_again": "",
+    "send_code": "",
+    "sign_up_with": "",
+    "we_will_send_sms": ""
+  },
   "gallery": {
     "all_n": "",
     "favourites_n": "",
     "fullscreen": "",
     "share": "",
     "view_detail": ""
+  },
+  "greeting": {
+    "greeting1": "",
+    "greeting2": "",
+    "greeting3": "",
+    "greeting4": "",
+    "greeting5": ""
   },
   "navbar": {
     "create": "Tạo ",

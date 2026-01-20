@@ -53,10 +53,37 @@ class AppText {
   ///
   static const all_n = 'gallery.all_n';
   static const favourites_n = 'gallery.favourites_n';
-    static const view_detail = 'gallery.view_detail';
-      static const share = 'gallery.share';
-        static const fullscreen = 'gallery.fullscreen';
+  static const view_detail = 'gallery.view_detail';
+  static const share = 'gallery.share';
+  static const fullscreen = 'gallery.fullscreen';
 
+  ///
+  /// AUTH
+  ///
+  static const login = 'auth.login';
+  static const register = 'auth.register';
+  static const email = 'auth.email';
+  static const password = 'auth.password';
+  static const confirm_password = 'auth.confirm_password';
+  static const forgot_password = 'auth.forgot_password';
+  static const sign_up_with = 'auth.sign_up_with';
+  static const enter_your_phone_number = 'auth.enter_your_phone_number';
+  static const send_code = 'auth.send_code';
+  static const we_will_send_sms = 'auth.we_will_send_sms';
+  static const phone_number = 'auth.phone_number';
+  static const phone_note_text = 'auth.phone_note_text';
+  static const enter_sms_code = 'auth.enter_sms_code';
+  static const dont_receive_the_code = 'auth.dont_receive_the_code';
+  static const send_again = 'auth.send_again';
+  static const confirm = 'auth.confirm';
 
+  ///
+  /// GREETING
+  ///
 
+  static const greeting1 = 'greeting.greeting1';
+  static const greeting2 = 'greeting.greeting2';
+  static const greeting3 = 'greeting.greeting3';
+  static const greeting4 = 'greeting.greeting4';
+  static const greeting5 = 'greeting.greeting5';
 }

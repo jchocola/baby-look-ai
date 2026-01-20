@@ -1,7 +1,9 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/main.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -234,7 +236,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isStep1 ? 'Введите номер телефона' : 'Введите SMS код'),
+        title: Text(isStep1 ? context.tr(AppText.enter_your_phone_number) : context.tr(AppText.enter_sms_code)),
         leading: !isStep1
             ? IconButton(
                 icon: Icon(Icons.arrow_back),
@@ -271,14 +273,14 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Введите номер телефона',
+         context.tr(AppText.enter_your_phone_number),
           style: Theme.of(
             context,
           ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         Text(
-          'Мы отправим SMS с кодом подтверждения',
+          context.tr(AppText.we_will_send_sms),
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -300,7 +302,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
             logger.d('Номер валиден: $value');
           },
           ignoreBlank: false,
-          hintText: 'Номер телефона',
+          hintText: context.tr(AppText.phone_number),
           inputBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -324,14 +326,14 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text('Отправить код', style: TextStyle(fontSize: 16)),
+            child: Text(context.tr(AppText.send_code), style: TextStyle(fontSize: 16)),
           ),
         ),
 
         SizedBox(height: 16),
 
         Text(
-          'Нажимая "Отправить код", вы соглашаетесь с нашими Условиями использования и Политикой конфиденциальности',
+          context.tr(AppText.phone_note_text),
           style: TextStyle(fontSize: 12, color: Colors.grey[600]),
           textAlign: TextAlign.center,
         ),
@@ -344,7 +346,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Введите SMS код',
+          context.tr(AppText.enter_sms_code),
           style: Theme.of(
             context,
           ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
@@ -396,10 +398,10 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Не получили код?', style: TextStyle(color: Colors.grey[600])),
+            Text(context.tr(AppText.dont_receive_the_code), style: TextStyle(color: Colors.grey[600])),
             TextButton(
               onPressed: _resendSmsCode,
-              child: Text('Отправить снова'),
+              child: Text(context.tr(AppText.send_again)),
             ),
           ],
         ),
@@ -423,7 +425,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text('Подтвердить', style: TextStyle(fontSize: 16)),
+            child: Text(context.tr(AppText.confirm), style: TextStyle(fontSize: 16)),
           ),
         ),
       ],

@@ -1,8 +1,10 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_auth/presentation/modal/forgot_password_modal.dart';
 import 'package:baby_look/shared/big_button.dart';
 import 'package:baby_look/shared/custom_textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -39,13 +41,13 @@ class _LoginWidgetState extends State<LoginWidget> {
       spacing: AppConstant.appPadding,
       children: [
         CustomTextfield(
-          labelText: 'Enter Email',
+          labelText:context.tr(AppText.email),
           focusBorderColor: theme.colorScheme.tertiary,
           cursorColor: theme.colorScheme.tertiary,
           controller: emailController,
         ),
         CustomTextfield(
-          labelText: 'Password',
+          labelText:context.tr(AppText.password),
           isObscure: true,
           focusBorderColor: theme.colorScheme.tertiary,
           cursorColor: theme.colorScheme.tertiary,
@@ -67,14 +69,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                 },
               );
             },
-            child: Text('Forgot password?', style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.tertiary),),
+            child: Text(context.tr(AppText.forgot_password), style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.tertiary),),
           ),
         ),
 
         BigButton(
           borderColor: theme.colorScheme.tertiary,
           buttonColor: theme.colorScheme.tertiary.withOpacity(0.3),
-          title: 'Log In',
+          title: context.tr(AppText.login),
           onTap: () {
             context.read<AuthBloc>().add(
               AuthBlocEvent_loginViaLoginPassword(

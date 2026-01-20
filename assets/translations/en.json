@@ -1,10 +1,35 @@
 {
+  "auth": {
+    "confirm": "Confirm",
+    "confirm_password": "Confirm Password",
+    "dont_receive_the_code": "Didn't receive the code?",
+    "email": "Email",
+    "enter_sms_code": "Enter SMS code",
+    "enter_your_phone_number": "Enter your phone",
+    "forgot_password": "Forgot passwprd?",
+    "login": "Login",
+    "password": "Password",
+    "phone_note_text": "By clicking “Send Code,” you agree to our Terms of Use and Privacy Policy.",
+    "phone_number": "Phone number",
+    "register": "Register",
+    "send_again": "Send again",
+    "send_code": "Send code",
+    "sign_up_with": "Sign up with",
+    "we_will_send_sms": "We will send you an SMS with a confirmation code."
+  },
   "gallery": {
     "all_n": "All {}",
     "favourites_n": "Favourites {}",
     "fullscreen": "Fullscreen",
     "share": "Share",
     "view_detail": "View Detail"
+  },
+  "greeting": {
+    "greeting1": "Добро пожаловать в волшебный мир ожидания!",
+    "greeting2": "Скоро вы увидите самое прекрасное лицо на свете",
+    "greeting3": "За каждой улыбкой малыша - история любви",
+    "greeting4": "Место, где мечты родителей становятся реальностью",
+    "greeting5": "Первая встреча с вашим чудом начинается здесь"
   },
   "navbar": {
     "create": "Create",

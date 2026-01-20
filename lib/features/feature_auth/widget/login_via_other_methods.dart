@@ -1,8 +1,10 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_auth/presentation/modal/phone_number_imput_modal.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +20,7 @@ class LoginViaOtherMethods extends StatelessWidget {
           spacing: AppConstant.appPadding,
           children: [
             Flexible(child: Divider()),
-            Text('Sign up with'),
+            Text(context.tr(AppText.sign_up_with)),
             Flexible(child: Divider()),
           ],
         ),

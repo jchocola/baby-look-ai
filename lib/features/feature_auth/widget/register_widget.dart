@@ -1,7 +1,9 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/shared/big_button.dart';
 import 'package:baby_look/shared/custom_textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,14 +41,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     return Column(
       spacing: AppConstant.appPadding,
       children: [
-        CustomTextfield(labelText: 'Enter Email', controller: emailController),
+        CustomTextfield(labelText: context.tr(AppText.email), controller: emailController),
         CustomTextfield(
-          labelText: 'Password',
+          labelText: context.tr(AppText.password),
           isObscure: true,
           controller: passwordController,
         ),
         CustomTextfield(
-          labelText: 'Confirm Password',
+          labelText: context.tr(AppText.confirm_password),
           isObscure: true,
           controller: confirmController,
         ),
@@ -59,7 +61,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           },
           borderColor: theme.colorScheme.primary,
           buttonColor: theme.colorScheme.primary.withOpacity(0.3),
-          title: 'Register',
+          title:context.tr(AppText.register),
         ),
       ],
     );
