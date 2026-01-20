@@ -1,12 +1,33 @@
 {
+  "gallery": {
+    "all_n": "All {}",
+    "favourites_n": "Favourites {}",
+    "fullscreen": "Fullscreen",
+    "share": "Share",
+    "view_detail": "View Detail"
+  },
   "navbar": {
     "create": "Create",
     "gallery": "Gallery",
     "home": "Home",
     "user": "User"
   },
+  "prediction": {
+    "days_active": "Days Active",
+    "favourites": "Favourites",
+    "predictions": "Predictions",
+    "week_n": "Week {}"
+  },
   "setting": {
-    "about_us": "About Us",
+    "about_us": {
+      "about_us": "About Us",
+      "ai_model": "AI Model",
+      "build_date": "Build Date",
+      "contact": "Contact",
+      "developer": "Developer",
+      "tech_stack": "Technical Stack",
+      "version": "Version"
+    },
     "account": "Account",
     "app_version": "BabyLook v1.0.0",
     "copyright": "© 2025 BabyLook. All rights reserved.",

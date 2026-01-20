@@ -1,9 +1,11 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +40,7 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Gallery'),
+      appBar: CustomAppBar(title: context.tr(AppText.gallery)),
       body: buildBody(context),
     );
   }
@@ -58,10 +60,12 @@ class _GalleryPageState extends State<GalleryPage> {
                     groupValue: currentValue,
                     children: {
                       0: Text(
-                        "All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
+                        context.tr(AppText.all_n, args: [state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : '']),
+                        //"All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
                       ),
                       1: Text(
-                        'Favourites ${userState is UserBlocState_loaded ? '(${userState.userEntity.favourites.length})' : ''}',
+                           context.tr(AppText.favourites_n, args: [state is PredictionsBlocState_loaded ? '(${state.favouriteList.length})' : '']),
+                        //'Favourites ${userState is UserBlocState_loaded ? '(${userState.userEntity.favourites.length})' : ''}',
                       ),
                     },
                     onValueChanged: _changePage,

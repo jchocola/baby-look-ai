@@ -1,12 +1,33 @@
 {
+  "gallery": {
+    "all_n": "",
+    "favourites_n": "",
+    "fullscreen": "",
+    "share": "",
+    "view_detail": ""
+  },
   "navbar": {
     "create": "Tạo ",
     "gallery": "Album",
     "home": "Nhà ",
     "user": "Profile"
   },
+  "prediction": {
+    "days_active": "",
+    "favourites": "",
+    "predictions": "",
+    "week_n": ""
+  },
   "setting": {
-    "about_us": "",
+    "about_us": {
+      "about_us": "",
+      "ai_model": "",
+      "build_date": "",
+      "contact": "",
+      "developer": "",
+      "tech_stack": "",
+      "version": ""
+    },
     "account": "",
     "app_version": "",
     "copyright": "",

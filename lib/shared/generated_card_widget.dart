@@ -1,9 +1,11 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -88,7 +90,7 @@ class GeneratedCardWidget extends StatelessWidget {
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.eyeIcon),
-                                Text('View detail'),
+                                Text(context.tr(AppText.view_detail)),
                               ],
                             ),
                           ),
@@ -97,7 +99,7 @@ class GeneratedCardWidget extends StatelessWidget {
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.shareIcon),
-                                Text('Share'),
+                                Text(context.tr(AppText.share)),
                               ],
                             ),
                           ),
@@ -112,7 +114,7 @@ class GeneratedCardWidget extends StatelessWidget {
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.fullScreenIcon),
-                                Text('Fullscreen'),
+                                Text(context.tr(AppText.share)),
                               ],
                             ),
                           ),
@@ -133,7 +135,10 @@ class GeneratedCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Week ${prediction?.gestationWeek ?? 0}',
+                        context.tr(AppText.week_n, args: [
+                          prediction?.gestationWeek.toString() ?? "0"
+                        ]),
+                     
                         style: theme.textTheme.titleSmall,
                       ),
                       Icon(genderToIcon(gender: prediction?.gender), color: genderFromStr(gender: prediction?.gender ?? '') == BABY_GENDER.BOY ? theme.colorScheme.tertiary : theme.colorScheme.primary,)

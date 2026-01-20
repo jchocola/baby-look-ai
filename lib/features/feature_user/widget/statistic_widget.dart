@@ -1,8 +1,10 @@
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/core/utils/get_diffent_day.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +26,7 @@ class StatisticWidget extends StatelessWidget {
           child: BlocBuilder<PredictionsBloc, PredictionsBlocState>(
             builder: (context, state) => _statisticCard(
               color: AppColor.pinkColor,
-              title: 'Predictions',
+              title: context.tr(AppText.predictions),
               value: state is PredictionsBlocState_loaded
                   ? state.predictionList.length.toString()
                   : '0',
@@ -35,7 +37,7 @@ class StatisticWidget extends StatelessWidget {
           child: BlocBuilder<UserBloc, UserBlocState>(
             builder: (context, state) => _statisticCard(
               color: AppColor.blueColor,
-              title: 'Favorites',
+              title: context.tr(AppText.favourites),
               value: state is UserBlocState_loaded
                   ? state.userEntity.favourites.length.toString()
                   : '0',
@@ -45,7 +47,7 @@ class StatisticWidget extends StatelessWidget {
         Expanded(
           child: BlocBuilder<AuthBloc, AuthBlocState>(
             builder: (context, state) => _statisticCard(
-              title: "Days Active",
+              title:context.tr(AppText.days_active),
               color: AppColor.yellowColor,
               value: state is AuthBlocState_authenticated
                   ? '${getDifferentDay(creationTime: state.user.metadata.creationTime)} '

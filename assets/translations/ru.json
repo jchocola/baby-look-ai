@@ -1,12 +1,33 @@
 {
+  "gallery": {
+    "all_n": "Все {}",
+    "favourites_n": "В избранных {}",
+    "fullscreen": "Полный экран",
+    "share": "Поделиться",
+    "view_detail": "Детально смотреть"
+  },
   "navbar": {
     "create": "Создать",
     "gallery": "Галерея",
     "home": "Главная",
     "user": "Профиль"
   },
+  "prediction": {
+    "days_active": "Активные дни",
+    "favourites": "В избранных",
+    "predictions": "Предсказания",
+    "week_n": "Неделя {}"
+  },
   "setting": {
-    "about_us": "О нас",
+    "about_us": {
+      "about_us": "О нас",
+      "ai_model": "ИИ Модель",
+      "build_date": "Дата сборки",
+      "contact": "Контакты",
+      "developer": "Разработчик",
+      "tech_stack": "Технический стэк",
+      "version": "Версия"
+    },
     "account": "Аккаунт",
     "app_version": "BabyLook v1.0.0",
     "copyright": "© 2025 BabyLook. All rights reserved.",
