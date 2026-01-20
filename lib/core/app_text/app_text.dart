@@ -28,6 +28,7 @@ class AppText {
 
   static const app_version = 'setting.app_version';
   static const copyright = 'setting.copyright';
+  static const coins = 'setting.coins';
 
   ///
   /// ABOUT US
@@ -89,6 +90,7 @@ class AppText {
   static const dont_receive_the_code = 'auth.dont_receive_the_code';
   static const send_again = 'auth.send_again';
   static const confirm = 'auth.confirm';
+  static const logout = 'auth.logout';
 
   ///
   /// GREETING
