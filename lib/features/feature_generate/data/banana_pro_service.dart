@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:baby_look/main.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
@@ -68,11 +69,15 @@ class BananaProService {
 
       final Uint8List imageBytes = result['image_bytes'] as Uint8List;
 
-      // 2. Validate the generated image
-      final isValid = await _validateImage(imageBytes);
+      // 2. Process image in background isolate (CPU intensive tasks)
+      final processedBytes = await _processImageInBackground(imageBytes);
+
+    
+      // 3. Validate the PROCESSED image in background
+      final isValid = await _validateImageInBackground(processedBytes);
 
       if (isValid) {
-        return imageBytes;
+        return processedBytes;
       } else {
         return null;
       }
@@ -85,6 +90,72 @@ class BananaProService {
     } catch (e) {
       logger.e('Error in generateBabyPrediction: $e');
       return null;
+    }
+  }
+
+   /// Validate image in background isolate to avoid blocking main thread
+  Future<bool> _validateImageInBackground(Uint8List imageBytes) async {
+    // Run image validation in background isolate
+    return await compute(_validateImageOnBackgroundThread, imageBytes);
+  }
+
+   /// Internal method that validates image in background
+  static bool _validateImageOnBackgroundThread(Uint8List imageBytes) {
+    try {
+      // This runs in a background isolate
+      final image = img.decodeImage(imageBytes);
+
+      if (image != null) {
+        logger.d('✅ Image is valid!');
+        logger.d('  Dimensions: ${image.width}x${image.height}');
+        logger.d('  Format: PNG (assumed)');
+        return true;
+      } else {
+        logger.e('❌ Failed to decode image');
+        return false;
+      }
+    } catch (e) {
+      logger.e('Error validating image: $e');
+      return false;
+    }
+  }
+
+
+    /// Process image in background isolate to avoid blocking main thread
+  Future<Uint8List> _processImageInBackground(Uint8List imageBytes) async {
+    // For CPU-intensive image processing, we use compute
+    // This runs the heavy image processing in a background isolate
+    return await compute(_processImageOnBackgroundThread, imageBytes);
+  }
+
+  /// Internal method that processes image in background
+  static Uint8List _processImageOnBackgroundThread(Uint8List imageBytes) {
+    try {
+      // This runs in a background isolate
+      final image = img.decodeImage(imageBytes);
+      if (image == null) return imageBytes;
+
+      // Resize to max 1024x1024 - CPU intensive operation
+      final optimized = img.copyResize(
+        image,
+        width: 1024,
+        height: 1024,
+        interpolation: img.Interpolation.cubic,
+      );
+
+      // Encode with compression - CPU intensive operation
+      final optimizedBytes = img.encodePng(optimized, level: 6);
+
+      logger.d(
+        'Image processed in background: ${imageBytes.length} → ${optimizedBytes.length} bytes',
+      );
+
+      
+      return Uint8List.fromList(imageBytes); // dont use optimisied bytes
+    } catch (e) {
+      logger.e('Error processing image in background: $e');
+      // Return original bytes if processing fails
+      return imageBytes;
     }
   }
 

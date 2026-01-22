@@ -165,7 +165,8 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
                   gender: event.gender,
                   additionalNotes: event.additionalNotes,
                 );
-                logger.f(response);
+                // logger.f(response); // NEVER USE THIS LINE , THIS WILL BLOCK UI THREAD
+
                 if (response != null) {
                   emit(GeneratingBlocState_generated(generatedImage: response));
                   // save image
@@ -178,9 +179,11 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
                     ),
                   );
 
-                   // reload predcitions
-                  predictionsBloc.add(PredictionsBlocEvent_loadPredictions());
-                  userBloc.add(UserBlocEvent_reloadUser());
+                  await Future.delayed(Duration(seconds: 2), () {
+                    // reload predcitions
+                    predictionsBloc.add(PredictionsBlocEvent_loadPredictions());
+                    userBloc.add(UserBlocEvent_reloadUser());
+                  });
                 } else {
                   throw AppException.invalid_response;
                 }
@@ -199,7 +202,6 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
         emit(GeneratingBlocState_error(error: e as AppException));
       } finally {
         emit(GeneratingBlocState_initial());
-       
       }
     });
 
