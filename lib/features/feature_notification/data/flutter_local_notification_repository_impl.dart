@@ -55,8 +55,8 @@ class FlutterLocalNotificationRepositoryImpl
 
       await flutterLocalNotificationsPlugin.show(
         0,
-        'Заголовок уведомления',
-        'Текст уведомления',
+        title,
+        body,
         platformChannelSpecifics,
       );
     } catch (e) {
