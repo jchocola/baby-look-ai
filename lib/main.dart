@@ -111,6 +111,8 @@ class MyApp extends StatelessWidget {
             userDbRepository: getIt<UserDbRepository>(),
             authBloc: context.read<AuthBloc>(),
             predictionsBloc: context.read<PredictionsBloc>(),
+            appConfigBloc: context.read<AppConfigBloc>(),
+            localNotifcationRepository: getIt<LocalNotifcationRepository>(), 
           ),
         ),
       ],

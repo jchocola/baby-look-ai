@@ -5,6 +5,9 @@ class AppConstant {
 
   static int REQUEST_PRICE = 1;
 
+  static String NOTIFICATION_CHANNEL_ID = 'ALERT_AFTER_GENERATING';
+  
+
   static String heroTag = 'BABY_VIEW';
 
   static const termServiceUrl =

@@ -4,8 +4,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:baby_look/core/bloc/app_config_bloc.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -78,6 +80,19 @@ class GeneratingBlocEvent_saveGeneratePredictionImage
   List<Object?> get props => [user, imageBytes, gestationWeek, gender];
 }
 
+class GeneratingBlocEvent_showNotificationAfterGenerating
+    extends GeneratingBlocEvent {
+  final String title;
+  final String body;
+  GeneratingBlocEvent_showNotificationAfterGenerating({
+    required this.title,
+    required this.body,
+  });
+
+  @override
+  List<Object?> get props => [title, body];
+}
+
 ///
 /// STATE
 ///
@@ -117,6 +132,8 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
   final UserDbRepository userDbRepository;
   final AuthBloc authBloc;
   final PredictionsBloc predictionsBloc;
+  final AppConfigBloc appConfigBloc;
+  final LocalNotifcationRepository localNotifcationRepository;
   GeneratingBloc({
     required this.bananaProService,
     required this.predictionDbRepository,
@@ -124,13 +141,13 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
     required this.userDbRepository,
     required this.authBloc,
     required this.predictionsBloc,
+    required this.appConfigBloc,
+    required this.localNotifcationRepository,
   }) : super(GeneratingBlocState_initial()) {
     ///
     /// GeneratingBlocEvent_generatePrediction
     ///
     on<GeneratingBlocEvent_generatePrediction>((event, emit) async {
-      //  final Completer completer = Completer();
-
       try {
         //1) check this user verified or not
         final authState = authBloc.state;
@@ -233,6 +250,29 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
         await predictionDbRepository.savePrediction(prediction: prediction);
       } catch (e) {
         logger.e(e);
+      }
+    });
+
+    ///
+    /// SHOW NOTIFICATION AFTER GENERATING IMAGE
+    ///
+    on<GeneratingBlocEvent_showNotificationAfterGenerating>((
+      event,
+      emit,
+    ) async {
+      final appConfigBlocState = appConfigBloc.state;
+      if (appConfigBlocState is AppConfigBlocState_loaded) {
+        // get notifcation setting setting
+        final notificationEnability = appConfigBlocState.notificationEnability;
+
+        if (notificationEnability) {
+          localNotifcationRepository.showNotification(
+            title: event.title,
+            body: event.body,
+            channel_id: AppConstant.NOTIFICATION_CHANNEL_ID,
+            channel_name: AppConstant.NOTIFICATION_CHANNEL_ID, 
+          );
+        }
       }
     });
   }

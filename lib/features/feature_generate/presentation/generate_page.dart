@@ -41,15 +41,20 @@ class _GeneratePageState extends State<GeneratePage> {
           child: BlocConsumer<GeneratingBloc, GeneratingBlocState>(
             listener: (context, state) {
               if (state is GeneratingBlocState_generated) {
+                context.read<GeneratingBloc>().add(GeneratingBlocEvent_showNotificationAfterGenerating(title: '👶 Встречайте ваше чудо!', body: "Результат готов к просмотру"));
+
                 showSuccessCustomToastification(title: 'Imaged Generated');
                 getIt<VibrattionRepository>().vibrate();
 
-                context.go('/gallery/image_viewer_after_generating', extra: state.generatedImage);
-
+                context.go(
+                  '/gallery/image_viewer_after_generating',
+                  extra: state.generatedImage,
+                );
               }
               if (state is GeneratingBlocState_error) {
-                showErrorCustomToastification(title: AppExceptionConverter(context, excetion: state.error)); 
-
+                showErrorCustomToastification(
+                  title: AppExceptionConverter(context, excetion: state.error),
+                );
               }
             },
 
