@@ -1,5 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/core/di/DI.dart';
+import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
@@ -60,11 +62,25 @@ class _GalleryPageState extends State<GalleryPage> {
                     groupValue: currentValue,
                     children: {
                       0: Text(
-                        context.tr(AppText.all_n, args: [state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : '']),
+                        context.tr(
+                          AppText.all_n,
+                          args: [
+                            state is PredictionsBlocState_loaded
+                                ? '(${state.predictionList.length})'
+                                : '',
+                          ],
+                        ),
                         //"All ${state is PredictionsBlocState_loaded ? '(${state.predictionList.length})' : ''}",
                       ),
                       1: Text(
-                           context.tr(AppText.favourites_n, args: [state is PredictionsBlocState_loaded ? '(${state.favouriteList.length})' : '']),
+                        context.tr(
+                          AppText.favourites_n,
+                          args: [
+                            state is PredictionsBlocState_loaded
+                                ? '(${state.favouriteList.length})'
+                                : '',
+                          ],
+                        ),
                         //'Favourites ${userState is UserBlocState_loaded ? '(${userState.userEntity.favourites.length})' : ''}',
                       ),
                     },
@@ -94,28 +110,36 @@ class _GalleryAll extends StatelessWidget {
     return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
       builder: (context, state) {
         if (state is PredictionsBlocState_loaded) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: AppConstant.appPadding,
-              crossAxisSpacing: AppConstant.appPadding,
-              childAspectRatio: 3 / 4,
-            ),
-            itemCount: state.predictionList.length,
-            itemBuilder: (context, index) {
-              return Hero(
-                tag: AppConstant.heroTag,
-                child: GeneratedCardWidget(
-                  prediction: state.predictionList[index],
-                  onCardTap: () {
-                    context.push(
-                      '/gallery/prediction_detail',
-                      extra: state.predictionList[index],
-                    );
-                  },
-                ),
+          return RefreshIndicator(
+            onRefresh: () async {
+              final user = await getIt<AuthRepository>().getCurrentUser();
+              context.read<PredictionsBloc>().add(
+                PredictionsBlocEvent_loadPredictions(user: user),
               );
             },
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: AppConstant.appPadding,
+                crossAxisSpacing: AppConstant.appPadding,
+                childAspectRatio: 3 / 4,
+              ),
+              itemCount: state.predictionList.length,
+              itemBuilder: (context, index) {
+                return Hero(
+                  tag: AppConstant.heroTag,
+                  child: GeneratedCardWidget(
+                    prediction: state.predictionList[index],
+                    onCardTap: () {
+                      context.push(
+                        '/gallery/prediction_detail',
+                        extra: state.predictionList[index],
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           );
         } else {
           return CircularProgressIndicator();
@@ -133,23 +157,34 @@ class _GalleryFavourites extends StatelessWidget {
     return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
       builder: (context, state) {
         if (state is PredictionsBlocState_loaded) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: AppConstant.appPadding,
-              crossAxisSpacing: AppConstant.appPadding,
-              childAspectRatio: 3 / 4,
-            ),
-            itemCount: state.favouriteList.length,
-            itemBuilder: (context, index) {
-              return Hero(
-                tag: AppConstant.heroTag,
-                child: GeneratedCardWidget(
-                  prediction: state.favouriteList[index],
-                  onCardTap: () => context.push('/gallery/prediction_detail', extra: state.favouriteList[index]),
-                ),
+          return RefreshIndicator(
+            onRefresh: () async {
+              final user = await getIt<AuthRepository>().getCurrentUser();
+              context.read<PredictionsBloc>().add(
+                PredictionsBlocEvent_loadPredictions(user: user),
               );
             },
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: AppConstant.appPadding,
+                crossAxisSpacing: AppConstant.appPadding,
+                childAspectRatio: 3 / 4,
+              ),
+              itemCount: state.favouriteList.length,
+              itemBuilder: (context, index) {
+                return Hero(
+                  tag: AppConstant.heroTag,
+                  child: GeneratedCardWidget(
+                    prediction: state.favouriteList[index],
+                    onCardTap: () => context.push(
+                      '/gallery/prediction_detail',
+                      extra: state.favouriteList[index],
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         } else {
           return CircularProgressIndicator();
