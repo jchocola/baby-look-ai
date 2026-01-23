@@ -28,7 +28,7 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
   }
 
   @override
-  Future<void> saveInterImageToGallery({required String imageUrl}) async {
+  Future<void> saveInternetImageToGallery({required String imageUrl}) async {
     try {
       final directory = await getDownloadsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;

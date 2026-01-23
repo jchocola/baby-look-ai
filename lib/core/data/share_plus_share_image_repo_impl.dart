@@ -8,7 +8,7 @@ import 'package:share_plus/share_plus.dart';
 
 class SharePlusShareImageRepoImpl implements ShareImageRepository {
   @override
-  Future<void> shareImage({required String imageUrl}) async {
+  Future<void> shareImage({required String imageUrl , String? content}) async {
     try {
       // 1) save file
       final dir = await getDownloadsDirectory();
@@ -19,7 +19,7 @@ class SharePlusShareImageRepoImpl implements ShareImageRepository {
       if (await file.exists()) {
         // 2) share
         final params = ShareParams(
-          text: 'Great picture',
+          text: content ??  'Great picture',
           files: [XFile(file.path)],
         );
 

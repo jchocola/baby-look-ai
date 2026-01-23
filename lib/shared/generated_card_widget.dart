@@ -96,7 +96,7 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
-                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction)),
+                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction, content: " this is our baby")),
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [

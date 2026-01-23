@@ -36,9 +36,10 @@ class PredictionsBlocEvent_saveImageFromServerToGallery
 class PredictionsBlocEvent_shareImageFromServerToGallery
     extends PredictionsBlocEvent {
   final PredictionEntity? prediction;
-  PredictionsBlocEvent_shareImageFromServerToGallery({this.prediction});
+  final String? content;
+  PredictionsBlocEvent_shareImageFromServerToGallery({this.prediction, this.content});
   @override
-  List<Object?> get props => [prediction];
+  List<Object?> get props => [prediction, content];
 }
 
 ///
@@ -118,7 +119,7 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
     on<PredictionsBlocEvent_saveImageFromServerToGallery>((event, emit) async {
       try {
         logger.d("PredictionsBlocEvent_saveImageFromServerToGallery Tapped");
-        await saveToGalleryRepository.saveInterImageToGallery(
+        await saveToGalleryRepository.saveInternetImageToGallery(
           imageUrl: event.prediction?.photoUrl ?? '',
         );
       } catch (e) {
@@ -134,6 +135,7 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
         logger.d("PredictionsBlocEvent_shareImageFromServerToGallery Tapped");
         await shareImageRepository.shareImage(
           imageUrl: event.prediction?.photoUrl ?? '',
+          content: event.content
         );
       } catch (e) {
         logger.e(e);
