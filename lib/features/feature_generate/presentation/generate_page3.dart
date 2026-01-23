@@ -123,7 +123,7 @@ class GeneratePage3 extends StatelessWidget {
                 pickedImage:
                     state is PrepareDataBlocState_loaded &&
                         state.motherImage != null
-                    ? PickedImageCard(file: File(state.motherImage!.path))
+                    ? PickedImageCard(file: File(state.motherImage!.path), onCancelPressed: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_cancelMotherImage()),)
                     : null,
                 onGalleryTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickMotherImageFromGallery(),
@@ -143,7 +143,7 @@ class GeneratePage3 extends StatelessWidget {
                 pickedImage:
                     state is PrepareDataBlocState_loaded &&
                         state.fatherImage != null
-                    ? PickedImageCard(file: File(state.fatherImage!.path))
+                    ? PickedImageCard(file: File(state.fatherImage!.path), onCancelPressed: () => context.read<PrepareDataBloc>().add(PrepareDataBlocEvent_cancelFatherImage()),)
                     : null,
                 onGalleryTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickFatherImageFromGallery(),
