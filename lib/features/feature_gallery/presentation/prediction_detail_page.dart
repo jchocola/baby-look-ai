@@ -53,7 +53,7 @@ class PredictionDetailPage extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.calendarIcon,
                     title: context.tr(AppText.gestation),
-                    subtitle:context.tr(AppText.week_n, args: [prediction?.gestationWeek.toString() ?? 'N' ]),
+                    subtitle:context.tr(AppText.week_n, args: [prediction?.gestationWeek.toString() ?? '' ]),
                   ),
                 ),
                 Expanded(
@@ -90,7 +90,7 @@ class PredictionDetailPage extends StatelessWidget {
               borderColor: theme.colorScheme.tertiary,
               buttonColor: theme.colorScheme.tertiaryFixed,
               icon: Icon(AppIcon.shareIcon),
-              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction , content: "This is my baby")),
+              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction , content: context.tr(AppText.share_content))),
             ),
             BigButton(
               title: context.tr(AppText.save_to_gallery),

@@ -96,7 +96,7 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
-                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction, content: " this is our baby")),
+                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction, content:context.tr(AppText.share_content))),
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
@@ -138,7 +138,7 @@ class GeneratedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         context.tr(AppText.week_n, args: [
-                          prediction?.gestationWeek.toString() ?? "0"
+                          prediction?.gestationWeek.toString() ?? ""
                         ]),
                      
                         style: theme.textTheme.titleSmall,
