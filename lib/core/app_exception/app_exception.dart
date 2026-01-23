@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 enum AppException {
   ///
@@ -41,7 +43,7 @@ enum AppException {
   auth_user_not_found,
 
   ///
-  /// COMMONS CASE
+  /// GENERAL
   ///
   empty_case,
   password_does_not_matched,
@@ -60,80 +62,80 @@ String AppExceptionConverter(
     /// AUTH
     ///
     case AppException.failed_auth_via_facebook:
-      return 'Authentication failed via Facebook. Please try again.';
+      return AppText.failed_auth_via_facebook.tr();
     case AppException.failed_auth_via_github:
-      return 'Authentication failed via GitHub. Please try again.';
+      return AppText.failed_auth_via_github.tr();
     case AppException.failed_auth_via_google:
-      return 'Authentication failed via Google. Please try again.';
+      return AppText.failed_auth_via_google.tr();
     case AppException.failed_auth_via_login_password:
-      return "Login failed. Please check your credentials and try again.";
+      return AppText.failed_auth_via_login_password.tr();
     case AppException.failed_register_user:
-      return "Registration failed. Please try again later.";
+      return AppText.failed_register_user.tr();
     case AppException.failed_verify_email:
-      return "Email verification failed. Please try again.";
+      return AppText.failed_verify_email.tr();
     case AppException.failed_recovery_password_email:
-      return "Password recovery email failed to send. Please try again.";
+      return AppText.failed_recovery_password_email.tr();
     case AppException.account_unverified:
-      return "Your account is not verified. Please verify your email address.";
+      return AppText.account_unverified.tr();
     case AppException.account_verified:
-      return "Account is already verified.";
+      return AppText.account_verified.tr();
     case AppException.sended_verify_email:
-      return "Verification email has been sent to your inbox.";
+      return AppText.sended_verify_email.tr();
 
     case AppException.invalid_email:
-      return 'Invalid email format. Please enter a valid email address.';
+      return AppText.invalid_email.tr();
     case AppException.user_disabled:
-      return 'This account has been disabled. Please contact support.';
+      return AppText.user_disabled.tr();
     case AppException.user_not_found:
-      return 'No account found with this email. Please register first.';
+      return AppText.user_not_found.tr();
     case AppException.wrong_password:
-      return "Incorrect password. Please try again.";
+      return AppText.wrong_password.tr();
     case AppException.too_many_requests:
-      return "Too many requests. Please try again later.";
+      return AppText.too_many_requests.tr();
     case AppException.user_token_expired:
-      return "Session expired. Please sign in again.";
+      return AppText.user_token_expired.tr();
     case AppException.network_request_failed:
-      return "Network request failed. Please check your connection.";
+      return AppText.network_request_failed.tr();
     case AppException.invalid_credential:
-      return "Invalid credentials. Please try again.";
+      return AppText.invalid_credential.tr();
     case AppException.operation_not_allowed:
-      return "This operation is not allowed. Please contact support.";
+      return AppText.operation_not_allowed.tr();
     case AppException.account_exists_with_different_credential:
-      return "Account exists with different credential. Please sign in using the original method.";
+      return AppText.account_exists_with_different_credential.tr();
     case AppException.invalid_verification_code:
-      return "Invalid verification code. Please try again.";
+      return AppText.invalid_verification_code.tr();
     case AppException.invalid_verification_id:
-      return "Invalid verification ID. Please request a new code.";
+      return AppText.invalid_verification_id.tr();
     case AppException.email_already_in_use:
-      return "This email is already in use. Please use a different email or sign in.";
+      return AppText.email_already_in_use.tr();
     case AppException.weak_password:
-      return "Password is too weak. Please use a stronger password.";
+      return AppText.weak_password.tr();
     case AppException.auth_invalid_email:
-      return "Invalid email format. Please enter a valid email address.";
+      return AppText.auth_invalid_email.tr();
     case AppException.auth_missing_android_pkg_name:
-      return "Missing Android package name. Please contact support.";
+      return AppText.auth_missing_android_pkg_name.tr();
     case AppException.auth_missing_continue_uri:
-      return "Missing continue URI. Please contact support.";
+      return AppText.auth_missing_continue_uri.tr();
     case AppException.auth_missing_ios_bundle_id:
-      return "Missing iOS bundle ID. Please contact support.";
+      return AppText.auth_missing_ios_bundle_id.tr();
     case AppException.auth_user_not_found:
-      return "User not found. Please register first.";
+      return AppText.auth_user_not_found.tr();
 
     ///
     /// COMMON CASES
     ///
     case AppException.empty_case:
-      return 'No data available. Please try again later.';
+      return AppText.empty_case.tr();
     case AppException.password_does_not_matched:
-      return "Passwords do not match. Please re-enter both passwords.";
+      return AppText.password_does_not_matched.tr();
     case AppException.balance_not_enought:
-      return "Insufficient balance. Please purchase more coins to continue.";
+      return AppText.balance_not_enought.tr();
     case AppException.invalid_response:
-      return "Invalid response received. Please try again.";
+      return AppText.invalid_response.tr();
     case AppException.ultra_sound_unpicked:
-      return "Please upload an ultrasound image first.";
+      return AppText.ultra_sound_unpicked.tr();
     case AppException.failed_to_save_image_byte_to_gallery:
-      return "Failed to save image to gallery. Please try again.";
+      return AppText.failed_to_save_image_byte_to_gallery.tr();
 
     // DEFAULT
     default:
