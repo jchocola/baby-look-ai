@@ -90,6 +90,7 @@ class PredictionDetailPage extends StatelessWidget {
               borderColor: theme.colorScheme.tertiary,
               buttonColor: theme.colorScheme.tertiaryFixed,
               icon: Icon(AppIcon.shareIcon),
+              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction)),
             ),
             BigButton(
               title: context.tr(AppText.save_to_gallery),

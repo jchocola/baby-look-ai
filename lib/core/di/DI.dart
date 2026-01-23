@@ -1,8 +1,10 @@
 import 'package:baby_look/core/data/save_to_gallery_repo_impl.dart';
+import 'package:baby_look/core/data/share_plus_share_image_repo_impl.dart';
 import 'package:baby_look/core/data/shared_localDBrepository_impl.dart';
 import 'package:baby_look/core/data/vibration_repository_impl.dart';
 import 'package:baby_look/core/domain/local_db_repository.dart';
 import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
+import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:baby_look/core/domain/vibrattion_repository.dart';
 import 'package:baby_look/features/feature_auth/data/firebase_auth_repository_impl.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
@@ -50,6 +52,8 @@ Future<void> DI() async {
   );
 
   getIt.registerSingleton<SaveToGalleryRepository>(SaveToGalleryRepoImpl());
+
+  getIt.registerSingleton<ShareImageRepository>(SharePlusShareImageRepoImpl());
 
   logger.i('DI initialized!');
 }

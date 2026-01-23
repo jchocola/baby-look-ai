@@ -2,6 +2,7 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
@@ -95,6 +96,7 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
+                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction)),
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [

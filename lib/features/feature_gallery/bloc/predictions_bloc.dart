@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
+import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,14 @@ class PredictionsBlocEvent_saveImageFromServerToGallery
     extends PredictionsBlocEvent {
   final PredictionEntity? prediction;
   PredictionsBlocEvent_saveImageFromServerToGallery({this.prediction});
+  @override
+  List<Object?> get props => [prediction];
+}
+
+class PredictionsBlocEvent_shareImageFromServerToGallery
+    extends PredictionsBlocEvent {
+  final PredictionEntity? prediction;
+  PredictionsBlocEvent_shareImageFromServerToGallery({this.prediction});
   @override
   List<Object?> get props => [prediction];
 }
@@ -63,9 +72,11 @@ class PredictionsBlocState_error extends PredictionsBlocState {}
 class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
   final PredictionDbRepository predictionDbRepository;
   final SaveToGalleryRepository saveToGalleryRepository;
+  final ShareImageRepository shareImageRepository;
   PredictionsBloc({
     required this.predictionDbRepository,
     required this.saveToGalleryRepository,
+    required this.shareImageRepository,
   }) : super(PredictionsBlocState_init()) {
     ///
     /// PredictionsBlocEvent_loadPredictions
@@ -108,6 +119,20 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
       try {
         logger.d("PredictionsBlocEvent_saveImageFromServerToGallery Tapped");
         await saveToGalleryRepository.saveInterImageToGallery(
+          imageUrl: event.prediction?.photoUrl ?? '',
+        );
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+    ///
+    /// PredictionsBlocEvent_shareImageFromServerToGallery
+    ///
+    on<PredictionsBlocEvent_shareImageFromServerToGallery>((event, emit) async {
+      try {
+        logger.d("PredictionsBlocEvent_shareImageFromServerToGallery Tapped");
+        await shareImageRepository.shareImage(
           imageUrl: event.prediction?.photoUrl ?? '',
         );
       } catch (e) {

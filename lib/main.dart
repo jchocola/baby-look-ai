@@ -6,6 +6,7 @@ import 'package:baby_look/core/data/save_to_gallery_repo_impl.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/domain/local_db_repository.dart';
 import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
+import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:baby_look/core/router/app_router.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
@@ -83,7 +84,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),
-            saveToGalleryRepository: getIt<SaveToGalleryRepository>()
+            saveToGalleryRepository: getIt<SaveToGalleryRepository>(),
+            shareImageRepository: getIt<ShareImageRepository>(),
           ),
         ),
         BlocProvider(
