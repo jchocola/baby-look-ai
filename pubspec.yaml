@@ -73,6 +73,8 @@ dependencies:
   flutter_local_notifications: ^19.5.0
   permission_handler: ^12.0.1
   shared_preferences: ^2.5.4
+  share_plus: ^12.0.1
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -100,6 +102,7 @@ flutter:
   assets:
     - .env
     - assets/generating.json
+    - assets/empty_case.json
     - assets/logo.png
     - assets/video.gif
     - assets/translations/

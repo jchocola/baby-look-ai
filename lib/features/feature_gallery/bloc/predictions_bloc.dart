@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
+import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +23,23 @@ class PredictionsBlocEvent_loadPredictions extends PredictionsBlocEvent {
   PredictionsBlocEvent_loadPredictions({this.user});
   @override
   List<Object?> get props => [user];
+}
+
+class PredictionsBlocEvent_saveImageFromServerToGallery
+    extends PredictionsBlocEvent {
+  final PredictionEntity? prediction;
+  PredictionsBlocEvent_saveImageFromServerToGallery({this.prediction});
+  @override
+  List<Object?> get props => [prediction];
+}
+
+class PredictionsBlocEvent_shareImageFromServerToGallery
+    extends PredictionsBlocEvent {
+  final PredictionEntity? prediction;
+  final String? content;
+  PredictionsBlocEvent_shareImageFromServerToGallery({this.prediction, this.content});
+  @override
+  List<Object?> get props => [prediction, content];
 }
 
 ///
@@ -53,8 +72,13 @@ class PredictionsBlocState_error extends PredictionsBlocState {}
 ///
 class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
   final PredictionDbRepository predictionDbRepository;
-  PredictionsBloc({required this.predictionDbRepository})
-    : super(PredictionsBlocState_init()) {
+  final SaveToGalleryRepository saveToGalleryRepository;
+  final ShareImageRepository shareImageRepository;
+  PredictionsBloc({
+    required this.predictionDbRepository,
+    required this.saveToGalleryRepository,
+    required this.shareImageRepository,
+  }) : super(PredictionsBlocState_init()) {
     ///
     /// PredictionsBlocEvent_loadPredictions
     ///
@@ -69,14 +93,52 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
 
           logger.d('Prediction list : ${predictionList.length}');
 
-          emit(PredictionsBlocState_loaded(predictionList: predictionList , favouriteList: favoritePredictionList));
+          emit(
+            PredictionsBlocState_loaded(
+              predictionList: predictionList,
+              favouriteList: favoritePredictionList,
+            ),
+          );
         } else {
           logger.d('Empty User');
-          emit(PredictionsBlocState_loaded(predictionList: [], favouriteList: []));
+          emit(
+            PredictionsBlocState_loaded(predictionList: [], favouriteList: []),
+          );
         }
       } catch (e) {
         logger.e(e);
-        emit(PredictionsBlocState_loaded(predictionList: [], favouriteList: []));
+        emit(
+          PredictionsBlocState_loaded(predictionList: [], favouriteList: []),
+        );
+      }
+    });
+
+    ///
+    /// PredictionsBlocEvent_saveImageFromServerToGallery
+    ///
+    on<PredictionsBlocEvent_saveImageFromServerToGallery>((event, emit) async {
+      try {
+        logger.d("PredictionsBlocEvent_saveImageFromServerToGallery Tapped");
+        await saveToGalleryRepository.saveInternetImageToGallery(
+          imageUrl: event.prediction?.photoUrl ?? '',
+        );
+      } catch (e) {
+        logger.e(e);
+      }
+    });
+
+    ///
+    /// PredictionsBlocEvent_shareImageFromServerToGallery
+    ///
+    on<PredictionsBlocEvent_shareImageFromServerToGallery>((event, emit) async {
+      try {
+        logger.d("PredictionsBlocEvent_shareImageFromServerToGallery Tapped");
+        await shareImageRepository.shareImage(
+          imageUrl: event.prediction?.photoUrl ?? '',
+          content: event.content
+        );
+      } catch (e) {
+        logger.e(e);
       }
     });
   }

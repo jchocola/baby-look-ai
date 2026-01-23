@@ -95,13 +95,18 @@ class PrepareDataBlocState_loaded extends PrepareDataBlocState {
     XFile? fatherImage,
     int? gestationWeek,
     BABY_GENDER? babyGender,
+    bool clearUltrasound = false,
+    bool clearMother = false,
+    bool clearFather = false,
+    bool clearGestation = false,
+    bool clearGender = false,
   }) {
     return PrepareDataBlocState_loaded(
-      ultrasoundImage: ultrasoundImage ?? this.ultrasoundImage,
-      motherImage: motherImage ?? this.motherImage,
-      fatherImage: fatherImage ?? this.fatherImage,
-      gestationWeek: gestationWeek ?? this.gestationWeek,
-      babyGender: babyGender ?? this.babyGender,
+      ultrasoundImage: clearUltrasound ? null : (ultrasoundImage ?? this.ultrasoundImage),
+      motherImage: clearMother ? null : (motherImage ?? this.motherImage),
+      fatherImage: clearFather ? null : (fatherImage ?? this.fatherImage),
+      gestationWeek: clearGestation ? null : (gestationWeek ?? this.gestationWeek),
+      babyGender: clearGender ? BABY_GENDER.DONT_KNOW : (babyGender ?? this.babyGender),
     );
   }
 }
@@ -149,7 +154,7 @@ class PrepareDataBloc extends Bloc<PrepareDataBlocEvent, PrepareDataBlocState> {
     on<PrepareDataBlocEvent_cancelUtrasoundImage>((event, emit) async {
       final currentState = state;
       if (currentState is PrepareDataBlocState_loaded) {
-        emit(currentState.copyWith(ultrasoundImage: null));
+        emit(currentState.copyWith(clearUltrasound: true));
       }
     });
 
@@ -208,7 +213,7 @@ class PrepareDataBloc extends Bloc<PrepareDataBlocEvent, PrepareDataBlocState> {
     on<PrepareDataBlocEvent_cancelMotherImage>((event, emit) async {
       final currentState = state;
       if (currentState is PrepareDataBlocState_loaded) {
-        emit(currentState.copyWith(motherImage: null));
+        emit(currentState.copyWith(clearMother: true));
       }
     });
 
@@ -245,7 +250,7 @@ class PrepareDataBloc extends Bloc<PrepareDataBlocEvent, PrepareDataBlocState> {
     on<PrepareDataBlocEvent_cancelFatherImage>((event, emit) async {
       final currentState = state;
       if (currentState is PrepareDataBlocState_loaded) {
-        emit(currentState.copyWith(fatherImage: null));
+        emit(currentState.copyWith(clearFather: true));
       }
     });
 

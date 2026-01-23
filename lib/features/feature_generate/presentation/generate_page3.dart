@@ -30,7 +30,7 @@ class GeneratePage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: context.tr(AppText.step3_appbar) ),
+      appBar: CustomAppBar(title: context.tr(AppText.step3_appbar)),
       body: _buildBody(context),
     );
   }
@@ -44,9 +44,12 @@ class GeneratePage3 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppConstant.appPadding,
           children: [
-            Text(context.tr(AppText.upload_parent_photo), style: theme.textTheme.titleMedium),
             Text(
-             context.tr(AppText.upload_parent_photo_note),
+              context.tr(AppText.upload_parent_photo),
+              style: theme.textTheme.titleMedium,
+            ),
+            Text(
+              context.tr(AppText.upload_parent_photo_note),
               style: theme.textTheme.bodySmall,
             ),
 
@@ -59,8 +62,7 @@ class GeneratePage3 extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.ideaIcon,
                     title: context.tr(AppText.good_lighting),
-                    subtitle:
-                        context.tr(AppText.use_natural_light),
+                    subtitle: context.tr(AppText.use_natural_light),
                   ),
                 ),
                 Expanded(
@@ -104,8 +106,7 @@ class GeneratePage3 extends StatelessWidget {
             NoteWidget(
               color: theme.colorScheme.error,
               icon: AppIcon.infoIcon,
-              note:
-                 context.tr(AppText.step3_tip),
+              note: context.tr(AppText.step3_tip),
             ),
 
             ///
@@ -116,14 +117,21 @@ class GeneratePage3 extends StatelessWidget {
                 bgColor: theme.colorScheme.onPrimary,
                 icon: AppIcon.motherIcon,
                 title: context.tr(AppText.mother_photo),
-                subtitle:context.tr(AppText.clear_frontal_photo_for_best_result),
+                subtitle: context.tr(
+                  AppText.clear_frontal_photo_for_best_result,
+                ),
                 onTapCameraTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickMotherImageFromCamera(),
                 ),
                 pickedImage:
                     state is PrepareDataBlocState_loaded &&
                         state.motherImage != null
-                    ? PickedImageCard(file: File(state.motherImage!.path))
+                    ? PickedImageCard(
+                        file: File(state.motherImage!.path),
+                        onCancelPressed: () => context
+                            .read<PrepareDataBloc>()
+                            .add(PrepareDataBlocEvent_cancelMotherImage()),
+                      )
                     : null,
                 onGalleryTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickMotherImageFromGallery(),
@@ -139,11 +147,18 @@ class GeneratePage3 extends StatelessWidget {
                 bgColor: theme.colorScheme.tertiaryFixed,
                 icon: AppIcon.fatherIcon,
                 title: context.tr(AppText.father_photo),
-                subtitle: context.tr(AppText.clear_frontal_photo_for_best_result),
+                subtitle: context.tr(
+                  AppText.clear_frontal_photo_for_best_result,
+                ),
                 pickedImage:
                     state is PrepareDataBlocState_loaded &&
                         state.fatherImage != null
-                    ? PickedImageCard(file: File(state.fatherImage!.path))
+                    ? PickedImageCard(
+                        file: File(state.fatherImage!.path),
+                        onCancelPressed: () => context
+                            .read<PrepareDataBloc>()
+                            .add(PrepareDataBlocEvent_cancelFatherImage()),
+                      )
                     : null,
                 onGalleryTapped: () => context.read<PrepareDataBloc>().add(
                   PrepareDataBlocEvent_pickFatherImageFromGallery(),
@@ -168,18 +183,27 @@ class GeneratePage3 extends StatelessWidget {
                               title: context.tr(AppText.generate_prediction),
                               onTap: () {
                                 if (state is PrepareDataBlocState_loaded) {
-                                  context.read<GeneratingBloc>().add(
+                                  if (state.ultrasoundImage == null) {
+                                    showErrorCustomToastification(
+                                      title: AppExceptionConverter(
+                                        context,
+                                        excetion:
+                                            AppException.ultra_sound_unpicked,
+                                      ),
+                                    );
+                                  } else {
+                                     context.read<GeneratingBloc>().add(
                                     GeneratingBlocEvent_generatePrediction(
                                       ultrasoundImage: File(
                                         state.ultrasoundImage!.path,
                                       ),
                                       gestationWeek: state.gestationWeek ?? 1,
-                                      motherImage: File(
-                                        state.motherImage!.path,
-                                      ),
-                                      fatherImage: File(
-                                        state.fatherImage!.path,
-                                      ),
+                                      motherImage: state.motherImage != null
+                                          ? File(state.motherImage!.path)
+                                          : null,
+                                      fatherImage: state.fatherImage != null
+                                          ? File(state.fatherImage!.path)
+                                          : null,
                                       gender: state.babyGender.name,
                                       user:
                                           authState
@@ -188,6 +212,7 @@ class GeneratePage3 extends StatelessWidget {
                                           : null,
                                     ),
                                   );
+                                  }
                                 }
                               },
                             )

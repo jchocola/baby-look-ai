@@ -70,6 +70,7 @@ class AppText {
   static const view_detail = 'gallery.view_detail';
   static const share = 'gallery.share';
   static const fullscreen = 'gallery.fullscreen';
+  static const share_content = 'gallery.share_content';
 
   ///
   /// AUTH

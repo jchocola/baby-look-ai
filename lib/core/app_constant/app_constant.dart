@@ -6,7 +6,13 @@ class AppConstant {
   static int REQUEST_PRICE = 1;
 
   static String NOTIFICATION_CHANNEL_ID = 'ALERT_AFTER_GENERATING';
-  
+
+  static String appVersion = "1.0.0(1)";
+  static String buildDate = '23.01.26';
+  static String developer = 'Nguen T.B';
+  static String AImodel = 'Nano Banana Pro';
+  static String techStack = 'Dart/Flutter';
+  static String supportEmail = 'bak_nguen@vk.com';
 
   static String heroTag = 'BABY_VIEW';
 

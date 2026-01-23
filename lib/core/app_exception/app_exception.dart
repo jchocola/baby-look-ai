@@ -47,6 +47,8 @@ enum AppException {
   password_does_not_matched,
   balance_not_enought,
   invalid_response,
+  ultra_sound_unpicked,
+  failed_to_save_image_byte_to_gallery,
 }
 
 String AppExceptionConverter(
@@ -107,7 +109,11 @@ String AppExceptionConverter(
     case AppException.balance_not_enought:
       return "balance_not_enought";
     case AppException.invalid_response:
-      return "invalid_response";  
+      return "invalid_response"; 
+     case AppException.ultra_sound_unpicked:
+      return "ultra_sound_unpicked";  
+     case AppException.failed_to_save_image_byte_to_gallery:
+      return "failed_to_save_image_byte_to_gallery";       
 
     // DEFAULT
     default:

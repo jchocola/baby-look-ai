@@ -29,51 +29,56 @@ class AboutAppPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AppLogo().animate(
-            onPlay: (controller) {
-              controller.repeat(reverse: true);
-            },
-          ).scaleXY(end: 1.5, duration: 1000.ms).then(delay: 300.ms). scaleXY(end: 1.2, duration: 300.ms, delay: 300.ms).shake(duration: 600.ms ,delay: 200.ms ),
-          SizedBox(height: AppConstant.appPadding * 2,),
+          AppLogo()
+              .animate(
+                onPlay: (controller) {
+                  controller.repeat(reverse: true);
+                },
+              )
+              .scaleXY(end: 1.5, duration: 1000.ms)
+              .then(delay: 300.ms)
+              .scaleXY(end: 1.2, duration: 300.ms, delay: 300.ms)
+              .shake(duration: 600.ms, delay: 200.ms),
+          SizedBox(height: AppConstant.appPadding * 2),
           CustomListile(
             icon: AppIcon.versionIcon,
-            title:  context.tr(AppText.version),
-            tralingWidget: Text('1.0.0', style: theme.textTheme.titleMedium),
+            title: context.tr(AppText.version),
+            tralingWidget: Text(AppConstant.appVersion, style: theme.textTheme.titleMedium),
           ),
           CustomListile(
             icon: AppIcon.buildDateIcon,
-            title:  context.tr(AppText.build_date),
-            tralingWidget: Text('1.0.0', style: theme.textTheme.titleMedium),
+            title: context.tr(AppText.build_date),
+            tralingWidget: Text(AppConstant.buildDate, style: theme.textTheme.titleMedium),
           ),
           CustomListile(
             icon: AppIcon.developerIcon,
-            title:  context.tr(AppText.developer),
+            title: context.tr(AppText.developer),
             tralingWidget: Text(
-              'Nguen T.B',
+              AppConstant.developer,
               style: theme.textTheme.titleMedium,
             ),
           ),
           CustomListile(
-            icon: AppIcon.AIIcon, 
-            title:  context.tr(AppText.ai_model),
+            icon: AppIcon.AIIcon,
+            title: context.tr(AppText.ai_model),
             tralingWidget: Text(
-              'Nano Banana Pro',
+              AppConstant.AImodel,
               style: theme.textTheme.titleMedium,
             ),
           ),
           CustomListile(
             icon: AppIcon.techStackIcon,
-            title:  context.tr(AppText.tech_stack),
+            title: context.tr(AppText.tech_stack),
             tralingWidget: Text(
-              'Flutter/Dart',
+              AppConstant.techStack,
               style: theme.textTheme.titleMedium,
             ),
           ),
           CustomListile(
             icon: AppIcon.emailIcon,
-            title:  context.tr(AppText.contact),
+            title: context.tr(AppText.contact),
             tralingWidget: Text(
-              'egmail.com',
+              AppConstant.supportEmail,
               style: theme.textTheme.titleMedium,
             ),
           ),

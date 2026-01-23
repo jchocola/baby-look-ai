@@ -1,6 +1,7 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
+import 'package:baby_look/shared/empty_widget.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,10 @@ class RecentPredictionsWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(context.tr(AppText.recent_predictions), style: theme.textTheme.titleMedium),
+            Text(
+              context.tr(AppText.recent_predictions),
+              style: theme.textTheme.titleMedium,
+            ),
             TextButton(
               onPressed: () {
                 context.go('/gallery');
@@ -44,6 +48,13 @@ class RecentPredictionsWidget extends StatelessWidget {
     return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
       builder: (context, state) {
         if (state is PredictionsBlocState_loaded) {
+          ///
+          /// EMPTY CASE
+          ///
+          if (state.predictionList.isEmpty) {
+            return Center(child: EmptyWidget());
+          }
+
           return GridView.builder(
             // only show latest 4
             itemCount: state.predictionList.length <= 4
@@ -62,15 +73,16 @@ class RecentPredictionsWidget extends StatelessWidget {
               final prediction = state.predictionList[index];
               return GeneratedCardWidget(
                 prediction: prediction,
-                onCardTap: () => context.go(
-                  '/gallery/prediction_detail',
-                  extra: prediction,
-                ),
+                onCardTap: () =>
+                    context.go('/gallery/prediction_detail', extra: prediction),
               );
             },
           );
         } else {
-          return CircularProgressIndicator();
+          ///
+          /// LOADING
+          ///
+          return EmptyWidget();
         }
       },
     );

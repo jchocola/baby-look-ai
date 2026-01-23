@@ -6,6 +6,7 @@ import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
+import 'package:baby_look/shared/empty_widget.dart';
 import 'package:baby_look/shared/generated_card_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,6 +111,13 @@ class _GalleryAll extends StatelessWidget {
     return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
       builder: (context, state) {
         if (state is PredictionsBlocState_loaded) {
+          ///
+          /// EMPTY CASE
+          ///
+           if (state.predictionList.isEmpty) {
+            return Center(child: EmptyWidget());
+          }
+        
           return RefreshIndicator(
             onRefresh: () async {
               final user = await getIt<AuthRepository>().getCurrentUser();
@@ -157,6 +165,13 @@ class _GalleryFavourites extends StatelessWidget {
     return BlocBuilder<PredictionsBloc, PredictionsBlocState>(
       builder: (context, state) {
         if (state is PredictionsBlocState_loaded) {
+          ///
+          /// EMPTY CASE
+          ///
+           if (state.predictionList.isEmpty) {
+            return Center(child: EmptyWidget());
+          }
+
           return RefreshIndicator(
             onRefresh: () async {
               final user = await getIt<AuthRepository>().getCurrentUser();

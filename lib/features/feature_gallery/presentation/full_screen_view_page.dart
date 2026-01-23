@@ -2,6 +2,7 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,13 @@ class FullScreenViewPage extends StatelessWidget {
       children: [
         Hero(
           tag: AppConstant.heroTag,
-          child: Image.network(prediction?.photoUrl ?? AppConstant.defaultAvatarUrl))]);
+          child: CachedNetworkImage(
+       imageUrl: prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
+      
+       errorWidget: (context, url, error) => Icon(Icons.error),
+    ),
+        ),
+      ],
+    );
   }
 }

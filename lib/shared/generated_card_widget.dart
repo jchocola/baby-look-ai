@@ -2,9 +2,11 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,13 +38,16 @@ class GeneratedCardWidget extends StatelessWidget {
                       topLeft: Radius.circular(AppConstant.borderRadius),
                       topRight: Radius.circular(AppConstant.borderRadius),
                     ),
-                    child: Image.network(
-                      prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
-                      //'https://raisingchildren.net.au/__data/assets/image/0026/47816/newborn-behaviour-nutshellnarrow.jpg',
+                    child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       height: double.maxFinite,
-                    ),
-                  ),
+                      width: double.maxFinite,
+       imageUrl: prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
+      
+       errorWidget: (context, url, error) => Icon(Icons.error),
+    ),
+                  )
+                  ,
 
                   Positioned(
                     right: AppConstant.appPadding / 4,
@@ -63,10 +68,13 @@ class GeneratedCardWidget extends StatelessWidget {
                                 )
                             ? AppIcon.favouriteSolidIcon
                             : AppIcon.favouriteRoundedIcon,
-                        iconColor: state is UserBlocState_loaded &&
+                        iconColor:
+                            state is UserBlocState_loaded &&
                                 state.userEntity.favourites.contains(
                                   prediction?.id,
-                                ) ? theme.colorScheme.primary : theme.colorScheme.secondary,
+                                )
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.secondary,
                       ),
                     ),
                   ),
@@ -75,8 +83,11 @@ class GeneratedCardWidget extends StatelessWidget {
                     left: AppConstant.appPadding / 4,
                     top: AppConstant.appPadding / 4,
                     child: PopupMenuButton(
-                      icon: Icon(AppIcon.verticalMoreIcon, color: theme.colorScheme.secondary,),
-                     
+                      icon: Icon(
+                        AppIcon.verticalMoreIcon,
+                        color: theme.colorScheme.secondary,
+                      ),
+
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(
@@ -95,6 +106,12 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
+                            onTap: () => context.read<PredictionsBloc>().add(
+                              PredictionsBlocEvent_shareImageFromServerToGallery(
+                                prediction: prediction,
+                                content: context.tr(AppText.share_content),
+                              ),
+                            ),
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
@@ -135,13 +152,21 @@ class GeneratedCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        context.tr(AppText.week_n, args: [
-                          prediction?.gestationWeek.toString() ?? "0"
-                        ]),
-                     
+                        context.tr(
+                          AppText.week_n,
+                          args: [prediction?.gestationWeek.toString() ?? ""],
+                        ),
+
                         style: theme.textTheme.titleSmall,
                       ),
-                      Icon(genderToIcon(gender: prediction?.gender), color: genderFromStr(gender: prediction?.gender ?? '') == BABY_GENDER.BOY ? theme.colorScheme.tertiary : theme.colorScheme.primary,)
+                      Icon(
+                        genderToIcon(gender: prediction?.gender),
+                        color:
+                            genderFromStr(gender: prediction?.gender ?? '') ==
+                                BABY_GENDER.BOY
+                            ? theme.colorScheme.tertiary
+                            : theme.colorScheme.primary,
+                      ),
                     ],
                   ),
                   Text(

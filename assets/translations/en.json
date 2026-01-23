@@ -55,7 +55,8 @@
     "favourites_n": "Favourites {}",
     "fullscreen": "Fullscreen",
     "share": "Share",
-    "view_detail": "View Detail"
+    "view_detail": "View Detail",
+    "share_content" : "🤔 На кого будет похож наш ребенок?\nBabyLook AI дал ответ! Посмотрите, что получилось 👇"
   },
   "generating": {
     "camera": "Camera",

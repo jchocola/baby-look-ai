@@ -2,6 +2,7 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
+import 'package:baby_look/shared/empty_widget.dart';
 import 'package:baby_look/shared/prediction_history_listile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,13 @@ class PredictionHistoryPage extends StatelessWidget {
       child: BlocBuilder<PredictionsBloc, PredictionsBlocState>(
         builder: (context, state) {
           if (state is PredictionsBlocState_loaded) {
+            ////
+            /// EMPTY CASE
+            ///
+             if (state.predictionList.isEmpty) {
+            return Center(child: EmptyWidget());
+          }
+
             return ListView.builder(
               itemCount: state.predictionList.length,
               itemBuilder: (context, index) {
