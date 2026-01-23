@@ -6,6 +6,7 @@ import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/shared/custom_circle_icon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,12 +38,16 @@ class GeneratedCardWidget extends StatelessWidget {
                       topLeft: Radius.circular(AppConstant.borderRadius),
                       topRight: Radius.circular(AppConstant.borderRadius),
                     ),
-                    child: Image.network(
-                      prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
-                      //'https://raisingchildren.net.au/__data/assets/image/0026/47816/newborn-behaviour-nutshellnarrow.jpg',
+                    child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       height: double.maxFinite,
-                  ),),
+                      width: double.maxFinite,
+       imageUrl: prediction?.photoUrl ?? AppConstant.defaultAvatarUrl,
+      
+       errorWidget: (context, url, error) => Icon(Icons.error),
+    ),
+                  )
+                  ,
 
                   Positioned(
                     right: AppConstant.appPadding / 4,
