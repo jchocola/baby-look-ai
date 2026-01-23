@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
 import 'package:baby_look/main.dart';
+import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
@@ -15,7 +16,7 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
       final file = File('${directory?.path}/baby_prediction_$timestamp.png');
 
       if (!await file.exists()) {
-       await  file.create(recursive: true);
+        await file.create(recursive: true);
       }
 
       await file.writeAsBytes(imageBytes);
@@ -27,8 +28,16 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
   }
 
   @override
-  Future<void> saveInterImageToGallery({required String imageUrl}) {
-    // TODO: implement saveInterImageToGallery
-    throw UnimplementedError();
+  Future<void> saveInterImageToGallery({required String imageUrl}) async {
+    try {
+      final directory = await getDownloadsDirectory();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final file = File('${directory?.path}/baby_prediction_$timestamp.png');
+
+      await Dio().download(imageUrl, file.path);
+      logger.f("saveInterImageToGallery completed");
+    } catch (e) {
+      logger.e(e);
+    }
   }
 }

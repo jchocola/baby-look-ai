@@ -2,6 +2,7 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_gallery/widget/generated_image_card.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/shared/big_button.dart';
@@ -9,6 +10,7 @@ import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:baby_look/shared/tips_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class PredictionDetailPage extends StatelessWidget {
@@ -94,6 +96,7 @@ class PredictionDetailPage extends StatelessWidget {
               borderColor: theme.colorScheme.error,
               buttonColor: theme.colorScheme.errorContainer,
               icon: Icon(AppIcon.galleryIcon),
+              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_saveImageFromServerToGallery(prediction: prediction)),
             ),
           ],
         ),

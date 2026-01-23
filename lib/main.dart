@@ -83,6 +83,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => PredictionsBloc(
             predictionDbRepository: getIt<PredictionDbRepository>(),
+            saveToGalleryRepository: getIt<SaveToGalleryRepository>()
           ),
         ),
         BlocProvider(
