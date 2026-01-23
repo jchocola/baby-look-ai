@@ -79,7 +79,7 @@ class _AuthPageState extends State<AuthPage>
         listener: (context, state) {
           if (state is AuthBlocState_error) {
             showErrorCustomToastification(
-              title: AppExceptionConverter(context, excetion: state.exception),
+              title: AppExceptionConverter(context, exception: state.exception),
             );
           }
 

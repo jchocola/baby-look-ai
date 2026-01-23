@@ -6,7 +6,7 @@
     "email": "Email",
     "enter_sms_code": "Enter SMS code",
     "enter_your_phone_number": "Enter your phone",
-    "forgot_password": "Forgot passwprd?",
+    "forgot_password": "Forgot password?",
     "login": "Login",
     "logout": "Log out",
     "password": "Password",
@@ -17,6 +17,49 @@
     "send_code": "Send code",
     "sign_up_with": "Sign up with",
     "we_will_send_sms": "We will send you an SMS with a confirmation code."
+  },
+  "exception": {
+    "auth": {
+      "account_unverified": "Your account is not verified. Please verify your email address.",
+      "account_verified": "Account is already verified.",
+      "failed_auth_via_facebook": "Facebook authentication failed. Please try again.",
+      "failed_auth_via_github": "Github authentication failed. Please try again.",
+      "failed_auth_via_google": "Google authentication failed. Please try again.",
+      "failed_auth_via_login_password": "Login failed. Please check your credentials and try again.",
+      "failed_recovery_password_email": "Password recovery email failed to send. Please try again.",
+      "failed_register_user": "Registration failed. Please try again later.",
+      "failed_verify_email": "Email verification failed. Please try again.",
+      "sended_verify_email": "Verification email has been sent to your inbox."
+    },
+    "firebase_exception": {
+      "account_exists_with_different_credential": "Account exists with different credential. Please sign in using the original method.",
+      "auth_invalid_email": "Invalid email format. Please enter a valid email address.",
+      "auth_missing_android_pkg_name": "Missing Android package name. Please contact support.",
+      "auth_missing_continue_uri": "Missing continue URI. Please contact support.",
+      "auth_missing_ios_bundle_id": "Missing iOS bundle ID. Please contact support.",
+      "auth_user_not_found": "User not found. Please register first.",
+      "email_already_in_use": "This email is already in use. Please use a different email or sign in.",
+      "invalid_credential": "Invalid credentials. Please try again.",
+      "invalid_email": "Invalid email format. Please enter a valid email address.",
+      "invalid_verification_code": "Invalid verification code. Please try again.",
+      "invalid_verification_id": "Invalid verification ID. Please request a new code.",
+      "network_request_failed": "Network request failed. Please check your connection.",
+      "operation_not_allowed": "This operation is not allowed. Please contact support.",
+      "too_many_requests": "Too many requests. Please try again later.",
+      "user_disabled": "User is disabled. Please contact support.",
+      "user_not_found": "No account found with this email. Please register first.",
+      "user_token_expired": "Session expired. Please sign in again.",
+      "weak_password": "Password is too weak. Please use a stronger password.",
+      "wrong_password": "Incorrect password. Please try again."
+    },
+    "general": {
+      "balance_not_enought": "Insufficient balance. Please purchase more coins to continue.",
+      "empty_case": "No data available. Please try again later.",
+      "failed_to_save_image_byte_to_gallery": "Failed to save image to gallery. Please try again.",
+      "invalid_response": "Invalid response received. Please try again.",
+      "password_does_not_matched": "Passwords do not match. Please re-enter both passwords.",
+      "ultra_sound_unpicked": "Please upload an ultrasound image first."
+    }
   },
   "faq": {
     "a1": "BabyLook is a mobile application that uses artificial intelligence to predict the appearance of your future child based on ultrasound scans and parent photos.",
@@ -55,8 +98,8 @@
     "favourites_n": "Favourites {}",
     "fullscreen": "Fullscreen",
     "share": "Share",
-    "view_detail": "View Detail",
-    "share_content": "🤔 Who will our baby look like?\nBabyLook AI has the answer! Check out the results 👇"
+    "share_content": "🤔 Who will our baby look like?BabyLook AI has the answer! Check out the results 👇",
+    "view_detail": "View Detail"
   },
   "generating": {
     "camera": "Camera",
@@ -175,48 +218,5 @@
     "purchases": "Purchases",
     "send_feedback": "Send Feedback",
     "terms_of_services": "Terms Of Services"
-  },
-  "exception": {
-    "auth": {
-      "failed_auth_via_facebook": "Facebook authentication failed. Please try again.",
-      "failed_auth_via_github": "Github authentication failed. Please try again.",
-      "failed_auth_via_google": "Google authentication failed. Please try again.",
-      "failed_auth_via_login_password": "Login failed. Please check your credentials and try again.",
-      "failed_register_user": "Registration failed. Please try again later.",
-      "failed_verify_email": "Email verification failed. Please try again.",
-      "failed_recovery_password_email": "Password recovery email failed to send. Please try again.",
-      "account_unverified": "Your account is not verified. Please verify your email address.",
-      "account_verified": "Account is already verified.",
-      "sended_verify_email": "Verification email has been sent to your inbox."
-    },
-    "firebase_exception": {
-      "invalid_email": "Invalid email format. Please enter a valid email address.",
-      "user_disabled": "User is disabled. Please contact support.",
-      "user_not_found": "No account found with this email. Please register first.",
-      "wrong_password": "Incorrect password. Please try again.",
-      "too_many_requests": "Too many requests. Please try again later.",
-      "user_token_expired": "Session expired. Please sign in again.",
-      "network_request_failed": "Network request failed. Please check your connection.",
-      "invalid_credential": "Invalid credentials. Please try again.",
-      "operation_not_allowed": "This operation is not allowed. Please contact support.",
-      "account_exists_with_different_credential": "Account exists with different credential. Please sign in using the original method.",
-      "invalid_verification_code": "Invalid verification code. Please try again.",
-      "invalid_verification_id": "Invalid verification ID. Please request a new code.",
-      "email_already_in_use": "This email is already in use. Please use a different email or sign in.",
-      "weak_password": "Password is too weak. Please use a stronger password.",
-      "auth_invalid_email": "Invalid email format. Please enter a valid email address.",
-      "auth_missing_android_pkg_name": "Missing Android package name. Please contact support.",
-      "auth_missing_continue_uri": "Missing continue URI. Please contact support.",
-      "auth_missing_ios_bundle_id": "Missing iOS bundle ID. Please contact support.",
-      "auth_user_not_found": "User not found. Please register first."
-    },
-    "general": {
-      "empty_case": "No data available. Please try again later.",
-      "password_does_not_matched": "Passwords do not match. Please re-enter both passwords.",
-      "balance_not_enought": "Insufficient balance. Please purchase more coins to continue.",
-      "invalid_response": "Invalid response received. Please try again.",
-      "ultra_sound_unpicked": "Please upload an ultrasound image first.",
-      "failed_to_save_image_byte_to_gallery": "Failed to save image to gallery. Please try again."
-    }
   }
 }
