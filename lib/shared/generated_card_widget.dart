@@ -42,8 +42,7 @@ class GeneratedCardWidget extends StatelessWidget {
                       //'https://raisingchildren.net.au/__data/assets/image/0026/47816/newborn-behaviour-nutshellnarrow.jpg',
                       fit: BoxFit.cover,
                       height: double.maxFinite,
-                    ),
-                  ),
+                  ),),
 
                   Positioned(
                     right: AppConstant.appPadding / 4,
@@ -64,10 +63,13 @@ class GeneratedCardWidget extends StatelessWidget {
                                 )
                             ? AppIcon.favouriteSolidIcon
                             : AppIcon.favouriteRoundedIcon,
-                        iconColor: state is UserBlocState_loaded &&
+                        iconColor:
+                            state is UserBlocState_loaded &&
                                 state.userEntity.favourites.contains(
                                   prediction?.id,
-                                ) ? theme.colorScheme.primary : theme.colorScheme.secondary,
+                                )
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.secondary,
                       ),
                     ),
                   ),
@@ -76,8 +78,11 @@ class GeneratedCardWidget extends StatelessWidget {
                     left: AppConstant.appPadding / 4,
                     top: AppConstant.appPadding / 4,
                     child: PopupMenuButton(
-                      icon: Icon(AppIcon.verticalMoreIcon, color: theme.colorScheme.secondary,),
-                     
+                      icon: Icon(
+                        AppIcon.verticalMoreIcon,
+                        color: theme.colorScheme.secondary,
+                      ),
+
                       itemBuilder: (context) {
                         return [
                           PopupMenuItem(
@@ -96,7 +101,12 @@ class GeneratedCardWidget extends StatelessWidget {
                             ),
                           ),
                           PopupMenuItem(
-                            onTap:()=> context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction, content:context.tr(AppText.share_content))),
+                            onTap: () => context.read<PredictionsBloc>().add(
+                              PredictionsBlocEvent_shareImageFromServerToGallery(
+                                prediction: prediction,
+                                content: context.tr(AppText.share_content),
+                              ),
+                            ),
                             child: Row(
                               spacing: AppConstant.appPadding,
                               children: [
@@ -137,13 +147,21 @@ class GeneratedCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        context.tr(AppText.week_n, args: [
-                          prediction?.gestationWeek.toString() ?? ""
-                        ]),
-                     
+                        context.tr(
+                          AppText.week_n,
+                          args: [prediction?.gestationWeek.toString() ?? ""],
+                        ),
+
                         style: theme.textTheme.titleSmall,
                       ),
-                      Icon(genderToIcon(gender: prediction?.gender), color: genderFromStr(gender: prediction?.gender ?? '') == BABY_GENDER.BOY ? theme.colorScheme.tertiary : theme.colorScheme.primary,)
+                      Icon(
+                        genderToIcon(gender: prediction?.gender),
+                        color:
+                            genderFromStr(gender: prediction?.gender ?? '') ==
+                                BABY_GENDER.BOY
+                            ? theme.colorScheme.tertiary
+                            : theme.colorScheme.primary,
+                      ),
                     ],
                   ),
                   Text(
