@@ -4,10 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:baby_look/core/bloc/app_config_bloc.dart';
-import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
-import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
-import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
+import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -17,9 +14,13 @@ import 'package:uuid/uuid.dart';
 
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_exception/app_exception.dart';
+import 'package:baby_look/core/bloc/app_config_bloc.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
+import 'package:baby_look/features/feature_notification/domain/local_notifcation_repository.dart';
 import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
@@ -93,6 +94,14 @@ class GeneratingBlocEvent_showNotificationAfterGenerating
   List<Object?> get props => [title, body];
 }
 
+class GeneratingBlocEvent_saveImageByteToGallery extends GeneratingBlocEvent {
+  final Uint8List imageBytes;
+  GeneratingBlocEvent_saveImageByteToGallery({required this.imageBytes});
+
+  @override
+  List<Object?> get props => [imageBytes];
+}
+
 ///
 /// STATE
 ///
@@ -133,6 +142,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
   final AuthBloc authBloc;
   final PredictionsBloc predictionsBloc;
   final AppConfigBloc appConfigBloc;
+  final SaveToGalleryRepository saveToGalleryRepository;
   final LocalNotifcationRepository localNotifcationRepository;
   GeneratingBloc({
     required this.bananaProService,
@@ -143,6 +153,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
     required this.predictionsBloc,
     required this.appConfigBloc,
     required this.localNotifcationRepository,
+    required this.saveToGalleryRepository,
   }) : super(GeneratingBlocState_initial()) {
     ///
     /// GeneratingBlocEvent_generatePrediction
@@ -218,7 +229,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
         logger.e(e);
         emit(GeneratingBlocState_error(error: e as AppException));
       } finally {
-        emit(GeneratingBlocState_initial());
+       // emit(GeneratingBlocState_initial()); // DONT USE THIS , ALLOW USE CAN SAVE TO GALLERY
       }
     });
 
@@ -270,9 +281,25 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
             title: event.title,
             body: event.body,
             channel_id: AppConstant.NOTIFICATION_CHANNEL_ID,
-            channel_name: AppConstant.NOTIFICATION_CHANNEL_ID, 
+            channel_name: AppConstant.NOTIFICATION_CHANNEL_ID,
           );
         }
+      }
+    });
+
+    ///
+    /// GeneratingBlocEvent_saveImageByteToGallery
+    ///
+    on<GeneratingBlocEvent_saveImageByteToGallery>((event, emit) async {
+      try {
+   
+          logger.d('Start save to gallery');
+          await saveToGalleryRepository.saveImageBytesToGallery(
+            imageBytes: event.imageBytes
+          );
+        
+      } catch (e) {
+        logger.e(e);
       }
     });
   }

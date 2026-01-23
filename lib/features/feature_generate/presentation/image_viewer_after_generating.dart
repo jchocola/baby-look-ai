@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/main.dart';
 import 'package:baby_look/shared/big_button.dart';
@@ -68,9 +69,12 @@ class _ImageViewerAfterGeneratingState
               child: Column(
                 spacing: AppConstant.appPadding,
                 children: [
-                  Text(context.tr(AppText.meet_your_baby), style: theme.textTheme.titleLarge),
                   Text(
-                   context.tr(AppText.ai_note1),
+                    context.tr(AppText.meet_your_baby),
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  Text(
+                    context.tr(AppText.ai_note1),
                     style: theme.textTheme.titleSmall,
                   ),
 
@@ -112,7 +116,8 @@ class _ImageViewerAfterGeneratingState
                     builder: (context, state) {
                       if (state is PrepareDataBlocState_loaded) {
                         return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          spacing: AppConstant.appPadding,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SmallPickedImageCard(
                               file: File(state.ultrasoundImage!.path),
@@ -121,12 +126,12 @@ class _ImageViewerAfterGeneratingState
                                 ? SmallPickedImageCard(
                                     file: File(state.motherImage!.path),
                                   )
-                                : SizedBox(),
+                                : Container(),
                             state.fatherImage != null
                                 ? SmallPickedImageCard(
                                     file: File(state.fatherImage!.path),
                                   )
-                                : SizedBox(),
+                                : Container(),
                           ],
                         );
                       } else {
@@ -138,28 +143,27 @@ class _ImageViewerAfterGeneratingState
               ),
             ),
 
-            Row(
-              spacing: AppConstant.appPadding,
-              children: [
-                Expanded(
-                  child: BigButton(
-                    // TODO : SAVE TO GALLERY LOGIC
-                    title: context.tr(AppText.save_to_gallery),
-                    icon: Icon(AppIcon.saveIcon),
-                    borderColor: theme.colorScheme.primary,
+            ///
+            /// SAVE TO GALLERY
+            ///
+            BlocBuilder<GeneratingBloc, GeneratingBlocState>(
+              builder: (context, state) => BigButton(
+                title: context.tr(AppText.save_to_gallery),
+                icon: Icon(AppIcon.saveIcon),
+                borderColor: theme.colorScheme.primary,
 
-                    buttonColor: theme.colorScheme.onPrimary,
-                  ),
-                ),
-                Expanded(
-                  child: BigButton(
-                    // TODO : RE-GENERATE LOGIC
-                    title: context.tr(AppText.re_generate),
-                    icon: Icon(AppIcon.retryIcon),
-                    borderColor: theme.colorScheme.secondary,
-                  ),
-                ),
-              ],
+                buttonColor: theme.colorScheme.onPrimary,
+                onTap: () {
+                  logger.d(state);
+                  if (state is GeneratingBlocState_generated) {
+                    context.read<GeneratingBloc>().add(
+                      GeneratingBlocEvent_saveImageByteToGallery(
+                        imageBytes: state.generatedImage,
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
             Row(
               spacing: AppConstant.appPadding,
@@ -171,7 +175,13 @@ class _ImageViewerAfterGeneratingState
                               // TODO : SCREENSHOT LOGIC
                               final bytes = await screenshotController
                                   .capture();
-                              logger.f(bytes);
+
+                              context.read<GeneratingBloc>().add(
+                                GeneratingBlocEvent_saveImageByteToGallery(
+                                  imageBytes: bytes!,
+                                ),
+                              );
+                              // logger.f(bytes);
                             },
                             title: context.tr(AppText.take_screenshot),
                             icon: Icon(AppIcon.cameratIcon),
@@ -186,8 +196,7 @@ class _ImageViewerAfterGeneratingState
 
             NoteWidget(
               icon: AppIcon.infoIcon,
-              note:
-                  context.tr(AppText.ai_note2),
+              note: context.tr(AppText.ai_note2),
             ),
           ],
         ),
