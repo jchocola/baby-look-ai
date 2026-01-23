@@ -55,87 +55,87 @@ enum AppException {
 
 String AppExceptionConverter(
   BuildContext context, {
-  required AppException excetion,
+  required AppException exception,
 }) {
-  switch (excetion) {
+  switch (exception) {
     ///
     /// AUTH
     ///
     case AppException.failed_auth_via_facebook:
-      return AppText.failed_auth_via_facebook.tr();
+      return context.tr(AppText.failed_auth_via_facebook);
     case AppException.failed_auth_via_github:
-      return AppText.failed_auth_via_github.tr();
+      return context.tr(AppText.failed_auth_via_github);
     case AppException.failed_auth_via_google:
-      return AppText.failed_auth_via_google.tr();
+      return context.tr(AppText.failed_auth_via_google);
     case AppException.failed_auth_via_login_password:
-      return AppText.failed_auth_via_login_password.tr();
+      return context.tr(AppText.failed_auth_via_login_password);
     case AppException.failed_register_user:
-      return AppText.failed_register_user.tr();
+      return context.tr(AppText.failed_register_user);
     case AppException.failed_verify_email:
-      return AppText.failed_verify_email.tr();
+      return context.tr(AppText.failed_verify_email);
     case AppException.failed_recovery_password_email:
-      return AppText.failed_recovery_password_email.tr();
+      return context.tr(AppText.failed_recovery_password_email);
     case AppException.account_unverified:
-      return AppText.account_unverified.tr();
+      return context.tr(AppText.account_unverified);
     case AppException.account_verified:
-      return AppText.account_verified.tr();
+      return context.tr(AppText.account_verified);
     case AppException.sended_verify_email:
-      return AppText.sended_verify_email.tr();
+      return context.tr(AppText.sended_verify_email);
 
     case AppException.invalid_email:
-      return AppText.invalid_email.tr();
+      return context.tr(AppText.invalid_email);
     case AppException.user_disabled:
-      return AppText.user_disabled.tr();
+      return context.tr(AppText.user_disabled);
     case AppException.user_not_found:
-      return AppText.user_not_found.tr();
+      return context.tr(AppText.user_not_found);
     case AppException.wrong_password:
-      return AppText.wrong_password.tr();
+      return context.tr(AppText.wrong_password);
     case AppException.too_many_requests:
-      return AppText.too_many_requests.tr();
+      return context.tr(AppText.too_many_requests);
     case AppException.user_token_expired:
-      return AppText.user_token_expired.tr();
+      return context.tr(AppText.user_token_expired);
     case AppException.network_request_failed:
-      return AppText.network_request_failed.tr();
+      return context.tr(AppText.network_request_failed);
     case AppException.invalid_credential:
-      return AppText.invalid_credential.tr();
+      return context.tr(AppText.invalid_credential);
     case AppException.operation_not_allowed:
-      return AppText.operation_not_allowed.tr();
+      return context.tr(AppText.operation_not_allowed);
     case AppException.account_exists_with_different_credential:
-      return AppText.account_exists_with_different_credential.tr();
+      return context.tr(AppText.account_exists_with_different_credential);
     case AppException.invalid_verification_code:
-      return AppText.invalid_verification_code.tr();
+      return context.tr(AppText.invalid_verification_code);
     case AppException.invalid_verification_id:
-      return AppText.invalid_verification_id.tr();
+      return context.tr(AppText.invalid_verification_id);
     case AppException.email_already_in_use:
-      return AppText.email_already_in_use.tr();
+      return context.tr(AppText.email_already_in_use);
     case AppException.weak_password:
-      return AppText.weak_password.tr();
+      return context.tr(AppText.weak_password);
     case AppException.auth_invalid_email:
-      return AppText.auth_invalid_email.tr();
+      return context.tr(AppText.auth_invalid_email);
     case AppException.auth_missing_android_pkg_name:
-      return AppText.auth_missing_android_pkg_name.tr();
+      return context.tr(AppText.auth_missing_android_pkg_name);
     case AppException.auth_missing_continue_uri:
-      return AppText.auth_missing_continue_uri.tr();
+      return context.tr(AppText.auth_missing_continue_uri);
     case AppException.auth_missing_ios_bundle_id:
-      return AppText.auth_missing_ios_bundle_id.tr();
+      return context.tr(AppText.auth_missing_ios_bundle_id);
     case AppException.auth_user_not_found:
-      return AppText.auth_user_not_found.tr();
+      return context.tr(AppText.auth_user_not_found);
 
     ///
     /// COMMON CASES
     ///
     case AppException.empty_case:
-      return AppText.empty_case.tr();
+      return context.tr(AppText.empty_case);
     case AppException.password_does_not_matched:
-      return AppText.password_does_not_matched.tr();
+      return context.tr(AppText.password_does_not_matched);
     case AppException.balance_not_enought:
-      return AppText.balance_not_enought.tr();
+      return context.tr(AppText.balance_not_enought);
     case AppException.invalid_response:
-      return AppText.invalid_response.tr();
+      return context.tr(AppText.invalid_response);
     case AppException.ultra_sound_unpicked:
-      return AppText.ultra_sound_unpicked.tr();
+      return context.tr(AppText.ultra_sound_unpicked);
     case AppException.failed_to_save_image_byte_to_gallery:
-      return AppText.failed_to_save_image_byte_to_gallery.tr();
+      return context.tr(AppText.failed_to_save_image_byte_to_gallery);
 
     // DEFAULT
     default:

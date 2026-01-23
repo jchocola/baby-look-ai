@@ -212,47 +212,65 @@ class AppText {
   static const faq_q15 = 'faq.q15';
   static const faq_a15 = 'faq.a15';
 
-
   ///
   /// EXCEPTION
   ///
-  static const failed_auth_via_facebook = 'exception.auth.failed_auth_via_facebook';
+  static const failed_auth_via_facebook =
+      'exception.auth.failed_auth_via_facebook';
   static const failed_auth_via_google = 'exception.auth.failed_auth_via_google';
   static const failed_auth_via_github = 'exception.auth.failed_auth_via_github';
-  static const failed_auth_via_login_password = 'exception.auth.failed_auth_via_login_password';
+  static const failed_auth_via_login_password =
+      'exception.auth.failed_auth_via_login_password';
   static const failed_register_user = 'exception.auth.failed_register_user';
   static const failed_verify_email = 'exception.auth.failed_verify_email';
-  static const failed_recovery_password_email = 'exception.auth.failed_recovery_password_email';
+  static const failed_recovery_password_email =
+      'exception.auth.failed_recovery_password_email';
   static const account_unverified = 'exception.auth.account_unverified';
   static const account_verified = 'exception.auth.account_verified';
   static const sended_verify_email = 'exception.auth.sended_verify_email';
-  
+
   // Firebase Exceptions
   static const invalid_email = 'exception.firebase_exception.invalid_email';
   static const user_disabled = 'exception.firebase_exception.user_disabled';
   static const user_not_found = 'exception.firebase_exception.user_not_found';
   static const wrong_password = 'exception.firebase_exception.wrong_password';
-  static const too_many_requests = 'exception.firebase_exception.too_many_requests';
-  static const user_token_expired = 'exception.firebase_exception.user_token_expired';
-  static const network_request_failed = 'exception.firebase_exception.network_request_failed';
-  static const invalid_credential = 'exception.firebase_exception.invalid_credential';
-  static const operation_not_allowed = 'exception.firebase_exception.operation_not_allowed';
-  static const account_exists_with_different_credential = 'exception.firebase_exception.account_exists_with_different_credential';
-  static const invalid_verification_code = 'exception.firebase_exception.invalid_verification_code';
-  static const invalid_verification_id = 'exception.firebase_exception.invalid_verification_id';
-  static const email_already_in_use = 'exception.firebase_exception.email_already_in_use';
+  static const too_many_requests =
+      'exception.firebase_exception.too_many_requests';
+  static const user_token_expired =
+      'exception.firebase_exception.user_token_expired';
+  static const network_request_failed =
+      'exception.firebase_exception.network_request_failed';
+  static const invalid_credential =
+      'exception.firebase_exception.invalid_credential';
+  static const operation_not_allowed =
+      'exception.firebase_exception.operation_not_allowed';
+  static const account_exists_with_different_credential =
+      'exception.firebase_exception.account_exists_with_different_credential';
+  static const invalid_verification_code =
+      'exception.firebase_exception.invalid_verification_code';
+  static const invalid_verification_id =
+      'exception.firebase_exception.invalid_verification_id';
+  static const email_already_in_use =
+      'exception.firebase_exception.email_already_in_use';
   static const weak_password = 'exception.firebase_exception.weak_password';
-  static const auth_invalid_email = 'exception.firebase_exception.auth_invalid_email';
-  static const auth_missing_android_pkg_name = 'exception.firebase_exception.auth_missing_android_pkg_name';
-  static const auth_missing_continue_uri = 'exception.firebase_exception.auth_missing_continue_uri';
-  static const auth_missing_ios_bundle_id = 'exception.firebase_exception.auth_missing_ios_bundle_id';
-  static const auth_user_not_found = 'exception.firebase_exception.auth_user_not_found';
-  
+  static const auth_invalid_email =
+      'exception.firebase_exception.auth_invalid_email';
+  static const auth_missing_android_pkg_name =
+      'exception.firebase_exception.auth_missing_android_pkg_name';
+  static const auth_missing_continue_uri =
+      'exception.firebase_exception.auth_missing_continue_uri';
+  static const auth_missing_ios_bundle_id =
+      'exception.firebase_exception.auth_missing_ios_bundle_id';
+  static const auth_user_not_found =
+      'exception.firebase_exception.auth_user_not_found';
+
   // General Exceptions
   static const empty_case = 'exception.general.empty_case';
-  static const password_does_not_matched = 'exception.general.password_does_not_matched';
+  static const password_does_not_matched =
+      'exception.general.password_does_not_matched';
   static const balance_not_enought = 'exception.general.balance_not_enought';
   static const invalid_response = 'exception.general.invalid_response';
   static const ultra_sound_unpicked = 'exception.general.ultra_sound_unpicked';
-  static const failed_to_save_image_byte_to_gallery = 'exception.general.failed_to_save_image_byte_to_gallery';
+  static const failed_to_save_image_byte_to_gallery =
+      'exception.general.failed_to_save_image_byte_to_gallery';
 }
