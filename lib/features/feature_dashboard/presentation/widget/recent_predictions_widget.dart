@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class RecentPredictionsWidget extends StatelessWidget {
   const RecentPredictionsWidget({super.key});
@@ -70,7 +71,32 @@ class RecentPredictionsWidget extends StatelessWidget {
             },
           );
         } else {
-          return CircularProgressIndicator();
+
+          ///
+          /// LOADING 
+          ///
+          return Skeletonizer(
+            enabled: false,
+            child: GridView.builder(
+              // only show latest 4
+              itemCount:  4,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisSpacing: AppConstant.appPadding,
+                crossAxisSpacing: AppConstant.appPadding,
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 4,
+              ),
+              itemBuilder: (context, index) {
+              
+                return GeneratedCardWidget(
+                
+                );
+              },
+            ),
+          );
         }
       },
     );
