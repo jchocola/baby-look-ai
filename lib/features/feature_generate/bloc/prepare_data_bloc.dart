@@ -77,7 +77,7 @@ class PrepareDataBlocState_loaded extends PrepareDataBlocState {
     this.motherImage,
     this.fatherImage,
     this.gestationWeek,
-     this.babyGender = BABY_GENDER.DONT_KNOW,
+    this.babyGender = BABY_GENDER.DONT_KNOW,
   });
 
   @override
@@ -102,11 +102,17 @@ class PrepareDataBlocState_loaded extends PrepareDataBlocState {
     bool clearGender = false,
   }) {
     return PrepareDataBlocState_loaded(
-      ultrasoundImage: clearUltrasound ? null : (ultrasoundImage ?? this.ultrasoundImage),
+      ultrasoundImage: clearUltrasound
+          ? null
+          : (ultrasoundImage ?? this.ultrasoundImage),
       motherImage: clearMother ? null : (motherImage ?? this.motherImage),
       fatherImage: clearFather ? null : (fatherImage ?? this.fatherImage),
-      gestationWeek: clearGestation ? null : (gestationWeek ?? this.gestationWeek),
-      babyGender: clearGender ? BABY_GENDER.DONT_KNOW : (babyGender ?? this.babyGender),
+      gestationWeek: clearGestation
+          ? null
+          : (gestationWeek ?? this.gestationWeek),
+      babyGender: clearGender
+          ? BABY_GENDER.DONT_KNOW
+          : (babyGender ?? this.babyGender),
     );
   }
 }

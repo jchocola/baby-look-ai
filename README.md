@@ -16,12 +16,14 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
 ## 🌟 Features
 
 ### Core Functionality
+
 - **AI-Powered Baby Prediction**: Utilizes Google's Gemini AI to create realistic baby face predictions
 - **Multi-Image Analysis**: Processes ultrasound scans along with parental photos for enhanced accuracy
 - **Realistic Rendering**: Generates photorealistic images of predicted baby faces
 - **Cross-Platform Support**: Available on iOS, Android, and web platforms
 
 ### User Experience
+
 - **Intuitive Interface**: Clean, user-friendly design with step-by-step guidance
 - **Multi-Language Support**: Available in English, Russian, and Vietnamese
 - **Secure Authentication**: Phone number verification with Firebase Authentication
@@ -29,6 +31,7 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
 - **Social Sharing**: Share predictions with family and friends
 
 ### Technical Features
+
 - **Background Processing**: Non-blocking image processing using Flutter isolates
 - **Cloud Storage**: Firebase integration for secure image storage
 - **Push Notifications**: Real-time updates and reminders
@@ -47,18 +50,21 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/baby_look.git
    cd baby_look
    ```
 
 2. **Install dependencies**
+
    ```bash
    flutter pub get
    ```
 
 3. **Environment Setup**
    Create a `.env` file in the root directory:
+
    ```env
    # Firebase Configuration
    FIREBASE_API_KEY=your_firebase_api_key
@@ -67,16 +73,17 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
    FIREBASE_STORAGE_BUCKET=your_project.appspot.com
    FIREBASE_MESSAGING_SENDER_ID=your_sender_id
    FIREBASE_APP_ID=your_app_id
-   
+
    # Gemini AI Configuration
    GEMINI_API_KEY=your_gemini_api_key
-   
+
    # Wiredash Feedback
    WIREDASH_PROJECT_ID=your_wiredash_project_id
    WIREDASH_SECRET_KEY=your_wiredash_secret_key
    ```
 
 4. **Firebase Setup**
+
    - Create a Firebase project
    - Enable Authentication, Cloud Firestore, and Storage
    - Download and place `google-services.json` (Android) and `GoogleService-Info.plist` (iOS) in respective directories
@@ -91,6 +98,7 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
 ### Tech Stack
 
 **Frontend**
+
 - Flutter Framework
 - Dart Programming Language
 - BLoC State Management
@@ -98,12 +106,14 @@ BabyLook AI is a cutting-edge mobile application that uses artificial intelligen
 - Firebase SDK
 
 **Backend Services**
+
 - Google Gemini AI (gemini-3-pro-image-preview)
 - Firebase Authentication
 - Cloud Firestore Database
 - Firebase Cloud Storage
 
 **Development Tools**
+
 - Flutter Lints for code quality
 - Easy Localization for multi-language support
 - Wiredash for user feedback
@@ -134,10 +144,13 @@ lib/
 ## 🎯 Key Components
 
 ### AI Service (`BananaProService`)
+
 Handles communication with Google's Gemini AI for image generation with built-in background processing to prevent UI blocking.
 
 ### State Management
+
 Uses BLoC pattern for predictable state management across features:
+
 - `PrepareDataBloc`: Handles image selection and form data
 - `GeneratingBloc`: Manages AI prediction generation process
 - `PredictionsBloc`: Controls gallery and saved predictions
@@ -145,6 +158,7 @@ Uses BLoC pattern for predictable state management across features:
 - `UserBloc`: Manages user profile and settings
 
 ### Image Processing Pipeline
+
 1. **Input Collection**: Ultrasound scan + optional parental photos
 2. **Preprocessing**: Image validation and optimization
 3. **AI Generation**: Gemini API processing with custom prompts
