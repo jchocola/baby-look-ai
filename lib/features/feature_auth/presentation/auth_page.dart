@@ -79,7 +79,7 @@ class _AuthPageState extends State<AuthPage>
         listener: (context, state) {
           if (state is AuthBlocState_error) {
             showErrorCustomToastification(
-              title: AppExceptionConverter(context, excetion: state.exception),
+              title: AppExceptionConverter(context, exception: state.exception),
             );
           }
 
@@ -125,7 +125,7 @@ class _AuthPageState extends State<AuthPage>
                                 children: [
                                   SafeArea(
                                     child: Text(
-                                      'BabyLook AI',
+                                      AppConstant.appName,
                                       style: theme.textTheme.headlineLarge,
                                     ),
                                   ),
@@ -188,8 +188,8 @@ class _AuthPageState extends State<AuthPage>
                                                             .colorScheme
                                                             .primary,
                                                   icon: AppIcon.infoIcon,
-                                                  note:
-                                                      'Первые 500 регистраций этой недели получат 10 БЕСПЛАТНЫХ генераций!',
+                                                  note: context.tr(AppText.promotion_text)
+                                                      ,
                                                 )
                                                 .animate(
                                                   onPlay: (controller) =>

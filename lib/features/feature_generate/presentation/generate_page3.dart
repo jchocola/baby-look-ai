@@ -187,7 +187,7 @@ class GeneratePage3 extends StatelessWidget {
                                     showErrorCustomToastification(
                                       title: AppExceptionConverter(
                                         context,
-                                        excetion:
+                                        exception:
                                             AppException.ultra_sound_unpicked,
                                       ),
                                     );

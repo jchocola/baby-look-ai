@@ -53,7 +53,7 @@ class _GeneratePageState extends State<GeneratePage> {
               }
               if (state is GeneratingBlocState_error) {
                 showErrorCustomToastification(
-                  title: AppExceptionConverter(context, excetion: state.error),
+                  title: AppExceptionConverter(context, exception: state.error),
                 );
               }
             },
