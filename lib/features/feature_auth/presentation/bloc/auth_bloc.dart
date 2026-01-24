@@ -38,6 +38,13 @@ class AuthBlocEvent_verifyPhoneNumber extends AuthBlocEvent {
   List<Object?> get props => [phoneNumber];
 }
 
+class AuthBlocEvent_verifySMSCode extends AuthBlocEvent {
+  final String smsCode;
+  AuthBlocEvent_verifySMSCode({required this.smsCode});
+  @override
+  List<Object?> get props => [smsCode];
+}
+
 class AuthBlocEvent_sendPassRecoverToEmail extends AuthBlocEvent {
   final String? email;
   AuthBlocEvent_sendPassRecoverToEmail({required this.email});
@@ -85,7 +92,7 @@ class AuthBlocState_init extends AuthBlocState {}
 class AuthBlocState_unauthenticated extends AuthBlocState {}
 
 class AuthBlocState_waiting_verify_sms_code extends AuthBlocState {
-  final String ?verificationId;
+  final String? verificationId;
   AuthBlocState_waiting_verify_sms_code({required this.verificationId});
   @override
   List<Object?> get props => [verificationId];
@@ -338,12 +345,45 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         final verificationId = await authRepository
             .getVerificationPhoneNumberId(phoneNumber: event.phoneNumber);
+        logger.d('VERIFICATION ID $verificationId');
         emit(
           AuthBlocState_waiting_verify_sms_code(verificationId: verificationId),
         );
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
+      }
+    });
+
+    ///
+    /// VERIFY SMS CODE
+    ///
+    on<AuthBlocEvent_verifySMSCode>((event, emit) async {
+      try {
+        logger.d('VERIFY SMS CODE ${event.smsCode}');
+        final currentState = state;
+        if (currentState is AuthBlocState_waiting_verify_sms_code) {
+          logger.d('CurrentVerifId : ${currentState.verificationId}');
+
+          final phoneAuthCredential = await authRepository.verifySMSCode(
+            smsCode: event.smsCode,
+            verificationId: currentState.verificationId,
+          );
+
+          final userCredential = await authRepository
+              .signInWithPhoneAuthCredential(credential: phoneAuthCredential);
+
+          add(
+            AuthBlocEvent_checkSetupUserDataFirstTime(
+              userCredential: userCredential,
+            ),
+          );
+        }
+      } catch (e) {
+        logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
       }
     });
 

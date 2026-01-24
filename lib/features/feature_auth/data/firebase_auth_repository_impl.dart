@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_nullable_for_final_variable_declarations, curly_braces_in_flow_control_structures, unnecessary_brace_in_string_interps
 
+import 'dart:async';
+
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/main.dart';
@@ -226,6 +228,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Future<String?> getVerificationPhoneNumberId({
     required String phoneNumber,
   }) async {
+    final completer = Completer<String?>();
     try {
       String? verifId;
 
@@ -236,18 +239,38 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
 
       // 2 ) verify phone number
       await _auth.verifyPhoneNumber(
-        verificationCompleted: (phoneCredential) {},
-        verificationFailed: (FirebaseAuthException excepion) {
+        phoneNumber: formattedNumber,
+        verificationCompleted: (phoneCredential) {
+          // Авто-подтверждение — нет verificationId, возвращаем null
+          logger.d('Phone verification completed automatically');
+          if (!completer.isCompleted) completer.complete(null);
+        },
+        verificationFailed: (FirebaseAuthException exception) {
           //TODO : CATCH ALL ERROR
+              // Завершаем ошибкой — вызывающий код может её поймать
+          logger.e('Phone verification failed: ${exception.code} ${exception.message}');
+          if (!completer.isCompleted) completer.completeError(exception);
         },
-        codeSent: (String verificationId, int? resendToken) {
-          logger.d('Code sent : verification ID : ${verificationId}');
-          verifId = verificationId;
+        codeSent: (String verificationId, int? resendToken)  {
+          logger.d('Code sent : verification ID : $verificationId');
+          if (!completer.isCompleted) completer.complete(verificationId);
         },
-        codeAutoRetrievalTimeout: (String verification) {},
+        codeAutoRetrievalTimeout: (String verificationId) {
+           // Таймаут автоподбора кода — иногда verificationId приходит здесь
+          logger.d('Auto retrieval timeout, verificationId: $verificationId');
+          if (!completer.isCompleted) completer.complete(verificationId);
+        },
       );
 
-      return verifId;
+     // Ожидаем результата из callback'ов, с защитным таймаутом
+      return await completer.future.timeout(
+        const Duration(minutes: 2),
+        onTimeout: () {
+          logger.e('verifyPhoneNumber timed out');
+          if (!completer.isCompleted) completer.complete(null);
+          return null;
+        },
+      );
     } catch (e) {
       logger.e(e);
       throw 'Failed to verify phone';

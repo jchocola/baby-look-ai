@@ -2,10 +2,12 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
+import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/main.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:pinput/pinput.dart';
 
@@ -54,7 +56,6 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
     });
   }
 
-
   // ✅ Шаг 1: Отправка номера телефона
   Future<void> _sendPhoneNumber(String phoneNumber) async {
     try {
@@ -94,7 +95,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
               errorMessage = 'Ошибка верификации: ${error.message}';
           }
 
-         showErrorCustomToastification(title:  errorMessage);
+          showErrorCustomToastification(title: errorMessage);
           setState(() => _isLoading = false);
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -106,7 +107,9 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
           setState(() => _isLoading = false);
           changeToStep2();
 
-          showSuccessCustomToastification(title:  'SMS код отправлен на $formattedPhone');
+          showSuccessCustomToastification(
+            title: 'SMS код отправлен на $formattedPhone',
+          );
         },
         timeout: const Duration(seconds: 60),
         codeAutoRetrievalTimeout: (String verificationId) {
@@ -118,7 +121,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
     } catch (e) {
       logger.e('Ошибка при отправке номера: $e');
 
-      showErrorCustomToastification( title: 'Неизвестная ошибка: $e');
+      showErrorCustomToastification(title: 'Неизвестная ошибка: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -127,7 +130,9 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   Future<void> _verifySmsCode(String smsCode) async {
     try {
       if (_verificationId == null) {
-        showErrorCustomToastification(title:  'Не найден verificationId. Попробуйте заново');
+        showErrorCustomToastification(
+          title: 'Не найден verificationId. Попробуйте заново',
+        );
         return;
       }
 
@@ -159,7 +164,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
         errorMessage = 'Неизвестная ошибка: $e';
       }
 
-      showErrorCustomToastification(title:  errorMessage);
+      showErrorCustomToastification(title: errorMessage);
       setState(() => _isLoading = false);
     }
   }
@@ -185,7 +190,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       logger.e('Ошибка входа: ${e.code} - ${e.message}');
-      showErrorCustomToastification(title:  'Ошибка входа: ${e.message}');
+      showErrorCustomToastification(title: 'Ошибка входа: ${e.message}');
       setState(() => _isLoading = false);
     }
   }
@@ -214,7 +219,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   // ✅ Повторная отправка SMS кода
   Future<void> _resendSmsCode() async {
     if (_phoneNumber == null) {
-      showErrorCustomToastification(title:  'Номер телефона не найден');
+      showErrorCustomToastification(title: 'Номер телефона не найден');
       return;
     }
 
@@ -225,7 +230,11 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isStep1 ? context.tr(AppText.enter_your_phone_number) : context.tr(AppText.enter_sms_code)),
+        title: Text(
+          isStep1
+              ? context.tr(AppText.enter_your_phone_number)
+              : context.tr(AppText.enter_sms_code),
+        ),
         leading: !isStep1
             ? IconButton(
                 icon: Icon(Icons.arrow_back),
@@ -238,186 +247,204 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
               )
             : null,
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppConstant.appPadding,
-                vertical: 20,
-              ),
-              child: Column(
-                children: [
-                  Visibility(visible: isStep1, child: buildStep1(context)),
-                  Visibility(visible: !isStep1, child: buildStep2(context)),
-                ],
-              ),
-            ),
+      body: BlocBuilder<AuthBloc, AuthBlocState>(
+        builder: (context, state) {
+          // case when verified phone number
+          if (state is AuthBlocState_waiting_verify_sms_code) {
+            return buildStep2(context);
+          } else {
+            return buildStep1(context);
+          }
+        },
+      ),
     );
   }
 
   Widget buildStep1(BuildContext context) {
     String? phoneNumber;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-         context.tr(AppText.enter_your_phone_number),
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        Text(
-          context.tr(AppText.we_will_send_sms),
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-        ),
-        SizedBox(height: 24),
-
-        InternationalPhoneNumberInput(
-          countries: const ["VN", "RU", "US", "CA", "KZ", "UA", "BY"],
-         // initialValue: PhoneNumber(isoCode: 'RU'),
-          // selectorConfig: const SelectorConfig(
-          //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-          // ),
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          onInputChanged: (PhoneNumber number) {
-            phoneNumber = number.phoneNumber;
-            logger.d(number);
-          },
-          onInputValidated: (bool value) {
-            logger.d('Номер валиден: $value');
-          },
-          ignoreBlank: false,
-          hintText: context.tr(AppText.phone_number),
-          inputBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+    return Padding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: AppConstant.appPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.tr(AppText.enter_your_phone_number),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
-        ),
+          SizedBox(height: 8),
+          Text(
+            context.tr(AppText.we_will_send_sms),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+          ),
+          SizedBox(height: 24),
 
-        SizedBox(height: 32),
-
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              if (phoneNumber != null && phoneNumber!.isNotEmpty) {
-                _sendPhoneNumber(phoneNumber!);
-              } else {
-                showErrorCustomToastification(title:  'Введите номер телефона');
-              }
+          InternationalPhoneNumberInput(
+            countries: const ["VN", "RU", "US", "CA", "KZ", "UA", "BY"],
+            // initialValue: PhoneNumber(isoCode: 'RU'),
+            // selectorConfig: const SelectorConfig(
+            //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+            // ),
+            autoValidateMode: AutovalidateMode.onUserInteraction,
+            onInputChanged: (PhoneNumber number) {
+              phoneNumber = number.phoneNumber;
+              logger.d(number);
             },
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+            onInputValidated: (bool value) {
+              logger.d('Номер валиден: $value');
+            },
+            ignoreBlank: false,
+            hintText: context.tr(AppText.phone_number),
+            inputBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+
+          SizedBox(height: 32),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                if (phoneNumber != null && phoneNumber!.isNotEmpty) {
+                  context.read<AuthBloc>().add(
+                    AuthBlocEvent_verifyPhoneNumber(phoneNumber: phoneNumber!),
+                  );
+                } else {
+                  showErrorCustomToastification(
+                    title: 'Введите номер телефона',
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                context.tr(AppText.send_code),
+                style: TextStyle(fontSize: 16),
               ),
             ),
-            child: Text(context.tr(AppText.send_code), style: TextStyle(fontSize: 16)),
           ),
-        ),
 
-        SizedBox(height: 16),
+          SizedBox(height: 16),
 
-        Text(
-          context.tr(AppText.phone_note_text),
-          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-          textAlign: TextAlign.center,
-        ),
-      ],
+          Text(
+            context.tr(AppText.phone_note_text),
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
   Widget buildStep2(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.tr(AppText.enter_sms_code),
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        RichText(
-          text: TextSpan(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppConstant.appPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.tr(AppText.enter_sms_code),
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-            children: [
-              TextSpan(text: 'Код отправлен на '),
-              TextSpan(
-                text: _phoneNumber ?? '',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w600,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 8),
+          RichText(
+            text: TextSpan(
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+              children: [
+                TextSpan(text: 'Код отправлен на '),
+                TextSpan(
+                  text: _phoneNumber ?? '',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
+              ],
+            ),
+          ),
+          SizedBox(height: 24),
+
+          Center(
+            child: Pinput(
+              length: 6,
+              controller: _smsCodeController,
+              defaultPinTheme: _pinTheme,
+              focusedPinTheme: _pinTheme.copyWith(
+                decoration: _pinTheme.decoration?.copyWith(
+                  border: Border.all(color: Colors.blue),
+                ),
+              ),
+              onCompleted: (pin) {
+                
+                context.read<AuthBloc>().add(
+                  AuthBlocEvent_verifySMSCode(smsCode: _smsCodeController.text),
+                );
+              },
+              validator: (value) {
+                if (value == null || value.length != 6) {
+                  return 'Введите 6 цифр';
+                }
+                return null;
+              },
+            ),
+          ),
+
+          SizedBox(height: 16),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                context.tr(AppText.dont_receive_the_code),
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+              TextButton(
+                onPressed: _resendSmsCode,
+                child: Text(context.tr(AppText.send_again)),
               ),
             ],
           ),
-        ),
-        SizedBox(height: 24),
 
-        Center(
-          child: Pinput(
-            length: 6,
-            controller: _smsCodeController,
-            defaultPinTheme: _pinTheme,
-            focusedPinTheme: _pinTheme.copyWith(
-              decoration: _pinTheme.decoration?.copyWith(
-                border: Border.all(color: Colors.blue),
+          SizedBox(height: 32),
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                final smsCode = _smsCodeController.text;
+                if (smsCode.length == 6) {
+                  _verifySmsCode(smsCode);
+                } else {
+                  showErrorCustomToastification(title: 'Введите 6-значный код');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                context.tr(AppText.confirm),
+                style: TextStyle(fontSize: 16),
               ),
             ),
-            onCompleted: (pin) {
-              _verifySmsCode(pin);
-            },
-            validator: (value) {
-              if (value == null || value.length != 6) {
-                return 'Введите 6 цифр';
-              }
-              return null;
-            },
           ),
-        ),
-
-        SizedBox(height: 16),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(context.tr(AppText.dont_receive_the_code), style: TextStyle(color: Colors.grey[600])),
-            TextButton(
-              onPressed: _resendSmsCode,
-              child: Text(context.tr(AppText.send_again)),
-            ),
-          ],
-        ),
-
-        SizedBox(height: 32),
-
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              final smsCode = _smsCodeController.text;
-              if (smsCode.length == 6) {
-                _verifySmsCode(smsCode);
-              } else {
-                showErrorCustomToastification(title:  'Введите 6-значный код');
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(context.tr(AppText.confirm), style: TextStyle(fontSize: 16)),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
