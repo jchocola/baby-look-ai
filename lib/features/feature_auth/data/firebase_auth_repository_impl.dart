@@ -11,6 +11,28 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthRepositoryImpl implements AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn.instance;
+  bool _isGoogleSignInInitialized = false;
+
+  Future<void> _initializeGoogleSignIn() async {
+    try {
+      await _googleSignIn.initialize();
+      _isGoogleSignInInitialized = true;
+    } catch (e) {
+      logger.e('Failed to initialize Google Sign-In: $e');
+    }
+  }
+
+  FirebaseAuthRepositoryImpl() {
+    _initializeGoogleSignIn();
+  }
+
+   /// Always check Google sign in initialization before use
+  Future<void> _ensureGoogleSignInInitialized() async {
+    if (!_isGoogleSignInInitialized) {
+      await _initializeGoogleSignIn();
+    }
+  }
 
   @override
   Future<UserCredential> authViaFacebook() async {
@@ -62,24 +84,25 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserCredential> authViaGoogle() async {
     try {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
-          .authenticate();
+      await _ensureGoogleSignInInitialized();
 
-      if (googleUser?.authentication == null) {
-        throw AppException.failed_auth_via_google;
-      }
+  // Authenticate with Google
+  final GoogleSignInAccount googleUser = await _googleSignIn.authenticate(
+    scopeHint: ['email'],
+  );
 
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = googleUser!.authentication;
+      // Get authorization for Firebase scopes if needed
+  final authClient = _googleSignIn.authorizationClient;
+  final authorization = await authClient.authorizationForScopes(['email']);
 
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
 
-      // Once signed in, return the UserCredential
-      return await _auth.signInWithCredential(credential);
+  final credential = GoogleAuthProvider.credential(
+    accessToken: authorization?.accessToken,
+    idToken: googleUser.authentication.idToken
+  );
+  final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+  return userCredential;
     } on FirebaseAuthException catch (e) {
       logger.e(e);
       if (e.code == "account-exists-with-different-credential")
