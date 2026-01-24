@@ -237,7 +237,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     });
 
       ///
-    /// AUTH VIA GOOGLE
+    /// AUTH VIA TWITTER
     ///
     on<AuthBlocEvent_authViaTwitter>((event, emit) async {
       try {
