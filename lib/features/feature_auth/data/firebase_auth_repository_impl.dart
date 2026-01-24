@@ -247,22 +247,24 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
         },
         verificationFailed: (FirebaseAuthException exception) {
           //TODO : CATCH ALL ERROR
-              // Завершаем ошибкой — вызывающий код может её поймать
-          logger.e('Phone verification failed: ${exception.code} ${exception.message}');
+          // Завершаем ошибкой — вызывающий код может её поймать
+          logger.e(
+            'Phone verification failed: ${exception.code} ${exception.message}',
+          );
           if (!completer.isCompleted) completer.completeError(exception);
         },
-        codeSent: (String verificationId, int? resendToken)  {
+        codeSent: (String verificationId, int? resendToken) {
           logger.d('Code sent : verification ID : $verificationId');
           if (!completer.isCompleted) completer.complete(verificationId);
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-           // Таймаут автоподбора кода — иногда verificationId приходит здесь
+          // Таймаут автоподбора кода — иногда verificationId приходит здесь
           logger.d('Auto retrieval timeout, verificationId: $verificationId');
           if (!completer.isCompleted) completer.complete(verificationId);
         },
       );
 
-     // Ожидаем результата из callback'ов, с защитным таймаутом
+      // Ожидаем результата из callback'ов, с защитным таймаутом
       return await completer.future.timeout(
         const Duration(minutes: 2),
         onTimeout: () {
@@ -315,5 +317,16 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
 
   String _formatPhoneNumber({required String phoneNumber}) {
     return phoneNumber.startsWith('+') ? phoneNumber : '+$phoneNumber';
+  }
+
+  @override
+  Future<UserCredential> authViaTwitter() async {
+    try {
+      TwitterAuthProvider twitterProvider = TwitterAuthProvider();
+      return await _auth.signInWithProvider(twitterProvider);
+    } catch (e) {
+      logger.e('Failed auth via twitter ');
+      throw 'Failed auth via twitter ';
+    }
   }
 }

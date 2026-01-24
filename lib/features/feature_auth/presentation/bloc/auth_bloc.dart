@@ -27,6 +27,8 @@ class AuthBlocEvent_authViaGitHub extends AuthBlocEvent {}
 
 class AuthBlocEvent_authViaGoogle extends AuthBlocEvent {}
 
+class AuthBlocEvent_authViaTwitter extends AuthBlocEvent {}
+
 class AuthBlocEvent_logout extends AuthBlocEvent {}
 
 class AuthBlocEvent_sendVerifyEmail extends AuthBlocEvent {}
@@ -220,6 +222,28 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.d('Auth via google');
 
         final userCredential = await authRepository.authViaGoogle();
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
+        );
+      } catch (e) {
+        logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
+      }
+    });
+
+      ///
+    /// AUTH VIA GOOGLE
+    ///
+    on<AuthBlocEvent_authViaTwitter>((event, emit) async {
+      try {
+        logger.d('Auth via Twitter');
+
+        final userCredential = await authRepository.authViaTwitter();
 
         add(
           AuthBlocEvent_checkSetupUserDataFirstTime(
