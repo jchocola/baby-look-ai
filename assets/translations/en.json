@@ -19,13 +19,13 @@
     "password_reset_send": "Password Reset Send",
     "phone_note_text": "By clicking “Send Code,” you agree to our Terms of Use and Privacy Policy.",
     "phone_number": "Phone number",
+    "promotion_text": "Register now and see your future baby!",
     "register": "Register",
     "send_again": "Send again",
     "send_code": "Send code",
     "send_password": "Send Password",
     "sign_up_with": "Sign up with",
-    "we_will_send_sms": "We will send you an SMS with a confirmation code.",
-    "promotion_text": "Зарегистрируйтесь сейчас и загляните в глаза своего будущего малыша!"
+    "we_will_send_sms": "We will send you an SMS with a confirmation code."
   },
   "exception": {
     "auth": {
@@ -109,6 +109,9 @@
     "share": "Share",
     "share_content": "🤔 Who will our baby look like?BabyLook AI has the answer! Check out the results 👇",
     "view_detail": "View Detail"
+  },
+  "general": {
+    "nothing_here": "Nothing here..."
   },
   "generating": {
     "camera": "Camera",

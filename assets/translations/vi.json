@@ -19,6 +19,7 @@
     "password_reset_send": "Đặt lại mật khẩu Gửi",
     "phone_note_text": "Bằng cách nhấp vào “Gửi mã”, bạn đồng ý với Điều khoản Sử dụng và Chính sách Bảo mật của chúng tôi.",
     "phone_number": "Số điện thoại",
+    "promotion_text": "Đăng ký ngay bây giờ và nhìn vào mắt đứa con tương lai của bạn!",
     "register": "Đăng ký",
     "send_again": "Gửi lại",
     "send_code": "Gửi mã",
@@ -108,6 +109,9 @@
     "share": "Chia sẻ",
     "share_content": "🤔 Con của chúng ta sẽ trông giống ai? BabyLook AI có câu trả lời! Xem kết quả 👇",
     "view_detail": "Xem chi tiết"
+  },
+  "general": {
+    "nothing_here": "Không có gì ở đây..."
   },
   "generating": {
     "camera": "Máy ảnh",

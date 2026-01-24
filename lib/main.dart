@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
               theme: appTheme,
               debugShowCheckedModeBanner: false,
               routerConfig: appRouter,
-              title: 'AI BabyLook',
+              title: 'BabyLook AI',
               // Provide localization delegates/locales/locale from EasyLocalization
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
