@@ -24,7 +24,8 @@
     "send_code": "Send code",
     "send_password": "Send Password",
     "sign_up_with": "Sign up with",
-    "we_will_send_sms": "We will send you an SMS with a confirmation code."
+    "we_will_send_sms": "We will send you an SMS with a confirmation code.",
+    "promotion_text": "Зарегистрируйтесь сейчас и загляните в глаза своего будущего малыша!"
   },
   "exception": {
     "auth": {

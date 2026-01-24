@@ -13,6 +13,7 @@ class AppConstant {
   static String AImodel = 'Nano Banana Pro';
   static String techStack = 'Dart/Flutter';
   static String supportEmail = 'bak_nguen@vk.com';
+  static String appName = "BabyLook AI";
 
   static String heroTag = 'BABY_VIEW';
 

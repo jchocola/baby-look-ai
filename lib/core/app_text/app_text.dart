@@ -101,7 +101,7 @@ class AppText {
   static const check_email = 'auth.check_email';
   static const check_spam = 'auth.check_spam';
   static const dont_receive_email = 'auth.dont_receive_email';
-
+    static const promotion_text = 'auth.promotion_text';
   ///
   /// GREETING
   ///
