@@ -27,4 +27,10 @@ abstract class AuthRepository {
   Future<void> logOut();
 
   Stream<User?> userStream();
+
+  Future<String?> getVerificationPhoneNumberId({required String phoneNumber});
+  Future<PhoneAuthCredential> verifySMSCode({required String smsCode, required String? verificationId});
+  Future<UserCredential> signInWithPhoneAuthCredential({
+    required PhoneAuthCredential credential,
+  });
 }

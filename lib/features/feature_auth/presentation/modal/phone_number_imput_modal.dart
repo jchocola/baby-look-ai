@@ -54,17 +54,6 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
     });
   }
 
-  // void _showErrorSnackBar(String error) {
-  //   ScaffoldMessenger.of(
-  //     context,
-  //   ).showSnackBar(SnackBar(content: Text(error), backgroundColor: Colors.red));
-  // }
-
-  // void _showSuccessSnackBar(String message) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(content: Text(message), backgroundColor: Colors.green),
-  //   );
-  // }
 
   // ✅ Шаг 1: Отправка номера телефона
   Future<void> _sendPhoneNumber(String phoneNumber) async {

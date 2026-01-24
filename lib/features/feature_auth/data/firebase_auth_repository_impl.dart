@@ -221,4 +221,76 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       throw AppException.failed_recovery_password_email;
     }
   }
+
+  @override
+  Future<String?> getVerificationPhoneNumberId({
+    required String phoneNumber,
+  }) async {
+    try {
+      String? verifId;
+
+      //1) formated phone number
+      final formattedNumber = _formatPhoneNumber(phoneNumber: phoneNumber);
+
+      logger.d('Отправка номера: $formattedNumber');
+
+      // 2 ) verify phone number
+      await _auth.verifyPhoneNumber(
+        verificationCompleted: (phoneCredential) {},
+        verificationFailed: (FirebaseAuthException excepion) {
+          //TODO : CATCH ALL ERROR
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          logger.d('Code sent : verification ID : ${verificationId}');
+          verifId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verification) {},
+      );
+
+      return verifId;
+    } catch (e) {
+      logger.e(e);
+      throw 'Failed to verify phone';
+    }
+  }
+
+  @override
+  Future<UserCredential> signInWithPhoneAuthCredential({
+    required PhoneAuthCredential credential,
+  }) async {
+    try {
+      final userCredential = await _auth.signInWithCredential(credential);
+      return userCredential;
+    } catch (e) {
+      logger.e(e);
+      throw 'signInWithPhoneAuthCredential failed';
+    }
+  }
+
+  @override
+  Future<PhoneAuthCredential> verifySMSCode({
+    required String smsCode,
+    required String? verificationId,
+  }) async {
+    try {
+      if (verificationId == null) {
+        logger.e('VerificationId == null');
+        throw "";
+      }
+
+      final phoneCredential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+
+      return phoneCredential;
+    } catch (e) {
+      logger.e(e);
+      throw 'Failed to verify SMS code';
+    }
+  }
+
+  String _formatPhoneNumber({required String phoneNumber}) {
+    return phoneNumber.startsWith('+') ? phoneNumber : '+$phoneNumber';
+  }
 }
