@@ -291,4 +291,31 @@ class AppText {
   /// GENERAL
   ///
   static const nothing_here = "general.nothing_here";
+
+  ///
+  /// FUN FACT
+  ///
+  static const fact1 = "fun_fact.fact1";
+  static const fact2 = "fun_fact.fact2";
+  static const fact3 = "fun_fact.fact3";
+  static const fact4 = "fun_fact.fact4";
+  static const fact5 = "fun_fact.fact5";
+  static const fact6 = "fun_fact.fact6";
+  static const fact7 = "fun_fact.fact7";
+  static const fact8 = "fun_fact.fact8";
+  static const fact9 = "fun_fact.fact9";
+  static const fact10 = "fun_fact.fact10";
+  static const fact11 = "fun_fact.fact11";
+  static const fact12 = "fun_fact.fact12";
+  static const fact13 = "fun_fact.fact13";
+  static const fact14 = "fun_fact.fact14";
+  static const fact15 = "fun_fact.fact15";
+  static const fact16 = "fun_fact.fact16";
+  static const fact17 = "fun_fact.fact17";
+  static const fact18 = "fun_fact.fact18";
+  static const fact19 = "fun_fact.fact19";
+  static const fact20 = "fun_fact.fact20";
+  static const fact21 = "fun_fact.fact21";
+  static const fact22 = "fun_fact.fact22";
+  static const fact23 = "fun_fact.fact23";
 }
