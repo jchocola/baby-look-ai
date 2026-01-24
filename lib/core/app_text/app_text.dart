@@ -92,6 +92,15 @@ class AppText {
   static const send_again = 'auth.send_again';
   static const confirm = 'auth.confirm';
   static const logout = 'auth.logout';
+  static const enter_email_to_reset_password =
+      'auth.enter_email_to_reset_password';
+  static const send_password = 'auth.send_password';
+  static const dont_remember_email = 'auth.dont_remember_email';
+  static const contact_us = 'auth.contact_us';
+  static const password_reset_send = 'auth.password_reset_send';
+  static const check_email = 'auth.check_email';
+  static const check_spam = 'auth.check_spam';
+  static const dont_receive_email = 'auth.dont_receive_email';
 
   ///
   /// GREETING

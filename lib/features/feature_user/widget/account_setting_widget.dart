@@ -28,7 +28,7 @@ class AccountSettingWidget extends StatelessWidget {
               showSuccessCustomToastification(
                 title: AppExceptionConverter(
                   context,
-                  excetion: state.exception,
+                  exception: state.exception,
                 ),
               );
             }
@@ -40,7 +40,7 @@ class AccountSettingWidget extends StatelessWidget {
                     showSuccessCustomToastification(
                       title: AppExceptionConverter(
                         context,
-                        excetion: AppException.account_verified,
+                        exception: AppException.account_verified,
                       ),
                     );
                   }
