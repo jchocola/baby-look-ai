@@ -1,5 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_exception/app_exception.dart';
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/di/DI.dart';
 import 'package:baby_look/core/domain/vibrattion_repository.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
@@ -10,6 +11,7 @@ import 'package:baby_look/features/feature_generate/presentation/generate_page2.
 import 'package:baby_look/features/feature_generate/presentation/generate_page3.dart';
 import 'package:baby_look/features/feature_generate/presentation/processing_page.dart';
 import 'package:baby_look/shared/custom_button_with_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -41,9 +43,14 @@ class _GeneratePageState extends State<GeneratePage> {
           child: BlocConsumer<GeneratingBloc, GeneratingBlocState>(
             listener: (context, state) {
               if (state is GeneratingBlocState_generated) {
-                context.read<GeneratingBloc>().add(GeneratingBlocEvent_showNotificationAfterGenerating(title: '👶 Встречайте ваше чудо!', body: "Результат готов к просмотру"));
+                context.read<GeneratingBloc>().add(
+                  GeneratingBlocEvent_showNotificationAfterGenerating(
+                    title: context.tr(AppText.notification_title),
+                    body: context.tr(AppText.notification_body),
+                  ),
+                );
 
-                showSuccessCustomToastification(title: 'Imaged Generated');
+                showSuccessCustomToastification(title: context.tr(AppText.image_generated));
                 getIt<VibrattionRepository>().vibrate();
 
                 context.go(

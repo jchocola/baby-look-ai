@@ -130,6 +130,9 @@ class AppText {
   ///
   static const generating_gallery = 'generating.gallery';
   static const camera = 'generating.camera';
+  static const notification_title = 'generating.notification_title';
+  static const notification_body = 'generating.notification_body';
+  static const image_generated = 'generating.image_generated';
 
   // STEP 1
   static const step1_appbar = 'generating.step1.step1_appbar';

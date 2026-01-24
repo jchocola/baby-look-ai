@@ -116,6 +116,9 @@
   "generating": {
     "camera": "Máy ảnh",
     "gallery": "Gallery",
+    "image_generated": "Hình ảnh được tạo ra",
+    "notification_body": "Kết quả đã sẵn sàng để xem",
+    "notification_title": "👶 Hãy chào đón phép màu của bạn!",
     "step1": {
       "choose_an_image_showing_the_baby": "Chọn một hình ảnh cho thấy rõ khuôn mặt bên của em bé.",
       "clear_profile_view": "Xem thông tin hồ sơ rõ ràng",

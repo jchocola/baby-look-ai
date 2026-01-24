@@ -116,6 +116,9 @@
   "generating": {
     "camera": "Camera",
     "gallery": "Gallery",
+    "image_generated": "Image generated",
+    "notification_body": "Результат готов к просмотру",
+    "notification_title": "👶 Встречайте ваше чудо!",
     "step1": {
       "choose_an_image_showing_the_baby": "Choose an image showing the baby's profile clearly",
       "clear_profile_view": "Clear Profile View",

@@ -9,7 +9,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:logger/logger.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class AccountSettingWidget extends StatelessWidget {
@@ -57,7 +56,7 @@ class AccountSettingWidget extends StatelessWidget {
                 : LucideIcons.userRoundX,
           ),
         ),
-        CustomListile(title: context.tr(AppText.purchases), icon: AppIcon.subscriptionIcon),
+       // CustomListile(title: context.tr(AppText.purchases), icon: AppIcon.subscriptionIcon),
         CustomListile(
           onTap: () => context.go('/user/history'),
           title: context.tr(AppText.prediction_history),
