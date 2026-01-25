@@ -229,6 +229,7 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
           isStep1
@@ -265,82 +266,84 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
 
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: AppConstant.appPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.tr(AppText.enter_your_phone_number),
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          Text(
-            context.tr(AppText.we_will_send_sms),
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-          ),
-          SizedBox(height: 24),
-
-          InternationalPhoneNumberInput(
-            countries: const ["VN", "RU", "US", "CA", "KZ", "UA", "BY"],
-            // initialValue: PhoneNumber(isoCode: 'RU'),
-            // selectorConfig: const SelectorConfig(
-            //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-            // ),
-            autoValidateMode: AutovalidateMode.onUserInteraction,
-            onInputChanged: (PhoneNumber number) {
-              phoneNumber = number.phoneNumber;
-              logger.d(number);
-            },
-            onInputValidated: (bool value) {
-              logger.d('Номер валиден: $value');
-            },
-            ignoreBlank: false,
-            hintText: context.tr(AppText.phone_number),
-            inputBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              context.tr(AppText.enter_your_phone_number),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
-          ),
-
-          SizedBox(height: 32),
-
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (phoneNumber != null && phoneNumber!.isNotEmpty) {
-                  context.read<AuthBloc>().add(
-                    AuthBlocEvent_verifyPhoneNumber(phoneNumber: phoneNumber!),
-                  );
-                } else {
-                  showErrorCustomToastification(
-                    title: 'Введите номер телефона',
-                  );
-                }
+            SizedBox(height: 8),
+            Text(
+              context.tr(AppText.we_will_send_sms),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+            ),
+            SizedBox(height: 24),
+        
+            InternationalPhoneNumberInput(
+              countries: const ["VN", "RU", "US",],
+              // initialValue: PhoneNumber(isoCode: 'RU'),
+              // selectorConfig: const SelectorConfig(
+              //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+              // ),
+              autoValidateMode: AutovalidateMode.onUserInteraction,
+              onInputChanged: (PhoneNumber number) {
+                phoneNumber = number.phoneNumber;
+                logger.d(number);
               },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+              onInputValidated: (bool value) {
+                logger.d('Номер валиден: $value');
+              },
+              ignoreBlank: false,
+              hintText: context.tr(AppText.phone_number),
+              inputBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+        
+            SizedBox(height: 32),
+        
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (phoneNumber != null && phoneNumber!.isNotEmpty) {
+                    context.read<AuthBloc>().add(
+                      AuthBlocEvent_verifyPhoneNumber(phoneNumber: phoneNumber!),
+                    );
+                  } else {
+                    showErrorCustomToastification(
+                      title: 'Введите номер телефона',
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  context.tr(AppText.send_code),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-              child: Text(
-                context.tr(AppText.send_code),
-                style: TextStyle(fontSize: 16),
-              ),
             ),
-          ),
-
-          SizedBox(height: 16),
-
-          Text(
-            context.tr(AppText.phone_note_text),
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-          ),
-        ],
+        
+            SizedBox(height: 16),
+        
+            Text(
+              context.tr(AppText.phone_note_text),
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -348,102 +351,104 @@ class _PhoneNumberImputModalState extends State<PhoneNumberImputModal> {
   Widget buildStep2(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppConstant.appPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.tr(AppText.enter_sms_code),
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 8),
-          RichText(
-            text: TextSpan(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              context.tr(AppText.enter_sms_code),
               style: Theme.of(
                 context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-              children: [
-                TextSpan(text: 'Код отправлен на '),
-                TextSpan(
-                  text: _phoneNumber ?? '',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w600,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            RichText(
+              text: TextSpan(
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                children: [
+                  // TextSpan(text: 'Код отправлен на '),
+                  TextSpan(
+                    text: _phoneNumber ?? '',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+        
+            Center(
+              child: Pinput(
+                length: 6,
+                controller: _smsCodeController,
+                defaultPinTheme: _pinTheme,
+                focusedPinTheme: _pinTheme.copyWith(
+                  decoration: _pinTheme.decoration?.copyWith(
+                    border: Border.all(color: Colors.blue),
+                  ),
+                ),
+                onCompleted: (pin) {
+                  
+                  context.read<AuthBloc>().add(
+                    AuthBlocEvent_verifySMSCode(smsCode: _smsCodeController.text),
+                  );
+                },
+                validator: (value) {
+                  if (value == null || value.length != 6) {
+                    return 'Введите 6 цифр';
+                  }
+                  return null;
+                },
+              ),
+            ),
+        
+            SizedBox(height: 16),
+        
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  context.tr(AppText.dont_receive_the_code),
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+                TextButton(
+                  onPressed: _resendSmsCode,
+                  child: Text(context.tr(AppText.send_again)),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 24),
-
-          Center(
-            child: Pinput(
-              length: 6,
-              controller: _smsCodeController,
-              defaultPinTheme: _pinTheme,
-              focusedPinTheme: _pinTheme.copyWith(
-                decoration: _pinTheme.decoration?.copyWith(
-                  border: Border.all(color: Colors.blue),
+        
+            SizedBox(height: 32),
+        
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  final smsCode = _smsCodeController.text;
+                  if (smsCode.length == 6) {
+                    _verifySmsCode(smsCode);
+                  } else {
+                    showErrorCustomToastification(title: 'Введите 6-значный код');
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  context.tr(AppText.confirm),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-              onCompleted: (pin) {
-                
-                context.read<AuthBloc>().add(
-                  AuthBlocEvent_verifySMSCode(smsCode: _smsCodeController.text),
-                );
-              },
-              validator: (value) {
-                if (value == null || value.length != 6) {
-                  return 'Введите 6 цифр';
-                }
-                return null;
-              },
             ),
-          ),
-
-          SizedBox(height: 16),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                context.tr(AppText.dont_receive_the_code),
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              TextButton(
-                onPressed: _resendSmsCode,
-                child: Text(context.tr(AppText.send_again)),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 32),
-
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                final smsCode = _smsCodeController.text;
-                if (smsCode.length == 6) {
-                  _verifySmsCode(smsCode);
-                } else {
-                  showErrorCustomToastification(title: 'Введите 6-значный код');
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Text(
-                context.tr(AppText.confirm),
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
