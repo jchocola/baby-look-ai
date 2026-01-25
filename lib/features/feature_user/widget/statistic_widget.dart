@@ -109,6 +109,7 @@ class _statisticCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             value,
@@ -117,7 +118,7 @@ class _statisticCard extends StatelessWidget {
               color: color,
             ),
           ),
-          Text(title),
+          Text(title, maxLines: 1,),
         ],
       ),
     );
