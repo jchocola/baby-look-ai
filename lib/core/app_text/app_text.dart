@@ -291,6 +291,7 @@ class AppText {
   /// GENERAL
   ///
   static const nothing_here = "general.nothing_here";
+  static const greeting = "general.greeting";
 
   ///
   /// FUN FACT

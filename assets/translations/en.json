@@ -65,6 +65,7 @@
       "balance_not_enought": "Insufficient balance. Please purchase more coins to continue.",
       "empty_case": "No data available. Please try again later.",
       "failed_to_save_image_byte_to_gallery": "Failed to save image to gallery. Please try again.",
+      "greeting": "Hello, glad to see you",
       "invalid_response": "Invalid response received. Please try again.",
       "password_does_not_matched": "Passwords do not match. Please re-enter both passwords.",
       "ultra_sound_unpicked": "Please upload an ultrasound image first."

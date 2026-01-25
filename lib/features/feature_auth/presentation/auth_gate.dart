@@ -1,6 +1,8 @@
+import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/features/feature_auth/presentation/auth_page.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +15,7 @@ class AuthGate extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthBlocState>(
       listener: (context, state) {
         if (state is AuthBlocState_authenticated) {
-          showSuccessCustomToastification(title: 'Hello, glad to see you');
+          showSuccessCustomToastification(title: context.tr(AppText.greeting));
           context.go('/home');
         } else {
            context.go('/auth');

@@ -65,6 +65,7 @@
       "balance_not_enought": "Số dư không đủ. Vui lòng mua thêm xu để tiếp tục.",
       "empty_case": "Không có dữ liệu sẵn có. Vui lòng thử lại sau.",
       "failed_to_save_image_byte_to_gallery": "Không thể lưu hình ảnh vào thư viện. Vui lòng thử lại.",
+      "greeting": "Chào mừng bạn quay lại !",
       "invalid_response": "Đã nhận được phản hồi không hợp lệ. Vui lòng thử lại.",
       "password_does_not_matched": "Mật khẩu không khớp. Vui lòng nhập lại cả hai mật khẩu.",
       "ultra_sound_unpicked": "Vui lòng tải lên hình ảnh siêu âm trước tiên."
