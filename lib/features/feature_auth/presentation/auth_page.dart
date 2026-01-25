@@ -5,6 +5,7 @@ import 'package:baby_look/core/app_text/app_text.dart';
 import 'package:baby_look/core/app_theme/app_color.dart';
 import 'package:baby_look/core/toastification/show_error_custom_toastification.dart';
 import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
+import 'package:baby_look/core/utils/language_converter.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_auth/widget/animated_greetings_widget.dart';
 import 'package:baby_look/features/feature_auth/widget/login_via_other_methods.dart';
@@ -188,8 +189,9 @@ class _AuthPageState extends State<AuthPage>
                                                             .colorScheme
                                                             .primary,
                                                   icon: AppIcon.infoIcon,
-                                                  note: context.tr(AppText.promotion_text)
-                                                      ,
+                                                  note: context.tr(
+                                                    AppText.promotion_text,
+                                                  ),
                                                 )
                                                 .animate(
                                                   onPlay: (controller) =>
@@ -235,14 +237,56 @@ class _AuthPageState extends State<AuthPage>
                                         child: Column(
                                           spacing: AppConstant.appPadding,
                                           children: [
-                                            CupertinoSlidingSegmentedControl(
-                                              groupValue: _slidingIndex,
-                                              children: {
-                                                0: Text(context.tr(AppText.login)),
-                                                1: Text(context.tr(AppText.register)),
-                                              },
-                                              onValueChanged:
-                                                  changeSlidingIndex,
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                ///
+                                                /// LOGIN / REGISTER
+                                                ///
+                                                CupertinoSlidingSegmentedControl(
+                                                  groupValue: _slidingIndex,
+                                                  children: {
+                                                    0: Text(
+                                                      context.tr(AppText.login),
+                                                    ),
+                                                    1: Text(
+                                                      context.tr(
+                                                        AppText.register,
+                                                      ),
+                                                    ),
+                                                  },
+                                                  onValueChanged:
+                                                      changeSlidingIndex,
+                                                ),
+
+                                                ///
+                                                /// LANGUAGE PICKER
+                                                ///
+                                                PopupMenuButton(
+                                                  child: Icon(AppIcon.languageIcon),
+                                                  itemBuilder: (context) {
+                                                    return List.generate(
+                                                      context
+                                                          .supportedLocales
+                                                          .length,
+                                                      (index) {
+                                                        final locale = context
+                                                            .supportedLocales[index];
+                                                             final currentLocale = context.locale;
+                                                        return PopupMenuItem(
+                                                          onTap: ()=>  context.setLocale(locale),
+                                                          child: Text(
+                                                            languageConverter(
+                                                              locale,
+                                                            ),
+                                                            style: theme.textTheme.bodyMedium!.copyWith(color: currentLocale == locale ? theme.colorScheme.primary : null),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                             SizedBox.fromSize(
                                               size: Size.fromHeight(
