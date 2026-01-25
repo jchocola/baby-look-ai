@@ -55,8 +55,15 @@ class UserPage extends StatelessWidget {
               ),
             ),
 
-
-            
+            // TextButton(
+            //   onPressed: () async {
+            //     await getIt<LocalNotifcationRepository>().showNotification(
+            //       title: 'demo',
+            //       body: "bodyu",
+            //     );
+            //   },
+            //   child: Text('ShowNotification'),
+            // ),
           ],
         ),
       ),

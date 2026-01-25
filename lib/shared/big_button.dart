@@ -34,7 +34,7 @@ class BigButton extends StatelessWidget {
           children: [
             icon ?? SizedBox(),
             icon != null ? SizedBox(width: AppConstant.appPadding,) : SizedBox(),
-            Text(title, style: theme.textTheme.titleMedium),
+            Text(title, style: theme.textTheme.titleMedium, maxLines: 1,),
           ],
         )),
       ),

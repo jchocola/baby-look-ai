@@ -26,7 +26,7 @@ class SharedLocaldbrepositoryImpl implements LocalDbRepository {
 
       if (!isGranted) {
         final stattus = await _requestNotificationPermission();
-        if (stattus.isPermanentlyDenied) {
+        if (stattus.isPermanentlyDenied || stattus.isDenied) {
           await openAppSettings();
         }
 
@@ -43,6 +43,7 @@ class SharedLocaldbrepositoryImpl implements LocalDbRepository {
   Future<PermissionStatus> _requestNotificationPermission() async {
     try {
       final status = await Permission.notification.request();
+
       logger.f(status);
       return status;
     } catch (e) {
