@@ -24,7 +24,7 @@ class CustomListile extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: CustomRoundedIcon(icon: icon),
-      title: Text(title,style: theme.textTheme.bodySmall,),
+      title: Text(title,style: theme.textTheme.bodyMedium,),
       trailing: Transform.scale(scale: 0.8, child: tralingWidget),
     );
   }

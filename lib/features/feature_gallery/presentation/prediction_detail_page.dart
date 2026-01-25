@@ -2,6 +2,7 @@ import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_enum/baby_gender.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_gallery/widget/generated_image_card.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
@@ -39,9 +40,10 @@ class PredictionDetailPage extends StatelessWidget {
               tag: AppConstant.heroTag,
               child: GeneratedImageCard(
                 onTap: () {
-                   context.go('/gallery/fullscreen_view', extra: prediction);
+                  context.go('/gallery/fullscreen_view', extra: prediction);
                 },
-                imageUrl: prediction?.photoUrl),
+                imageUrl: prediction?.photoUrl,
+              ),
             ),
 
             Row(
@@ -53,7 +55,10 @@ class PredictionDetailPage extends StatelessWidget {
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.calendarIcon,
                     title: context.tr(AppText.gestation),
-                    subtitle:context.tr(AppText.week_n, args: [prediction?.gestationWeek.toString() ?? '' ]),
+                    subtitle: context.tr(
+                      AppText.week_n,
+                      args: [prediction?.gestationWeek.toString() ?? ''],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -62,8 +67,11 @@ class PredictionDetailPage extends StatelessWidget {
                     iconColor: theme.colorScheme.primary,
                     cardColor: theme.colorScheme.tertiaryFixed,
                     icon: AppIcon.genderIcon,
-                    title:context.tr(AppText.gender),
-                    subtitle: genderToStr(context, gender: context.tr(AppText.boy)),
+                    title: context.tr(AppText.gender),
+                    subtitle: genderToStr(
+                      context,
+                      gender: context.tr(AppText.boy),
+                    ),
                   ),
                 ),
               ],
@@ -77,7 +85,7 @@ class PredictionDetailPage extends StatelessWidget {
               subtitle: prediction?.created.toLocal().toString() ?? '',
             ),
             BigButton(
-              title:context.tr(AppText.view_full_image),
+              title: context.tr(AppText.view_full_image),
               borderColor: theme.colorScheme.primary,
               buttonColor: theme.colorScheme.onPrimary,
               icon: Icon(AppIcon.fullImageIcon),
@@ -90,14 +98,30 @@ class PredictionDetailPage extends StatelessWidget {
               borderColor: theme.colorScheme.tertiary,
               buttonColor: theme.colorScheme.tertiaryFixed,
               icon: Icon(AppIcon.shareIcon),
-              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_shareImageFromServerToGallery(prediction: prediction , content: context.tr(AppText.share_content))),
+              onTap: () => context.read<PredictionsBloc>().add(
+                PredictionsBlocEvent_shareImageFromServerToGallery(
+                  prediction: prediction,
+                  content: context.tr(AppText.share_content),
+                ),
+              ),
             ),
-            BigButton(
-              title: context.tr(AppText.save_to_gallery),
-              borderColor: theme.colorScheme.error,
-              buttonColor: theme.colorScheme.errorContainer,
-              icon: Icon(AppIcon.galleryIcon),
-              onTap: () => context.read<PredictionsBloc>().add(PredictionsBlocEvent_saveImageFromServerToGallery(prediction: prediction)),
+            BlocListener<PredictionsBloc, PredictionsBlocState>(
+              listener: (context, state) {
+                if (state is PredictionsBlocState_success) {
+                  showSuccessCustomToastification(title: state.success);
+                }
+              },
+              child: BigButton(
+                title: context.tr(AppText.save_to_gallery),
+                borderColor: theme.colorScheme.error,
+                buttonColor: theme.colorScheme.errorContainer,
+                icon: Icon(AppIcon.galleryIcon),
+                onTap: () => context.read<PredictionsBloc>().add(
+                  PredictionsBlocEvent_saveImageFromServerToGallery(
+                    prediction: prediction,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

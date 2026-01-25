@@ -1,11 +1,11 @@
 // ignore_for_file: camel_case_types
 
-import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
-import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
+import 'package:baby_look/core/domain/share_image_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_db_repository.dart';
 import 'package:baby_look/features/feature_generate/domain/prediction_entity.dart';
 import 'package:baby_look/main.dart';
@@ -37,7 +37,10 @@ class PredictionsBlocEvent_shareImageFromServerToGallery
     extends PredictionsBlocEvent {
   final PredictionEntity? prediction;
   final String? content;
-  PredictionsBlocEvent_shareImageFromServerToGallery({this.prediction, this.content});
+  PredictionsBlocEvent_shareImageFromServerToGallery({
+    this.prediction,
+    this.content,
+  });
   @override
   List<Object?> get props => [prediction, content];
 }
@@ -66,6 +69,13 @@ class PredictionsBlocState_loaded extends PredictionsBlocState {
 }
 
 class PredictionsBlocState_error extends PredictionsBlocState {}
+
+class PredictionsBlocState_success extends PredictionsBlocState {
+  final String success;
+  PredictionsBlocState_success({required this.success});
+  @override
+  List<Object?> get props => [success];
+}
 
 ///
 /// BLOC
@@ -118,10 +128,15 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
     ///
     on<PredictionsBlocEvent_saveImageFromServerToGallery>((event, emit) async {
       try {
+        final currentState = state;
         logger.d("PredictionsBlocEvent_saveImageFromServerToGallery Tapped");
-        await saveToGalleryRepository.saveInternetImageToGallery(
-          imageUrl: event.prediction?.photoUrl ?? '',
-        );
+        final fileDir = await saveToGalleryRepository
+            .saveInternetImageToGallery(
+              imageUrl: event.prediction?.photoUrl ?? '',
+            );
+
+        emit(PredictionsBlocState_success(success: fileDir));
+        emit(currentState);
       } catch (e) {
         logger.e(e);
       }
@@ -135,7 +150,7 @@ class PredictionsBloc extends Bloc<PredictionsBlocEvent, PredictionsBlocState> {
         logger.d("PredictionsBlocEvent_shareImageFromServerToGallery Tapped");
         await shareImageRepository.shareImage(
           imageUrl: event.prediction?.photoUrl ?? '',
-          content: event.content
+          content: event.content,
         );
       } catch (e) {
         logger.e(e);

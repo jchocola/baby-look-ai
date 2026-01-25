@@ -28,7 +28,7 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
   }
 
   @override
-  Future<void> saveInternetImageToGallery({required String imageUrl}) async {
+  Future<String> saveInternetImageToGallery({required String imageUrl}) async {
     try {
       final directory = await getDownloadsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -36,8 +36,10 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
       logger.d(file.path);
       await Dio().download(imageUrl, file.path);
       logger.f("saveInterImageToGallery completed");
+      return file.path;
     } catch (e) {
       logger.e(e);
+      throw 'failed to save image from gallerry';
     }
   }
 }
