@@ -33,7 +33,7 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
       final directory = await getDownloadsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final file = File('${directory?.path}/baby_prediction_$timestamp.png');
-
+      logger.d(file.path);
       await Dio().download(imageUrl, file.path);
       logger.f("saveInterImageToGallery completed");
     } catch (e) {

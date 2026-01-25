@@ -54,6 +54,9 @@ class UserPage extends StatelessWidget {
                 child: Text(context.tr(AppText.logout)),
               ),
             ),
+
+
+            
           ],
         ),
       ),

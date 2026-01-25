@@ -36,8 +36,8 @@ class ProfileCard extends StatelessWidget {
                         SizedBox(
                           width: size.width * 0.5,
                           child: Text(
-                            "djfkdfghdfgdfghdfkhdfgdfhgdfhgdfgdfgkj",
-                            //   state.user.email ?? context.tr(AppText.expecting_parent),
+                            state.user.email ??
+                                context.tr(AppText.expecting_parent),
                             maxLines: 2,
                             style: theme.textTheme.titleMedium,
                           ),
