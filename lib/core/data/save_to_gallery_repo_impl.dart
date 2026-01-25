@@ -9,7 +9,9 @@ import 'package:path_provider/path_provider.dart';
 
 class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
   @override
-  Future<void> saveImageBytesToGallery({required Uint8List imageBytes}) async {
+  Future<String> saveImageBytesToGallery({
+    required Uint8List imageBytes,
+  }) async {
     try {
       final directory = await getDownloadsDirectory();
       final timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -21,6 +23,7 @@ class SaveToGalleryRepoImpl implements SaveToGalleryRepository {
 
       await file.writeAsBytes(imageBytes);
       logger.i('File saved in ${file.path}');
+      return file.path;
     } catch (e) {
       logger.e(e);
       throw AppException.failed_to_save_image_byte_to_gallery;
