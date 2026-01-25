@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +14,7 @@ import 'package:uuid/uuid.dart';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/core/bloc/app_config_bloc.dart';
+import 'package:baby_look/core/domain/save_to_gallery_repository.dart';
 import 'package:baby_look/features/feature_auth/presentation/bloc/auth_bloc.dart';
 import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
 import 'package:baby_look/features/feature_generate/data/banana_pro_service.dart';
@@ -129,7 +129,12 @@ class GeneratingBlocState_error extends GeneratingBlocState {
   List<Object?> get props => [error];
 }
 
-class GeneratingBlocState_success extends GeneratingBlocState {}
+class GeneratingBlocState_success extends GeneratingBlocState {
+  final String success;
+  GeneratingBlocState_success({required this.success});
+  @override
+  List<Object?> get props => [success];
+}
 
 ///
 /// BLOC
@@ -229,7 +234,7 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
         logger.e(e);
         emit(GeneratingBlocState_error(error: e as AppException));
       } finally {
-       // emit(GeneratingBlocState_initial()); // DONT USE THIS , ALLOW USE CAN SAVE TO GALLERY
+        // emit(GeneratingBlocState_initial()); // DONT USE THIS , ALLOW USE CAN SAVE TO GALLERY
       }
     });
 
@@ -292,12 +297,14 @@ class GeneratingBloc extends Bloc<GeneratingBlocEvent, GeneratingBlocState> {
     ///
     on<GeneratingBlocEvent_saveImageByteToGallery>((event, emit) async {
       try {
-   
-          logger.d('Start save to gallery');
-          await saveToGalleryRepository.saveImageBytesToGallery(
-            imageBytes: event.imageBytes
-          );
-        
+        final currentState = state;
+        logger.d('Start save to gallery');
+        final imageDir = await saveToGalleryRepository.saveImageBytesToGallery(
+          imageBytes: event.imageBytes,
+        );
+
+        emit(GeneratingBlocState_success(success: imageDir));
+        emit(currentState);
       } catch (e) {
         logger.e(e);
       }

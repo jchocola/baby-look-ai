@@ -19,6 +19,7 @@
     "password_reset_send": "Đặt lại mật khẩu Gửi",
     "phone_note_text": "Bằng cách nhấp vào “Gửi mã”, bạn đồng ý với Điều khoản Sử dụng và Chính sách Bảo mật của chúng tôi.",
     "phone_number": "Số điện thoại",
+    "promotion_text": "Đăng ký ngay bây giờ và nhìn vào mắt đứa con tương lai của bạn!",
     "register": "Đăng ký",
     "send_again": "Gửi lại",
     "send_code": "Gửi mã",
@@ -64,6 +65,7 @@
       "balance_not_enought": "Số dư không đủ. Vui lòng mua thêm xu để tiếp tục.",
       "empty_case": "Không có dữ liệu sẵn có. Vui lòng thử lại sau.",
       "failed_to_save_image_byte_to_gallery": "Không thể lưu hình ảnh vào thư viện. Vui lòng thử lại.",
+      "greeting": "Chào mừng bạn quay lại !",
       "invalid_response": "Đã nhận được phản hồi không hợp lệ. Vui lòng thử lại.",
       "password_does_not_matched": "Mật khẩu không khớp. Vui lòng nhập lại cả hai mật khẩu.",
       "ultra_sound_unpicked": "Vui lòng tải lên hình ảnh siêu âm trước tiên."
@@ -101,6 +103,31 @@
     "q8": "Tôi có cần tải lên ảnh của cả hai bố mẹ không?",
     "q9": "Tôi có thể thay đổi giới tính của em bé trong ứng dụng không?"
   },
+  "fun_fact": {
+    "fact1": "70% khả năng - đứa trẻ sẽ thừa hưởng hình dáng môi từ mẹ",
+    "fact10": "30% trẻ em thừa hưởng nụ cười từ cha, ngay cả khi trông giống mẹ.",
+    "fact11": "20% trường hợp - đứa trẻ nhận được sự kết hợp các đặc điểm mà không có ở bất kỳ cha mẹ nào",
+    "fact12": "10% trẻ em sinh ra với nốt ruồi giống hệt nốt ruồi của cha mẹ ở cùng vị trí.",
+    "fact13": "70% con trai thừa hưởng hình dáng khuôn mặt từ mẹ",
+    "fact14": "80% con gái thừa hưởng kết cấu tóc từ cha",
+    "fact15": "60% bé trai có màu mắt giống mẹ",
+    "fact16": "90% các bé gái thừa hưởng hình dáng tai từ cha",
+    "fact17": "50% khả năng - đứa con đầu lòng sẽ giống cha, đứa con thứ hai sẽ giống mẹ",
+    "fact18": "55% các đặc điểm khuôn mặt được di truyền",
+    "fact19": "3 thế hệ - 'bộ nhớ' tối đa của gen về ngoại hình của tổ tiên",
+    "fact2": "60% khả năng có lúm đồng tiền trên má nếu một trong hai cha mẹ có lúm đồng tiền",
+    "fact20": "1 trong 10 cặp vợ chồng sinh ra một đứa trẻ không giống ai trong số họ",
+    "fact21": "85% cha mẹ nhận thấy những đặc điểm của mình ở con cái, ngay cả khi những đặc điểm đó không tồn tại.",
+    "fact22": "70% bà ngoại khẳng định cháu trai giống bên gia đình họ",
+    "fact23": "60% các ông bố coi con trai là 'bản sao thu nhỏ' của mình",
+    "fact3": "90% khả năng thừa hưởng hình dáng mũi từ một trong hai cha mẹ",
+    "fact4": "75% trẻ em thừa hưởng màu tóc từ cha",
+    "fact5": "80% trường hợp - mắt nâu thắng mắt xanh (gen trội)",
+    "fact6": "90% khả năng - tóc xoăn chiếm ưu thế hơn tóc thẳng",
+    "fact7": "85% khả năng - lúm đồng tiền trên cằm sẽ di truyền từ cha sang con trai",
+    "fact8": "70% trẻ em thừa hưởng hình dáng lông mày từ mẹ",
+    "fact9": "1 trong 4 đứa trẻ sinh ra giống ông bà hơn là cha mẹ."
+  },
   "gallery": {
     "all_n": "Tất cả {}",
     "favourites_n": "Yêu thích {}",
@@ -109,9 +136,15 @@
     "share_content": "🤔 Con của chúng ta sẽ trông giống ai? BabyLook AI có câu trả lời! Xem kết quả 👇",
     "view_detail": "Xem chi tiết"
   },
+  "general": {
+    "nothing_here": "Không có gì ở đây..."
+  },
   "generating": {
     "camera": "Máy ảnh",
     "gallery": "Gallery",
+    "image_generated": "Hình ảnh được tạo ra",
+    "notification_body": "Kết quả đã sẵn sàng để xem",
+    "notification_title": "👶 Hãy chào đón phép màu của bạn!",
     "step1": {
       "choose_an_image_showing_the_baby": "Chọn một hình ảnh cho thấy rõ khuôn mặt bên của em bé.",
       "clear_profile_view": "Xem thông tin hồ sơ rõ ràng",

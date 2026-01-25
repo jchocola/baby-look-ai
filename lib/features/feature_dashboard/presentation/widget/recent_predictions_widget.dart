@@ -20,9 +20,12 @@ class RecentPredictionsWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              context.tr(AppText.recent_predictions),
-              style: theme.textTheme.titleMedium,
+            SizedBox(
+              width: size.width * 0.45,
+              child: Text(
+                context.tr(AppText.recent_predictions),
+                style: theme.textTheme.titleMedium,
+              ),
             ),
             TextButton(
               onPressed: () {

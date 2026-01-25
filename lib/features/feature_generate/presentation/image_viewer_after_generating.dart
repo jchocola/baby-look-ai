@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_icon/app_icon.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/core/toastification/show_success_custom_toastification.dart';
 import 'package:baby_look/features/feature_generate/bloc/generating_bloc.dart';
 import 'package:baby_look/features/feature_generate/bloc/prepare_data_bloc.dart';
 import 'package:baby_look/main.dart';
@@ -100,7 +101,7 @@ class _ImageViewerAfterGeneratingState
                         bottom: AppConstant.appPadding / 2,
                         right: AppConstant.appPadding / 2,
                         child: Text(
-                          'BabyLook AI',
+                          AppConstant.appName,
                           style: theme.textTheme.titleMedium!.copyWith(
                             color: theme.colorScheme.secondary,
                           ),
@@ -169,27 +170,35 @@ class _ImageViewerAfterGeneratingState
               spacing: AppConstant.appPadding,
               children: [
                 Expanded(
-                  child:
-                      BigButton(
-                            onTap: () async {
-                              // TODO : SCREENSHOT LOGIC
-                              final bytes = await screenshotController
-                                  .capture();
+                  child: BlocListener<GeneratingBloc, GeneratingBlocState>(
+                    listener: (context, state) {
+                      if (state is GeneratingBlocState_success) {
+                        showSuccessCustomToastification(title: state.success);
+                      }
+                    },
+                    child:
+                        BigButton(
+                              onTap: () async {
+                                final bytes = await screenshotController
+                                    .capture();
 
-                              context.read<GeneratingBloc>().add(
-                                GeneratingBlocEvent_saveImageByteToGallery(
-                                  imageBytes: bytes!,
-                                ),
-                              );
-                              // logger.f(bytes);
-                            },
-                            title: context.tr(AppText.take_screenshot),
-                            icon: Icon(AppIcon.cameratIcon),
-                            borderColor: theme.colorScheme.error,
-                            buttonColor: theme.colorScheme.errorContainer,
-                          )
-                          .animate(onPlay: (controller) => controller.repeat())
-                          .shimmer(duration: 1000.ms, delay: 500.ms),
+                                context.read<GeneratingBloc>().add(
+                                  GeneratingBlocEvent_saveImageByteToGallery(
+                                    imageBytes: bytes!,
+                                  ),
+                                );
+                                // logger.f(bytes);
+                              },
+                              title: context.tr(AppText.take_screenshot),
+                              icon: Icon(AppIcon.cameratIcon),
+                              borderColor: theme.colorScheme.error,
+                              buttonColor: theme.colorScheme.errorContainer,
+                            )
+                            .animate(
+                              onPlay: (controller) => controller.repeat(),
+                            )
+                            .shimmer(duration: 1000.ms, delay: 500.ms),
+                  ),
                 ),
               ],
             ),

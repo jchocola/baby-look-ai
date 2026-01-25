@@ -30,7 +30,7 @@ class CreateNewPredictionWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppConstant.borderRadius),
         ),
         width: double.infinity,
-        height: size.height * 0.1,
+        //height: size.height * 0.1,
 
         child: Row(
           spacing: AppConstant.appPadding,

@@ -101,7 +101,8 @@ class AppText {
   static const check_email = 'auth.check_email';
   static const check_spam = 'auth.check_spam';
   static const dont_receive_email = 'auth.dont_receive_email';
-    static const promotion_text = 'auth.promotion_text';
+  static const promotion_text = 'auth.promotion_text';
+
   ///
   /// GREETING
   ///
@@ -129,6 +130,9 @@ class AppText {
   ///
   static const generating_gallery = 'generating.gallery';
   static const camera = 'generating.camera';
+  static const notification_title = 'generating.notification_title';
+  static const notification_body = 'generating.notification_body';
+  static const image_generated = 'generating.image_generated';
 
   // STEP 1
   static const step1_appbar = 'generating.step1.step1_appbar';
@@ -282,4 +286,37 @@ class AppText {
   static const ultra_sound_unpicked = 'exception.general.ultra_sound_unpicked';
   static const failed_to_save_image_byte_to_gallery =
       'exception.general.failed_to_save_image_byte_to_gallery';
+
+  ///
+  /// GENERAL
+  ///
+  static const nothing_here = "general.nothing_here";
+  static const greeting = "general.greeting";
+
+  ///
+  /// FUN FACT
+  ///
+  static const fact1 = "fun_fact.fact1";
+  static const fact2 = "fun_fact.fact2";
+  static const fact3 = "fun_fact.fact3";
+  static const fact4 = "fun_fact.fact4";
+  static const fact5 = "fun_fact.fact5";
+  static const fact6 = "fun_fact.fact6";
+  static const fact7 = "fun_fact.fact7";
+  static const fact8 = "fun_fact.fact8";
+  static const fact9 = "fun_fact.fact9";
+  static const fact10 = "fun_fact.fact10";
+  static const fact11 = "fun_fact.fact11";
+  static const fact12 = "fun_fact.fact12";
+  static const fact13 = "fun_fact.fact13";
+  static const fact14 = "fun_fact.fact14";
+  static const fact15 = "fun_fact.fact15";
+  static const fact16 = "fun_fact.fact16";
+  static const fact17 = "fun_fact.fact17";
+  static const fact18 = "fun_fact.fact18";
+  static const fact19 = "fun_fact.fact19";
+  static const fact20 = "fun_fact.fact20";
+  static const fact21 = "fun_fact.fact21";
+  static const fact22 = "fun_fact.fact22";
+  static const fact23 = "fun_fact.fact23";
 }

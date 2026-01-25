@@ -7,8 +7,11 @@ class CustomListile extends StatelessWidget {
     super.key,
     this.title = 'Default',
     this.icon = Icons.add,
-    this.tralingWidget = const Icon(AppIcon.arrowForwardIcon,color: Colors.black54,),
-    this.onTap
+    this.tralingWidget = const Icon(
+      AppIcon.arrowForwardIcon,
+      color: Colors.black54,
+    ),
+    this.onTap,
   });
 
   final String title;
@@ -17,10 +20,11 @@ class CustomListile extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
       onTap: onTap,
       leading: CustomRoundedIcon(icon: icon),
-      title: Text(title),
+      title: Text(title,style: theme.textTheme.bodyMedium,),
       trailing: Transform.scale(scale: 0.8, child: tralingWidget),
     );
   }

@@ -83,7 +83,7 @@ class LoginViaOtherMethods extends StatelessWidget {
 
             TwitterAuthButton(
               onPressed: () {
-                //context.read<AuthBloc>().add(AuthBlocEvent_authViaGitHub());
+                context.read<AuthBloc>().add(AuthBlocEvent_authViaTwitter());
               },
               style: AuthButtonStyle(
                 buttonType: AuthButtonType.icon,

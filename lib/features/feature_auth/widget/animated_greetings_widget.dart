@@ -13,7 +13,7 @@ class AnimatedGreetingsWidget extends StatelessWidget {
       //width: 250.0,
       height: 100,
       child: DefaultTextStyle(
-        style: theme.textTheme.titleLarge!,
+        style: theme.textTheme.titleMedium!,
         child: AnimatedTextKit(
           pause: Duration.zero,
           repeatForever: true,

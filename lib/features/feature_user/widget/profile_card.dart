@@ -13,6 +13,7 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
     return BlocBuilder<AuthBloc, AuthBlocState>(
       builder: (context, state) {
         if (state is AuthBlocState_authenticated) {
@@ -32,10 +33,14 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          state.user.email ?? context.tr(AppText.expecting_parent),
-                              
-                          style: theme.textTheme.titleMedium,
+                        SizedBox(
+                          width: size.width * 0.5,
+                          child: Text(
+                            state.user.email ??
+                                context.tr(AppText.expecting_parent),
+                            maxLines: 2,
+                            style: theme.textTheme.titleMedium,
+                          ),
                         ),
                         Text(
                           '#' + state.user.uid.substring(0, 10),
@@ -50,8 +55,18 @@ class ProfileCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        BlocBuilder<UserBloc,UserBlocState>(builder:(context,state)=> Text( state is UserBlocState_loaded ? state.userEntity.coins.toString() : '0', style: theme.textTheme.titleMedium)),
-                        Text(context.tr(AppText.coins), style: theme.textTheme.bodySmall),
+                        BlocBuilder<UserBloc, UserBlocState>(
+                          builder: (context, state) => Text(
+                            state is UserBlocState_loaded
+                                ? state.userEntity.coins.toString()
+                                : '0',
+                            style: theme.textTheme.titleMedium,
+                          ),
+                        ),
+                        Text(
+                          context.tr(AppText.coins),
+                          style: theme.textTheme.bodySmall,
+                        ),
                       ],
                     ),
                   ],

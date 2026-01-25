@@ -54,6 +54,16 @@ class UserPage extends StatelessWidget {
                 child: Text(context.tr(AppText.logout)),
               ),
             ),
+
+            // TextButton(
+            //   onPressed: () async {
+            //     await getIt<LocalNotifcationRepository>().showNotification(
+            //       title: 'demo',
+            //       body: "bodyu",
+            //     );
+            //   },
+            //   child: Text('ShowNotification'),
+            // ),
           ],
         ),
       ),

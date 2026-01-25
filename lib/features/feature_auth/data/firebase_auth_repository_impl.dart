@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_nullable_for_final_variable_declarations, curly_braces_in_flow_control_structures, unnecessary_brace_in_string_interps
 
+import 'dart:async';
+
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
 import 'package:baby_look/main.dart';
@@ -9,6 +11,28 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthRepositoryImpl implements AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn.instance;
+  bool _isGoogleSignInInitialized = false;
+
+  Future<void> _initializeGoogleSignIn() async {
+    try {
+      await _googleSignIn.initialize();
+      _isGoogleSignInInitialized = true;
+    } catch (e) {
+      logger.e('Failed to initialize Google Sign-In: $e');
+    }
+  }
+
+  FirebaseAuthRepositoryImpl() {
+    _initializeGoogleSignIn();
+  }
+
+   /// Always check Google sign in initialization before use
+  Future<void> _ensureGoogleSignInInitialized() async {
+    if (!_isGoogleSignInInitialized) {
+      await _initializeGoogleSignIn();
+    }
+  }
 
   @override
   Future<UserCredential> authViaFacebook() async {
@@ -60,24 +84,25 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserCredential> authViaGoogle() async {
     try {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance
-          .authenticate();
+      await _ensureGoogleSignInInitialized();
 
-      if (googleUser?.authentication == null) {
-        throw AppException.failed_auth_via_google;
-      }
+  // Authenticate with Google
+  final GoogleSignInAccount googleUser = await _googleSignIn.authenticate(
+    scopeHint: ['email'],
+  );
 
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = googleUser!.authentication;
+      // Get authorization for Firebase scopes if needed
+  final authClient = _googleSignIn.authorizationClient;
+  final authorization = await authClient.authorizationForScopes(['email']);
 
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
 
-      // Once signed in, return the UserCredential
-      return await _auth.signInWithCredential(credential);
+  final credential = GoogleAuthProvider.credential(
+    accessToken: authorization?.accessToken,
+    idToken: googleUser.authentication.idToken
+  );
+  final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+  return userCredential;
     } on FirebaseAuthException catch (e) {
       logger.e(e);
       if (e.code == "account-exists-with-different-credential")
@@ -219,6 +244,112 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
         throw AppException.auth_user_not_found;
 
       throw AppException.failed_recovery_password_email;
+    }
+  }
+
+  @override
+  Future<String?> getVerificationPhoneNumberId({
+    required String phoneNumber,
+  }) async {
+    final completer = Completer<String?>();
+    try {
+      String? verifId;
+
+      //1) formated phone number
+      final formattedNumber = _formatPhoneNumber(phoneNumber: phoneNumber);
+
+      logger.d('Отправка номера: $formattedNumber');
+
+      // 2 ) verify phone number
+      await _auth.verifyPhoneNumber(
+        phoneNumber: formattedNumber,
+        verificationCompleted: (phoneCredential) {
+          // Авто-подтверждение — нет verificationId, возвращаем null
+          logger.d('Phone verification completed automatically');
+          if (!completer.isCompleted) completer.complete(null);
+        },
+        verificationFailed: (FirebaseAuthException exception) {
+          //TODO : CATCH ALL ERROR
+          // Завершаем ошибкой — вызывающий код может её поймать
+          logger.e(
+            'Phone verification failed: ${exception.code} ${exception.message}',
+          );
+          if (!completer.isCompleted) completer.completeError(exception);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          logger.d('Code sent : verification ID : $verificationId');
+          if (!completer.isCompleted) completer.complete(verificationId);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Таймаут автоподбора кода — иногда verificationId приходит здесь
+          logger.d('Auto retrieval timeout, verificationId: $verificationId');
+          if (!completer.isCompleted) completer.complete(verificationId);
+        },
+      );
+
+      // Ожидаем результата из callback'ов, с защитным таймаутом
+      return await completer.future.timeout(
+        const Duration(minutes: 2),
+        onTimeout: () {
+          logger.e('verifyPhoneNumber timed out');
+          if (!completer.isCompleted) completer.complete(null);
+          return null;
+        },
+      );
+    } catch (e) {
+      logger.e(e);
+      throw 'Failed to verify phone';
+    }
+  }
+
+  @override
+  Future<UserCredential> signInWithPhoneAuthCredential({
+    required PhoneAuthCredential credential,
+  }) async {
+    try {
+      final userCredential = await _auth.signInWithCredential(credential);
+      return userCredential;
+    } catch (e) {
+      logger.e(e);
+      throw 'signInWithPhoneAuthCredential failed';
+    }
+  }
+
+  @override
+  Future<PhoneAuthCredential> verifySMSCode({
+    required String smsCode,
+    required String? verificationId,
+  }) async {
+    try {
+      if (verificationId == null) {
+        logger.e('VerificationId == null');
+        throw "";
+      }
+
+      final phoneCredential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+
+      return phoneCredential;
+    } catch (e) {
+      logger.e(e);
+      throw 'Failed to verify SMS code';
+    }
+  }
+
+  String _formatPhoneNumber({required String phoneNumber}) {
+    return phoneNumber.startsWith('+') ? phoneNumber : '+$phoneNumber';
+  }
+
+  @override
+  Future<UserCredential> authViaTwitter() async {
+    try {
+      TwitterAuthProvider twitterProvider = TwitterAuthProvider();
+      return await _auth.signInWithProvider(twitterProvider);
+    } catch (e) {
+      logger.e('Failed auth via twitter ');
+      throw 'Failed auth via twitter ';
     }
   }
 }

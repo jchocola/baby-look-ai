@@ -131,7 +131,7 @@ class GeneratedCardWidget extends StatelessWidget {
                               spacing: AppConstant.appPadding,
                               children: [
                                 Icon(AppIcon.fullScreenIcon),
-                                Text(context.tr(AppText.share)),
+                                Text(context.tr(AppText.fullscreen)),
                               ],
                             ),
                           ),

@@ -19,13 +19,13 @@
     "password_reset_send": "Password Reset Send",
     "phone_note_text": "By clicking “Send Code,” you agree to our Terms of Use and Privacy Policy.",
     "phone_number": "Phone number",
+    "promotion_text": "Register now and see your future baby!",
     "register": "Register",
     "send_again": "Send again",
     "send_code": "Send code",
     "send_password": "Send Password",
     "sign_up_with": "Sign up with",
-    "we_will_send_sms": "We will send you an SMS with a confirmation code.",
-    "promotion_text": "Зарегистрируйтесь сейчас и загляните в глаза своего будущего малыша!"
+    "we_will_send_sms": "We will send you an SMS with a confirmation code."
   },
   "exception": {
     "auth": {
@@ -65,6 +65,7 @@
       "balance_not_enought": "Insufficient balance. Please purchase more coins to continue.",
       "empty_case": "No data available. Please try again later.",
       "failed_to_save_image_byte_to_gallery": "Failed to save image to gallery. Please try again.",
+      "greeting": "Hello, glad to see you",
       "invalid_response": "Invalid response received. Please try again.",
       "password_does_not_matched": "Passwords do not match. Please re-enter both passwords.",
       "ultra_sound_unpicked": "Please upload an ultrasound image first."
@@ -102,6 +103,31 @@
     "q8": "Do I need to upload both parents' photos?",
     "q9": "Can I change the baby's gender in the app?"
   },
+  "fun_fact": {
+    "fact1": "70% probability - the child will inherit the shape of the lips from the mother",
+    "fact10": "30% of children inherit their father's smile, even if they resemble their mother.",
+    "fact11": "In 20% of cases, the child inherits a combination of traits that neither parent possesses.",
+    "fact12": "10% of children are born with an exact copy of a mole in the same place as their parent.",
+    "fact13": "70% of sons inherit their mother's facial shape.",
+    "fact14": "80% of daughters inherit their father's hair texture.",
+    "fact15": "60% of boys inherit their mother's eye color.",
+    "fact16": "90% of girls inherit their ear shape from their father.",
+    "fact17": "50% probability - the first child will resemble the father, the second - the mother",
+    "fact18": "55% of facial features are inherited",
+    "fact19": "3 generations - maximum ‘memory’ of genes about the appearance of ancestors",
+    "fact2": "There is a 60% chance of having dimples on your cheeks if one of your parents has them.",
+    "fact20": "1 in 10 couples have a child who does not resemble either of them.",
+    "fact21": "85% of parents see their own traits in their children, even if they don't have them.",
+    "fact22": "70% of grandmothers say their grandson resembles their side of the family.",
+    "fact23": "60% of fathers see their son as a ‘miniature version of themselves’.",
+    "fact3": "90% probability of inheriting the shape of the nose from one of the parents",
+    "fact4": "75% of children inherit their hair color from their father.",
+    "fact5": "In 80% of cases, brown eyes win over blue eyes (dominant gene).",
+    "fact6": "90% probability - curly hair dominates over straight hair",
+    "fact7": "85% chance - dimple on the chin will be passed from father to son",
+    "fact8": "70% of children inherit their eyebrow shape from their mother.",
+    "fact9": "One in four children are born looking like their grandmother or grandfather, bypassing their parents."
+  },
   "gallery": {
     "all_n": "All {}",
     "favourites_n": "Favourites {}",
@@ -110,9 +136,15 @@
     "share_content": "🤔 Who will our baby look like?BabyLook AI has the answer! Check out the results 👇",
     "view_detail": "View Detail"
   },
+  "general": {
+    "nothing_here": "Nothing here..."
+  },
   "generating": {
     "camera": "Camera",
     "gallery": "Gallery",
+    "image_generated": "Image generated",
+    "notification_body": "Результат готов к просмотру",
+    "notification_title": "👶 Встречайте ваше чудо!",
     "step1": {
       "choose_an_image_showing_the_baby": "Choose an image showing the baby's profile clearly",
       "clear_profile_view": "Clear Profile View",

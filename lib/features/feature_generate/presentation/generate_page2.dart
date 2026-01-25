@@ -25,26 +25,28 @@ class GeneratePage2 extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(AppConstant.appPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: AppConstant.appPadding,
-        children: [
-          NoteWidget(
-            color: theme.colorScheme.tertiary,
-            icon: AppIcon.infoIcon,
-            note: context.tr(AppText.step2_note),
-          ),
-
-          GestationWeek(),
-          BabyGenderPicker(),
-          TipsCard(
-            cardColor: theme.colorScheme.errorContainer,
-            iconColor: theme.colorScheme.error,
-            icon: AppIcon.ideaIcon,
-            title: context.tr(AppText.step2_tip_title),
-            subtitle: context.tr(AppText.step2_tip_subtitle),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: AppConstant.appPadding,
+          children: [
+            NoteWidget(
+              color: theme.colorScheme.tertiary,
+              icon: AppIcon.infoIcon,
+              note: context.tr(AppText.step2_note),
+            ),
+        
+            GestationWeek(),
+            BabyGenderPicker(),
+            TipsCard(
+              cardColor: theme.colorScheme.errorContainer,
+              iconColor: theme.colorScheme.error,
+              icon: AppIcon.ideaIcon,
+              title: context.tr(AppText.step2_tip_title),
+              subtitle: context.tr(AppText.step2_tip_subtitle),
+            ),
+          ],
+        ),
       ),
     );
   }

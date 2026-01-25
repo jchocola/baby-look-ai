@@ -1,13 +1,13 @@
 // ignore_for_file: camel_case_types
 
-import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
-import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:baby_look/core/app_exception/app_exception.dart';
 import 'package:baby_look/features/feature_auth/domain/repository/auth_repository.dart';
+import 'package:baby_look/features/feature_gallery/bloc/predictions_bloc.dart';
+import 'package:baby_look/features/feature_user/bloc/user_bloc.dart';
 import 'package:baby_look/features/feature_user/domain/repo/user_db_repository.dart';
 import 'package:baby_look/main.dart';
 
@@ -27,9 +27,25 @@ class AuthBlocEvent_authViaGitHub extends AuthBlocEvent {}
 
 class AuthBlocEvent_authViaGoogle extends AuthBlocEvent {}
 
+class AuthBlocEvent_authViaTwitter extends AuthBlocEvent {}
+
 class AuthBlocEvent_logout extends AuthBlocEvent {}
 
 class AuthBlocEvent_sendVerifyEmail extends AuthBlocEvent {}
+
+class AuthBlocEvent_verifyPhoneNumber extends AuthBlocEvent {
+  final String phoneNumber;
+  AuthBlocEvent_verifyPhoneNumber({required this.phoneNumber});
+  @override
+  List<Object?> get props => [phoneNumber];
+}
+
+class AuthBlocEvent_verifySMSCode extends AuthBlocEvent {
+  final String smsCode;
+  AuthBlocEvent_verifySMSCode({required this.smsCode});
+  @override
+  List<Object?> get props => [smsCode];
+}
 
 class AuthBlocEvent_sendPassRecoverToEmail extends AuthBlocEvent {
   final String? email;
@@ -76,6 +92,13 @@ abstract class AuthBlocState extends Equatable {
 class AuthBlocState_init extends AuthBlocState {}
 
 class AuthBlocState_unauthenticated extends AuthBlocState {}
+
+class AuthBlocState_waiting_verify_sms_code extends AuthBlocState {
+  final String? verificationId;
+  AuthBlocState_waiting_verify_sms_code({required this.verificationId});
+  @override
+  List<Object?> get props => [verificationId];
+}
 
 class AuthBlocState_sendedPasswordRecoverEmail extends AuthBlocState {}
 
@@ -213,6 +236,28 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       }
     });
 
+      ///
+    /// AUTH VIA TWITTER
+    ///
+    on<AuthBlocEvent_authViaTwitter>((event, emit) async {
+      try {
+        logger.d('Auth via Twitter');
+
+        final userCredential = await authRepository.authViaTwitter();
+
+        add(
+          AuthBlocEvent_checkSetupUserDataFirstTime(
+            userCredential: userCredential,
+          ),
+        );
+      } catch (e) {
+        logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
+      }
+    });
+
     ///
     /// AUTH WITH LOGIN PASSWORD
     ///
@@ -292,7 +337,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
       } finally {
-          add(AuthBlocEvent_authCheck());
+        add(AuthBlocEvent_authCheck());
       }
     });
 
@@ -309,6 +354,55 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
             emit(AuthBlocState_sendedPasswordRecoverEmail());
           },
         );
+      } catch (e) {
+        logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      } finally {
+        add(AuthBlocEvent_authCheck());
+      }
+    });
+
+    ///
+    /// VERIFY PHONE NUMBER
+    ///
+    on<AuthBlocEvent_verifyPhoneNumber>((event, emit) async {
+      try {
+        final verificationId = await authRepository
+            .getVerificationPhoneNumberId(phoneNumber: event.phoneNumber);
+        logger.d('VERIFICATION ID $verificationId');
+        emit(
+          AuthBlocState_waiting_verify_sms_code(verificationId: verificationId),
+        );
+      } catch (e) {
+        logger.e(e);
+        emit(AuthBlocState_error(exception: e as AppException));
+      }
+    });
+
+    ///
+    /// VERIFY SMS CODE
+    ///
+    on<AuthBlocEvent_verifySMSCode>((event, emit) async {
+      try {
+        logger.d('VERIFY SMS CODE ${event.smsCode}');
+        final currentState = state;
+        if (currentState is AuthBlocState_waiting_verify_sms_code) {
+          logger.d('CurrentVerifId : ${currentState.verificationId}');
+
+          final phoneAuthCredential = await authRepository.verifySMSCode(
+            smsCode: event.smsCode,
+            verificationId: currentState.verificationId,
+          );
+
+          final userCredential = await authRepository
+              .signInWithPhoneAuthCredential(credential: phoneAuthCredential);
+
+          add(
+            AuthBlocEvent_checkSetupUserDataFirstTime(
+              userCredential: userCredential,
+            ),
+          );
+        }
       } catch (e) {
         logger.e(e);
         emit(AuthBlocState_error(exception: e as AppException));
