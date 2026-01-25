@@ -1,5 +1,6 @@
 import 'package:baby_look/core/app_constant/app_constant.dart';
 import 'package:baby_look/core/app_text/app_text.dart';
+import 'package:baby_look/core/utils/language_converter.dart';
 import 'package:baby_look/shared/custom_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _languageListTile extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       color: isCurrent ? theme.colorScheme.onTertiary : null,
-      child: ListTile(onTap: onTap, title: Text(locale.languageCode)),
+      child: ListTile(onTap: onTap, title: Text(languageConverter(locale))),
     );
   }
 }
